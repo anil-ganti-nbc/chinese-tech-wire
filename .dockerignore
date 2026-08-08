@@ -1,0 +1,21 @@
+# Build context hygiene. The Dockerfile only COPYs specific paths, so nothing
+# here can leak into the image regardless — this just keeps the build context
+# small and the daemon from hashing gigabytes of unrelated local files.
+.git
+.claude
+.venv
+venv
+.mypy_cache
+.ruff_cache
+.pytest_cache
+**/__pycache__
+*.pyc
+.env
+data/
+logs/
+dist/
+build/
+*.exe
+*.spec
+ai
+tests
