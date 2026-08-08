@@ -1,0 +1,315 @@
+# Chinese Tech Wire V0.1 Configuration
+# Edit freely without touching code.
+
+polling:
+  default_interval_minutes: 5
+  prevent_overlap: true
+  sources:
+    ithome: 3
+    mydrivers: 5
+    expreview: 5
+    zol: 7
+    jiwei: 5
+    benchlife: 5
+    hkepc: 7
+    technews: 5
+    xfastest: 5
+
+http:
+  timeout_seconds: 20
+  max_retries: 3
+  backoff_factor: 1.5
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 ChineseTechWire/0.1"
+  rate_limit_per_domain_seconds: 2.0
+  random_delay_min: 0.3
+  random_delay_max: 1.2
+
+notification:
+  # Legacy per-article Discord path (opt-in only). StoryLead alerts are primary.
+  enable_article_alerts: false
+  priority_threshold: 70
+  high_priority_threshold: 90
+  dry_run: false
+
+scoring:
+  relevance_weight: 0.45
+  novelty_weight: 0.35
+  source_quality_weight: 0.10
+  freshness_weight: 0.10
+  # Bonuses (added after weighted sum, then clamp 0-100)
+  bonuses:
+    benchmark: 8
+    retail_listing: 10
+    regulatory: 12
+    engineering_sample: 15
+    new_specs: 10
+    new_price: 8
+    new_launch_date: 10
+    leak: 7
+
+source_quality:
+  ithome: 0.85
+  mydrivers: 0.80
+  expreview: 0.90
+  zol: 0.70
+  jiwei: 0.88
+  benchlife: 0.88
+  hkepc: 0.85
+  technews: 0.87
+  xfastest: 0.82
+
+high_priority_entities:
+  - Nvidia
+  - 輝達
+  - 英偉達
+  - 台積電
+  - 超微
+  - AMD
+  - Intel
+  - TSMC
+  - Samsung
+  - Qualcomm
+  - Apple
+  - Huawei
+  - Lenovo
+  - Valve
+  - Sony
+  - Microsoft
+  - Nintendo
+  - Asus
+  - MSI
+  - Gigabyte
+  - Moore Threads
+  - Loongson
+  - Zhaoxin
+  - Xiaomi
+  - MediaTek
+
+high_priority_terms:
+  - RTX
+  - GeForce
+  - Radeon
+  - Ryzen
+  - EPYC
+  - Nova Lake
+  - Panther Lake
+  - Arrow Lake
+  - Lunar Lake
+  - Snapdragon
+  - Dimensity
+  - Steam Deck
+  - PlayStation
+  - Xbox
+  - Switch
+  - 3nm
+  - 2nm
+  - 18A
+  - 14A
+  - GDDR7
+  - HBM
+  - DDR5
+  - DDR6
+  - engineering sample
+  - 工程样机
+  - 曝光
+  - 泄露
+  - 规格
+  - 跑分
+  - 天梯榜
+
+noise_keywords:
+  - 优惠券
+  - 打折
+  - 导购
+  - 怎么选
+  - 教程
+  - 评测体验
+  - 开箱
+  - 日常
+  - 生活方式
+  - 明星
+  - 代言
+  - 促销
+  - 秒杀
+  - 拼多多
+  - 淘宝
+
+rumor_keywords_zh:
+  - 传闻
+  - 据说
+  - 据称
+  - 曝光
+  - 泄露
+  - 爆料
+  - 消息人士
+  - 供应链
+  - 业内人士
+  - 微博
+  - 爆料人
+  - 工程样机
+  - 工程样品
+  - 未发布
+  - 未官宣
+  - 据悉
+  - 有消息称
+
+rumor_keywords_en:
+  - rumor
+  - reportedly
+  - allegedly
+  - leak
+  - exposed
+  - revealed by sources
+  - industry sources
+  - supply-chain
+  - tipster
+  - engineering sample
+
+dedup:
+  # Conservative: false merges are worse than missed merges
+  title_similarity_threshold: 0.78
+  title_similarity_soft: 0.62
+  time_window_hours: 48
+  entity_overlap_min: 2
+
+# Extra company aliases (merged with built-in map). Format:
+#   CanonicalName: [alias1, alias2]
+entity_aliases:
+  Nvidia: ["NV", "黄氏"]
+  CXMT: ["长鑫", "长鑫存储"]
+  YMTC: ["长江存储"]
+
+entity_chip_patterns:
+  - RTX 5050
+  - Ryzen AI 300
+
+translation:
+  timeout_seconds: 20
+  max_retries: 2
+
+community:
+  min_rate_limit_seconds: 3.0
+  notify_threshold: 75
+  high_priority_threshold: 90
+  speculation_priority_cap: 60
+  max_selected_replies: 20
+  polling_minutes:
+    chiphell: 8
+    mobile01: 8
+    ptt: 10
+    coolaler: 8
+  scoring:
+    relevance: 0.30
+    novelty: 0.20
+    evidence: 0.20
+    firsthand: 0.10
+    velocity: 0.10
+    community: 0.05
+    corroboration: 0.05
+
+documentary:
+  # Geekbench DIRECT MONITORING: DISABLED / UNSUPPORTED
+  # Reason: access/anti-automation constraints and maintenance cost.
+  # Historical source="geekbench" records remain valid. External Geekbench
+  # URLs in news/community posts are classified but never auto-fetched.
+  notify_threshold: 75
+  removal_confirmations: 2
+  scoring:
+    relevance: 0.30
+    novelty: 0.30
+    evidence: 0.25
+    source_quality: 0.10
+    corroboration: 0.05
+  watchlists:
+    # Used by retail adapters (JD). Not used for any Geekbench requests.
+    retail:
+      - "RTX 6090"
+      - "RTX 6080"
+      - "联想 拯救者"
+      - "ROG 幻"
+      - "Steam Deck"
+
+
+newsroom:
+  # Lifecycle status thresholds (independent of Discord eligibility)
+  actionable_threshold: 70
+  watching_threshold: 45
+  # Legacy flat key kept for compatibility; prefer alerts.min_priority
+  alert_threshold: 52
+  stale_after_hours: 72
+  momentum_window_hours: 3
+  rebuild_window_hours: 168
+  # StoryLead Discord policy — calibrated from soak max≈56.8, 0 ACTIONABLE
+  # Separates alert eligibility from ACTIONABLE lifecycle semantics.
+  alerts:
+    enabled: true
+    min_priority: 52
+    high_priority: 55
+    min_evidence: 15
+    min_relevance: 35
+    min_confidence: 25
+    allowed_statuses:
+      - WATCHING
+      - ACTIONABLE
+      - ESCALATED
+    max_age_hours: 48
+    material_score_delta: 8
+    max_alerts_per_cycle: 5
+    cooldown_hours: 12
+    evidence_delta: 5
+    allowed_lead_types: []
+    blocked_lead_types: []
+    # Suppress leads whose last_activity predates policy activation (backlog shield)
+    suppress_before_activation: true
+    # Optional ISO-8601 UTC stamp. Empty → stamped on first rebuild after upgrade.
+    policy_activated_at: null
+
+source_health:
+  fail_streak_failing: 3
+  fail_streak_degraded: 2
+  zero_streak_quiet: 5
+  zero_streak_degraded: 12
+  stale_hours: 36
+  quiet_hours: 24
+  lookback_runs: 30
+  weights:
+    novelty: 0.18
+    evidence: 0.20
+    exclusivity: 0.15
+    momentum: 0.12
+    source_diversity: 0.10
+    confidence: 0.12
+    relevance: 0.13
+  watchlist_companies:
+    - Nvidia
+    - AMD
+    - Intel
+    - Apple
+    - Qualcomm
+    - TSMC
+    - Samsung
+    - Sony
+    - Microsoft
+    - Nintendo
+    - Valve
+    - Huawei
+    - Lenovo
+    - Asus
+  watchlist_topics:
+    - GPU
+    - CPU
+    - semiconductor
+    - laptop
+    - handheld
+    - RTX
+    - Ryzen
+  negative_keywords:
+    - 优惠券
+    - 打折
+    - 怎么选
+    - 怎麼選
+    - 请益
+    - 請益
+    - 闲聊
+    - 閒聊
+    - 教程

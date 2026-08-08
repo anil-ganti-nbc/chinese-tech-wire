@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>BenchLife.info</title>
+    <link>https://benchlife.info</link>
+    <item>
+      <title>鎖定 NVIDIA RTX Pro 6000 96GB，AMD Instinct MI350P PCIe 運算卡提供 144GB HBM3e 記憶體</title>
+      <link>https://benchlife.info/amd-instinct-m350p-wtih-cdna-4-and-144gb-hbm3e/</link>
+      <pubDate>Thu, 24 Jul 2026 10:00:00 +0800</pubDate>
+      <category>硬體零組件</category>
+      <description><![CDATA[<p>AMD 公布 Instinct MI350P 細節。</p>]]></description>
+    </item>
+    <item>
+      <title>AMD Instinct MI500 與 MI600 系列分別在 2027 與 2028 年登場</title>
+      <link>https://benchlife.info/amd-announce-instinct-mi500-at-2027-and-mi600-at-2028/</link>
+      <pubDate>Thu, 24 Jul 2026 09:30:00 +0800</pubDate>
+      <category>半導體</category>
+      <description><![CDATA[<p>路線圖更新。</p>]]></description>
+    </item>
+    <item>
+      <title>輝達與台積電擴大合作推進先進封裝</title>
+      <link>https://benchlife.info/nvidia-tsmc-advanced-packaging/</link>
+      <pubDate>Wed, 23 Jul 2026 15:00:00 +0800</pubDate>
+      <category>半導體</category>
+      <description><![CDATA[<p>先進封裝產能。</p>]]></description>
+    </item>
+  </channel>
+</rss>

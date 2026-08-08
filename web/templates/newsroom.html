@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Newsroom — CTW{% endblock %}
+{% block content %}
+<div class="summary">
+  <span>Actionable: <b>{{ summary.actionable }}</b></span>
+  <span>Watching: <b>{{ summary.watching }}</b></span>
+  <span>New 24h: <b>{{ summary.new_24h }}</b></span>
+  <span>Written: <b>{{ summary.written }}</b></span>
+  <span>Stale: <b>{{ summary.stale }}</b></span>
+  <span>Useful: <b>{{ summary.useful }}</b></span>
+  <span>FP: <b>{{ summary.false_positives }}</b></span>
+  <span class="muted">|</span>
+  <a href="/newsroom?hours=3">3h</a>
+  <a href="/newsroom?hours=6">6h</a>
+  <a href="/newsroom?hours=12">12h</a>
+  <a href="/newsroom?hours=24">24h</a>
+  <a href="/export/newsroom.csv">CSV</a>
+</div>
+
+<form class="filters" method="get" action="/newsroom"
+      onsubmit="var h=this.elements['hours']; if(h &amp;&amp; !h.value) h.disabled = true; return true;">
+  <select name="status">
+    <option value="">All status</option>
+    {% for s in ['ACTIONABLE','ESCALATED','WATCHING','NEW','STALE','RESOLVED'] %}
+    <option value="{{ s }}" {{ 'selected' if status==s else '' }}>{{ s }}</option>
+    {% endfor %}
+  </select>
+  <select name="lead_type">
+    <option value="">All types</option>
+    {% for t in ['BREAKING_NEWS','LEAK','RUMOR','EARLY_SIGNAL','DOCUMENTARY_DISCOVERY','RETAIL_DISCOVERY','CORROBORATION','SOURCE_RACE','FOLLOW_UP'] %}
+    <option value="{{ t }}" {{ 'selected' if lead_type==t else '' }}>{{ t }}</option>
+    {% endfor %}
+  </select>
+  <input type="text" name="q" value="{{ q }}" placeholder="Search entity/text…">
+  <select name="hours">
+    <option value="">Any time</option>
+    {% for h in [1,3,6,12,24,72,168] %}
+    <option value="{{ h }}" {{ 'selected' if hours==h else '' }}>{{ h }}h</option>
+    {% endfor %}
+  </select>
+  <select name="freshness" title="Freshness">
+    <option value="active" {{ 'selected' if freshness=='active' else '' }}>Active &lt;7d</option>
+    <option value="archived" {{ 'selected' if freshness=='archived' else '' }}>Archived &gt;7d</option>
+    <option value="all" {{ 'selected' if freshness=='all' else '' }}>All</option>
+  </select>
+  <label class="muted"><input type="checkbox" name="hide_written" value="1" {{ 'checked' if hide_written else '' }}> hide written</label>
+  <button type="submit" class="btn">Filter</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>Status</th>
+      <th>Lead</th>
+      <th>Source</th>
+      <th>Why now</th>
+      <th>Age</th>
+      <th>Excl</th>
+      <th>Conf</th>
+      <th>Sat</th>
+      <th>First</th>
+      <th>Activity</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for L in leads %}
+    <tr>
+      <td class="score {% if L.priority_score >= 80 %}hi{% elif L.priority_score >= 60 %}mid{% else %}lo{% endif %}">
+        {{ '%.0f'|format(L.priority_score) }}
+      </td>
+      <td><span class="badge {{ L.lead_status }}">{{ L.lead_status }}</span>
+        {% if fb_map.get(L.id) %}<div class="muted" style="font-size:10px">{{ fb_map[L.id] }}</div>{% endif %}
+      </td>
+      <td>
+        <a href="/leads/{{ L.id }}">{{ L.headline_hint or ('Lead #' ~ L.id) }}</a>
+        <div class="muted">{{ L.lead_type }}</div>
+      </td>
+      <td class="mono">
+        {% if source_url_map.get(L.id) %}
+        <a href="{{ source_url_map[L.id] }}" target="_blank" rel="noopener noreferrer" title="Open original source">Open ↗</a>
+        {% else %}
+        <span class="muted">—</span>
+        {% endif %}
+      </td>
+      <td class="why">{{ L.why_now or '—' }}</td>
+      <td class="mono muted">{{ age_str(L.last_activity_at or L.created_at) }}</td>
+      <td class="mono">{{ '%.0f'|format(L.exclusivity_score) }}</td>
+      <td class="mono">{{ '%.0f'|format(L.confidence_score) }}</td>
+      <td class="mono">{{ '%.0f'|format(L.media_saturation_score) }}</td>
+      <td class="muted">{{ L.first_signal_source or L.first_documentary_source or L.first_media_source or '—' }}</td>
+      <td class="mono muted">{{ fmt(L.last_activity_at) }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="11" class="muted">No leads. Run ingestion then: python main.py --rebuild-leads</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+<div class="pager">
+  page {{ page }} · showing {{ leads|length }} of {{ total }}
+  {% if page > 1 %}<a href="?page={{ page-1 }}&status={{ status }}&lead_type={{ lead_type }}&q={{ q }}&freshness={{ freshness }}{% if hours %}&hours={{ hours }}{% endif %}">prev</a>{% endif %}
+  {% if page * per_page < total %}<a href="?page={{ page+1 }}&status={{ status }}&lead_type={{ lead_type }}&q={{ q }}&freshness={{ freshness }}{% if hours %}&hours={{ hours }}{% endif %}">next</a>{% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+setTimeout(function(){ location.reload(); }, 45000);
+</script>
+{% endblock %}

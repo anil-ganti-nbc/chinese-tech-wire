@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Alert ledger — CTW{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>StoryLead notification ledger</h2>
+  <form class="filters" method="get" action="/notifications">
+    <select name="outcome">
+      <option value="">All outcomes</option>
+      {% for o in ['SENT','FAILED','DRY_RUN','SUPPRESSED','POLICY_ACTIVATED'] %}
+      <option value="{{ o }}" {{ 'selected' if outcome==o else '' }}>{{ o }}</option>
+      {% endfor %}
+    </select>
+    <input type="text" name="reason" value="{{ reason }}" placeholder="reason code">
+    <input type="number" name="limit" value="{{ limit }}" min="1" max="200">
+    <button type="submit">Filter</button>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>When</th><th>Lead</th><th>Headline</th><th>Outcome</th><th>Reason</th>
+        <th>Alert</th><th>P</th><th>Evid</th><th>Rel</th><th>Conf</th><th>Status</th><th>HTTP</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td class="mono muted">{{ fmt(r.attempted_at) }}</td>
+        <td>{% if r.lead_id %}<a href="/leads/{{ r.lead_id }}">#{{ r.lead_id }}</a>{% else %}—{% endif %}</td>
+        <td>{{ (headlines.get(r.lead_id) or "—")[:80] }}</td>
+        <td><b>{{ r.outcome }}</b></td>
+        <td class="muted">{{ r.reason_code or "—" }}</td>
+        <td class="muted">{{ r.alert_reason or "—" }}</td>
+        <td class="mono">{{ r.priority_score if r.priority_score is not none else "—" }}</td>
+        <td class="mono">{{ r.evidence_score if r.evidence_score is not none else "—" }}</td>
+        <td class="mono">{{ r.relevance_score if r.relevance_score is not none else "—" }}</td>
+        <td class="mono">{{ r.confidence_score if r.confidence_score is not none else "—" }}</td>
+        <td>{{ r.lead_status or "—" }}</td>
+        <td class="mono">{{ r.webhook_http_status or "—" }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="12" class="muted">No notification decisions yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

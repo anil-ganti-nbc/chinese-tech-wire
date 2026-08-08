@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CTW Newsroom{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  {% block head %}{% endblock %}
+</head>
+<body>
+<header>
+  <a class="brand" href="/newsroom">Chinese Tech Wire</a>
+  <nav>
+    <a href="/newsroom" class="{{ 'active' if active=='newsroom' else '' }}">Newsroom</a>
+    <a href="/news" class="{{ 'active' if active=='news' else '' }}">News</a>
+    <a href="/community" class="{{ 'active' if active=='community' else '' }}">Community</a>
+    <a href="/documentary" class="{{ 'active' if active=='documentary' else '' }}">Documentary</a>
+    <a href="/clusters" class="{{ 'active' if active=='clusters' else '' }}">Clusters</a>
+    <a href="/activity" class="{{ 'active' if active=='activity' else '' }}">Activity</a>
+    <a href="/notifications" class="{{ 'active' if active=='notifications' else '' }}">Alerts</a>
+    <a href="/validation" class="{{ 'active' if active=='validation' else '' }}">Validation</a>
+    <a href="/health" class="{{ 'active' if active=='health' else '' }}">Health</a>
+    <a href="/soak" class="{{ 'active' if active=='soak' else '' }}">Soak</a>
+  </nav>
+</header>
+<main>
+  {% block content %}{% endblock %}
+</main>
+{% block scripts %}{% endblock %}
+</body>
+</html>

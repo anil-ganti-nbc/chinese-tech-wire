@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}News — CTW{% endblock %}
+{% block content %}
+<form class="filters" method="get">
+  <select name="source">
+    <option value="">All sources</option>
+    {% for s in sources %}
+    <option value="{{ s }}" {{ 'selected' if source==s else '' }}>{{ s }}</option>
+    {% endfor %}
+  </select>
+  <input type="text" name="q" value="{{ q }}" placeholder="Search…">
+  <select name="hours">
+    {% for h in [6,12,24,48,72,168] %}
+    <option value="{{ h }}" {{ 'selected' if hours==h else '' }}>{{ h }}h</option>
+    {% endfor %}
+  </select>
+  <button class="btn" type="submit">Filter</button>
+</form>
+<table>
+  <thead><tr><th>Time</th><th>Source</th><th>Headline</th><th>Score</th><th>Cluster</th></tr></thead>
+  <tbody>
+  {% for a in articles %}
+  <tr>
+    <td class="mono muted">{{ fmt(a.discovered_at) }}</td>
+    <td>{{ a.source }}</td>
+    <td>
+      {% if a.url %}<a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title_english or a.title_original }}</a>
+      {% else %}{{ a.title_english or a.title_original }}{% endif %}
+      {% if a.title_english and a.title_original %}
+      <div class="muted">{{ a.title_original }}</div>{% endif %}
+    </td>
+    <td class="mono">{{ '%.0f'|format(a.priority_score or 0) }}</td>
+    <td class="muted">{% if a.duplicate_group_id %}<a href="/clusters/{{ a.duplicate_group_id }}">#{{ a.duplicate_group_id }}</a>{% else %}—{% endif %}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="5" class="muted">No articles</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+<div class="pager">page {{ page }} · {{ articles|length }}/{{ total }}
+{% if page>1 %}<a href="?page={{ page-1 }}&source={{ source }}&q={{ q }}&hours={{ hours }}">prev</a>{% endif %}
+{% if page*per_page < total %}<a href="?page={{ page+1 }}&source={{ source }}&q={{ q }}&hours={{ hours }}">next</a>{% endif %}
+</div>
+{% endblock %}

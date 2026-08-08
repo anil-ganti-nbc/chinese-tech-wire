@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Documentary — CTW{% endblock %}
+{% block content %}
+<form class="filters" method="get">
+  <select name="source">
+    <option value="">All</option>
+    <option value="jd" {{ 'selected' if source=='jd' else '' }}>jd</option>
+  </select>
+  <select name="hours">
+    {% for h in [24,72,168,336] %}
+    <option value="{{ h }}" {{ 'selected' if hours==h else '' }}>{{ h }}h</option>
+    {% endfor %}
+  </select>
+  <button class="btn" type="submit">Filter</button>
+</form>
+<table>
+  <thead><tr><th>Score</th><th>Source</th><th>Type</th><th>Title / Model</th><th>Status</th><th>Seen</th></tr></thead>
+  <tbody>
+  {% for r in records %}
+  <tr>
+    <td class="score">{{ '%.0f'|format(r.priority_score or 0) }}</td>
+    <td>{{ r.source }}</td>
+    <td class="muted">{{ r.record_type }}</td>
+    <td>{% if r.url %}<a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.title or r.source_record_id }}</a>{% else %}{{ r.title or r.source_record_id }}{% endif %}
+      {% if r.model_number %}<div class="muted">model {{ r.model_number }}</div>{% endif %}
+    </td>
+    <td class="muted">{{ r.record_status }}</td>
+    <td class="mono muted">{{ fmt(r.first_seen_at) }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="6" class="muted">No documentary records</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% if events %}
+<div class="card" style="margin-top:12px">
+  <h2>Recent change events</h2>
+  <ul class="timeline">
+  {% for e in events %}
+  <li>
+    <span class="mono muted">{{ fmt(e.observed_at) }}</span>
+    <span>{{ e.event_type }}</span>
+    <span class="muted">#{{ e.record_id }} {{ e.summary or '' }}</span>
+  </li>
+  {% endfor %}
+  </ul>
+</div>
+{% endif %}
+<div class="pager">page {{ page }} · {{ records|length }}/{{ total }}</div>
+{% endblock %}

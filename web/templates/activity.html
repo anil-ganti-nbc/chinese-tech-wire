@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Activity — CTW{% endblock %}
+{% block content %}
+<div class="filters">
+  <a href="?hours=3" class="{{ 'on' if hours==3 else '' }}">3h</a>
+  <a href="?hours=6" class="{{ 'on' if hours==6 else '' }}">6h</a>
+  <a href="?hours=12" class="{{ 'on' if hours==12 else '' }}">12h</a>
+  <a href="?hours=24" class="{{ 'on' if hours==24 else '' }}">24h</a>
+</div>
+<ul class="timeline">
+{% for i in items %}
+  <li>
+    <span class="mono muted">{{ fmt(i.t) }}</span>
+    <span>{{ i.kind }}</span>
+    <span>{% if i.link and i.link.startswith('http') %}<a href="{{ i.link }}" target="_blank" rel="noopener">{{ i.text }}</a>
+    {% elif i.link %}<a href="{{ i.link }}">{{ i.text }}</a>
+    {% else %}{{ i.text }}{% endif %}</span>
+  </li>
+{% else %}
+  <li class="muted">No recent activity</li>
+{% endfor %}
+</ul>
+{% endblock %}

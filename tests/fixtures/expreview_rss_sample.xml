@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+			<rss version="2.0">
+			  <channel>
+			    <title>超能网</title>
+			    <link>http://www.expreview.com</link>
+			    <description>超能网</description>
+			    <copyright>Copyright(C) 超能网</copyright>
+			    <generator>SupeSite</generator>
+			    <lastBuildDate>Fri, 24 Jul 2026 15:58:09 +08</lastBuildDate><item>
+								<title>育碧称《刺客信条 : 黑旗 记忆重置》超预期，半月销量已超过350万份</title>
+								<link>http://www.expreview.com/107233.html</link>
+								<description><![CDATA[<p>或许大家都没有想到，《刺客信条：黑旗 记忆重置》在2026年7月9日发售后的表现非常强劲，首日销量就超过了200万份，刷新了系列作品的发行记录。单周销量也超过300万份，这一里程碑也证明了势头得到延续。育碧（Ubisoft）已经<a href="https://www.expreview.com/107102.html" target="_blank">确认</a>，未来将推出更多更新内容，包括备受期待的“新游戏 +”模式，进一步提升最忠实玩家重玩的价值。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/09/AC_BF_R_FS.jpg" width="100%"/></p><p>育碧刚刚<a href="https://staticctf.ubisoft.com/8aefmxkxpxwl/u6PstLIurmu4aaTlzdOvk/66cdf0b12d61438d5df4c066f0fa64ba/Ubisoft_FY27_Q1_PR_English_vF.pdf" target="_blank">公布</a>了新一个财季的财报，再次对《刺客信条：黑旗 记忆重置》的情况进行了说明。这款游戏不仅在商业上取得了成功，也深受玩家和媒体的喜爱，发售后半个月的销量已经突破了350万份，超额完成了年度销售预期。</p><p>虽然《刺客信条：黑旗 记忆重置》的表现很不错，但是育碧整体业绩并不理想。财报显示，育碧在上一财季的销售额为2.682亿欧元，略高于约2.5亿欧元的预期目标，相比于上一财年同期下降了13.7%。预计接下来的财季净预定额约3.7亿欧元，明显低于市场4.26亿欧元的预期。</p><p>目前<a href="https://store.steampowered.com/app/3751950/_/" target="_blank">Steam</a>上，《刺客信条：黑旗 记忆重置》国区标准版价格为248元，豪华版价格为298元，预购可获得专属的“黑胡子的绯红礼包”奖励，内含一套爱德华专属服装，以及一把长剑与一支手枪。豪华版除了游戏本体外，还包括刺客大师角色包（爱德华服装、长剑、手枪和具有独特加成效果的饰品）和刺客大师航海包（帆具组、船上宠物、船员服饰、船舵、船头像和船身装饰）。</p><p>我们已经对《刺客信条：黑旗 记忆重置》PC版进行了硬件需求评测，回看评测文章可点击<a href="https://www.expreview.com/106955.html" target="_blank">此处</a>。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 14:38:00 +08</pubDate>
+							</item>
+							<item>
+								<title>微软再推两款自研MAI模型，且全面应用于核心产品</title>
+								<link>http://www.expreview.com/107232.html</link>
+								<description><![CDATA[<p>微软的人工智能研究实验室Microsoft AI日前在<a href="https://microsoft.ai/news/introducing-mai-image-2-5-pro-and-mai-voice-2-flash/" target="_blank">官方博客</a>上宣布，他们的MAI产品线再添两款自研模型变体：MAI-Image-2.5-Pro 与 MAI-Voice-2-Flash，这两款模型目前已进入公开预览（public preview）阶段。</p><p>其中，MAI-Image-2.5-Pro 定位为“质量优先”的旗舰图像模型，是微软迄今保真度最高的图像模型，主打高精度图像生成、细节化编辑以及准确的图内文字渲染（in-image text rendering），并支持自然语言指令编辑。定价为每百万文本输入 token 5 美元、每百万图像输入 token 8 美元、每百万图像输出 token 106 美元。</p><p>MAI-Voice-2-Flash 则主打速度与规模，面向高并发语音场景。相比 MAI-Voice-2，其速度提升 2 倍、成本降低 32%，定价为每百万字符 15 美元，同时在自然韵律（prosody）与声学质量上保持旗舰水准。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/maiimg.jpg" width="100%"/></p><p>值得注意的是，这两款模型并非仅停留在榜单刷分。微软强调，自研 MAI 系列已大规模落地核心产品：Bing Image Creator 已 100% 切换至 MAI-Image-2.5；PowerPoint 的图像生成与编辑中，MAI-Image-2.5的GPU 成本较 GPT-Image-2 降低最多 84%；而OneDrive 图像编辑场景切换为 MAI-Image-2.5 后，保存率提升 26%、P95 延迟下降约 25%；Dynamics 365 Contact Center（客户含 T-Mobile、EasyJet）改用 MAI-Voice-2-Flash，GPU 成本最多降 89%。</p><p>此外，微软还提到了他们在专业领域上的成果——他们与医疗方案 Dragon Copilot 合作，后者服务 17 万医疗提供者、上季度处理 2800 万次就诊记录；MAI-Transcribe-1.5 已接替原有模型，覆盖 58 种语言，在多数语言上转录与语种识别错误率相对下降 50%。</p><p>微软表示，这一系列更新都指向同一目标——用微软自研模型驱动微软自有产品；其强调模型在内部训练、不依赖第三方模型蒸馏，并希望通过提供质量、速度、成本各异的模型选项，让用户与开发者获得更多选择与更高性价比。</p>]]></description>
+								<category>快讯</category>
+								<author>易铭恩</author>
+								<pubDate>Fri, 24 Jul 2026 14:57:10 +08</pubDate>
+							</item>
+							<item>
+								<title>打造软硬协同的前沿AI基础设施，AMD Helios机架级AI系统登场</title>
+								<link>http://www.expreview.com/107231.html</link>
+								<description><![CDATA[<p>在今天AMD正式举办Advancing AI 2026（以下简称AAI 
+2026）大会，本次大会的重磅产品是AMD旗下首款机架级AI系统Helios，以及与Helios配套的新一代Instinct MI400系列GPU、第六代EPYC系列高性能处理器、基于UALoE开放标准的Pensando高速网络以及ROCm.AI平台，进一步实现了软硬件深度适配以及协同优化的目标。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/12.jpg" width="100%"/></p><p style="text-align:left;">AMD Helios机架级AI系统早在去年的AAI 
+2025大会上就已经初见端倪，后续的亦在各种不同的展会上以实体的形式与大家见面，但正式发布是在今天的AAI 
+2026大会。AMD表示，目前AI行业正在蓬勃发展，只论单一硬件领域的话，有不少厂商都能提供优秀甚至顶尖的产品，但AMD能做到的不仅如此，他们通过整合GPU、CPU、网络和软件生态，以Helios展示了其构建端到端AI基础设施的能力。</p><p style="text-align:left;">正如前述所言，Helios机架级AI系统并非单一产品，主要组成硬件单拿出来亦是同类产品中的佼佼者。同样在AAI 
+2026大会中发布的Instinct MI400系列GPU就是组成Helios的重要部分，按照目前的计划有面向前沿AI和AI工厂部署、适合大规模AI训练与推理的MI455X，以及面向高精度、高性能科学计算的MI430X。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/18.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/></p><p style="text-align:left;">大会上首发的是Instinct MI455X，基于AMD CDNA 
+5架构打造，在计算性能、内存系统、可扩展性、能效和安全等多个方面相较上代产品有明显提升。据AMD提供的信息显示，MI455X的XCD计算核心将采用台积电2nm（N2）工艺制造，FCD和IOD核心则采用3nm（N3P）工艺制造，晶体管总数达到3200亿个，通过CoWoS-L封装技术将8个XCD、2个IOD和2个FCD与12组HBM4显存集成于同一封装内。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/14.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/></p><p style="text-align:left;">MI455X相比MI355X虽然延续了8个XCD的设计，但XCD中的计算单元（CU）倍替换为全新的工作组处理器（WGP），共计配置有256组WGP，Wave64执行架构也被Wave32执行架构所取代，进一步降低了指令延迟、分支分歧惩罚和寄存器压力，更适合延迟敏感型计算任务。</p><p style="text-align:left;">要让MI455X充分发挥性能，离不开强大的网络系统，Helios所使用Pensando高速网络可以为单个MI455X提供36条UALoE（Ultra 
+Accelerator Link over Ethernet）链路，每条链路提供400Gb/s双向带宽，单GPU Scale-Up带宽达到3.6TB/s。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/19.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/></p><p style="text-align:left;">借助UALoE架构，单一共享内存域中可连接72个MI455X，同时还引入了分离式DMA架构，前端单元自动将传输请求拆分并分配至UALoE接口的后端单元，降低通信软件对底层拓扑管理的复杂度。Scale-Out带宽同样大幅提升，MI455X可支持最多三块AMD 
+Pensando Vulcano 800 AI-NIC网络组件，拥有600GB/s双向Scale-Out带宽，相当于是MI355X的6倍。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/36.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/></p><p style="text-align:left;">性能强大的CPU也是Helios不可或缺的部分，因此AMD拿出了第6代EPYC服务器处理器EPYC 
+9006系列。该系列处理器代号为“Venice”，是首颗基于2nm先进制程工艺打造的高性能处理器，AMD针对AI时代不断增长的工作负载需求，对EPYC产品组合进行了优化。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/40.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/></p><p style="text-align:left;">EPYC 9006系列处理器基于Zen 6与Zen 6c架构打造，其中Zen 6架构产品最高为96核心/192线程，而Zen 6c则可以达到256核心/512线程，目前计划是有4款不同的产品，分别对应AI生态中不同的定位，值得注意的是这4款EPYC 9006系列处理器并非一个型号对应一个规格，而是可以根据实际需求的不同选择不同的配置方案。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/41.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/></p><p style="text-align:left;">AMD表示，从2017年第一代EPYC处理器的“Naples”到今天的“Venice”，处理器的数据吞吐能力提升到18倍，其中“Venice”与前代的“Turin”相比，AI运算的综合性能前者相当于后者的1.8倍，同时还带来了16通道内存、PCIe 
+6.0等更强的扩展能力。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/58.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/></p><p style="text-align:left;">Helios是“软硬兼备”的系统，硬件有Instinct MI400系列GPU以及第6代EPYC高性能处理器，那软件指的自然是ROCm.AI堆栈平台。AMD 
+ROCm平台早在去年的AAI 2025大会上就崭露头角，那今年的ROCm.AI又是什么呢？其“AI”后缀其实已经可以说明很多东西，简单来说就是“可以实现用AI来优化AI的堆栈平台”。</p><p style="text-align:left;">ROCm.AI堆栈平台的设计核心是用智能体AI来加速AI开发，整套堆栈平台可以分为四个部分，分别是对接智能体AI编程、AI负载优化、主流AI框架和AI底层工具，可实现自动优化工作流，分析模型性能瓶颈，定位调优环节，自动执行优化并反复迭代更新。根据AMD测试，在特定工作负载下，ROCm AI相关优化相比ROCm 7可带来最高3.3倍推理性能提升，训练性能则提升至约2.4倍，效果显著。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/24.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/></p><p style="text-align:left;">在软硬件的相互配合下，Helios机架级AI系统将展现出顶级算力实力。按照目前展示的实物，单个Helios计算托盘将配置4块MI455X、1颗第六代EPYC处理器以及相应的Pensando 
+AI NIC网络组件，而整套Helios系统可配置18个计算托盘以及6个交换托盘，合计组成18颗CPU、72颗GPU、约31TB 
+HBM4显存的机架级AI系统，可支撑万亿级参数大模型训练与高密度AI推理任务。同时系统采用全液冷散热设计并兼容OCP开放机架标准，整体运维成本、单Token成本以及处理能效等方面都在行业中处于优势地位。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/73.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/></p><p style="text-align:left;">在AAI 2026大会的现场，我们不仅可以近距离接触AMD 
+Helios机架级AI系统，同时还能看到AMD及其合作伙伴展示的各种AI相关硬件与软件产品，从大型机架到桌面级PC产品可以说是应有尽有。</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/74.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>Helios系统托盘展示</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/81.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>解除散热系统的Helios托盘</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/75.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>基于第6代EPYC处理器打造的双路CPU系统</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/86.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>基于256核心第6代EPYC处理器打造的双路CPU系统</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/85.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>第6代EPYC处理器样品展示</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/79.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>8单元Instinct MI350X计算系统</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/76.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>基于锐龙AI嵌入式P100和X100系列处理器打造的两只机器狗</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/84.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>两只机器狗正在与观众互动</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/83.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>AI平台的现场展示</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/77.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>基于AMD硬件打造的游戏PC与掌机亦有登场提供体验</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/90.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>基于AMD硬件打造的赛车模拟器在现场提供体验</p><p style="text-align:center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/92.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>专业级的驾驶模拟器</p><p style="text-align: center;"><img class="lazy" data-original="https://img.expreview.com/news/2026/07/AAI2026/AAI2026/89.jpg" src="//www.expreview.com/exp_new/static/exp5/imgjs/l900.gif" width="100%" border="0"/><br/>最后是F1赛车压轴，目前AMD与梅赛德斯-AMG马石油F1车队正展开紧密合作</p>]]></description>
+								<category>硬件快讯</category>
+								<author>潘靖江</author>
+								<pubDate>Fri, 24 Jul 2026 14:39:00 +08</pubDate>
+							</item>
+							<item>
+								<title>《EA Sports FC 27》开启预购：9月25日解锁，Steam国区248元起</title>
+								<link>http://www.expreview.com/107230.html</link>
+								<description><![CDATA[<p>电子艺界（EA）已正式公布了《EA Sports FC 27》，将于2026年9月25日发售，登陆PlayStation 4/5、XBOX Series X|S、Nintendo Switch系列、以及PC平台。游戏不但支持简体中文界面和字幕，还支持中文配音。</p><div class="debug"><p style="text-align:center;"><iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116972343790106&bvid=BV17agb6gEW6&cid=40240744270&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="620px"> </iframe>
+ &nbsp; &nbsp;</p><script style="display:none">if (IsMobile()) {
+                jQuery("iframe").attr("width", "100%");
+                jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16);
+            } else jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16 + 120);</script></div><p>手机通道：<a href="https://www.bilibili.com/video/BV17agb6gEW6/" target="_blank" textvalue="哔哩哔哩">哔哩哔哩</a></p><p>欢迎在《EA SPORTS FC 27》中体验全世界的游戏。 踏入The Grounds，体验这座连接街头与球场的足球乐园；随着灵感源自社区反馈的创新带来更真实的足球玩法，在每一种模式中感受更强的掌控力。</p><p>法国国家队队长基利安·姆巴佩将担任《EA Sports FC 27》终极版封面球星。这是姆巴佩在告别“FIFA”品牌后首次重返该系列封面，也是他继《FIFA 21》《FIFA 22》《FIFA 23》之后第四次登上EA足球游戏封面。此前EA SPORTS已在各大社交平台同步更新了品牌标识，全面切换至《EA Sports FC 27》视觉体系，标志着新一年度足球游戏周期的正式开启。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/EA_Sports_FC_27_YG.jpg" width="100%"/></p><p>目前游戏已经在<a href="https://store.steampowered.com/app/4080220/EA_SPORTS_FC_27/" target="_blank">Steam</a>上架，开启了预购，国区标准版价格248元，终极版价格448元，终极加强版价格798元。选购不同的版本会有相对应的预购优惠，以及包含不同的物品，甚至可以提前7天抢先体验。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 14:38:00 +08</pubDate>
+							</item>
+							<item>
+								<title>《光环 : 战役进化》发售预告：焕然一新的冒险，7月28日解锁，高级版已开玩</title>
+								<link>http://www.expreview.com/107229.html</link>
+								<description><![CDATA[<p>《光环：战役进化（Halo: Campaign Evolved）》是《光环：战斗进化》战役模式的忠实还原且经现代化重塑的版本，将于2026年7月28日正式发售，登陆PlayStation 5、Xbox Series X|S、以及PC平台，同步加入Game Pass游戏库。游戏不但支持简体中文界面和字幕，还支持中文配音。</p><div class="debug"><p style="text-align:center;"><iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116972360564937&bvid=BV1ZLga6mEZw&cid=40241006353&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="620px"> </iframe>
+ &nbsp; &nbsp;</p><script style="display:none">if (IsMobile()) {
+                jQuery("iframe").attr("width", "100%");
+                jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16);
+            } else jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16 + 120);</script></div><p>手机通道：<a href="https://www.bilibili.com/video/BV1ZLga6mEZw/" target="_blank" textvalue="哔哩哔哩">哔哩哔哩</a></p><p>玩家将体验具备高清画面、优化控制、最多4人玩家在线合作、3个全新任务，以及扩充武器库、载具与新增敌人的传奇故事。</p><p>玩家可选择单人模式，或者最多4人玩家在线合作，支持完整跨平台联机与跨平台进度同步。无论是初次接触《光环》系列作品，还是时隔25年重返这座环带世界，《光环：战役进化》都将带来一场既经典永恒、又焕然一新的冒险。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/06/08/Halo-Campaign-Evolved.jpg" width="100%"/></p><p>目前《光环：战役进化》在<a href="https://store.steampowered.com/app/2806050/Halo_Campaign_Evolved/" target="_blank">Steam</a>平台有预售活动，标准版价格298元，高级版价格398元。预购即可解锁铸造厂军械库礼包，礼包内含士官长标志性马克V型雷神之锤装甲的传奇外观。高级版除了游戏本体外，可以提前5天进入游戏，并可获得阿尔法光环军械库礼包（内含5款士官长装甲皮肤与6款武器皮肤）、数字画册、数字短篇小说、以及数字版游戏手册。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 14:23:00 +08</pubDate>
+							</item>
+							<item>
+								<title>《漫威金刚狼》剧情预告：与凤凰女琴·葛蕾联手战哨兵，9月15日登陆PS5</title>
+								<link>http://www.expreview.com/107228.html</link>
+								<description><![CDATA[<p>《漫威金刚狼（Marvel&#39;s Wolverine）》将于2026年9月15日发售，是一款第三人称动作游戏，属于PlayStation 5独占作品，支持DualSense 无线手柄的震动功能和触发效果。这是自2009年《X战警前传：金刚狼》以来，首部金刚狼独立游戏。随着发售时间临近，官方放出了剧情预告。</p><div class="debug"><p style="text-align:center;"><iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116972226545105&bvid=BV1Ligb6BEQv&cid=40240349931&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="620px"> </iframe>
+ &nbsp; &nbsp;</p><script style="display:none">if (IsMobile()) {
+                jQuery("iframe").attr("width", "100%");
+                jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16);
+            } else jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16 + 120);</script></div><p>手机通道：<a href="https://www.bilibili.com/video/BV1Ligb6BEQv/" target="_blank" textvalue="哔哩哔哩">哔哩哔哩</a></p><p>罗根以为自己已经与「金刚狼」这个身份告别，可他的过去仍不肯放过他。三年前，他离开了变种人特别行动X小队。如今，在X小队最黑暗的时刻，金刚狼归队。&nbsp;&nbsp;一心奉行人类至上理念的玻利瓦尔·特拉斯克开始大肆绑架变种人。能救他们的，只有金刚狼。</p><p>为了变种人的未来，金刚狼必须与世界各地的变种人并肩作战，足迹遍及加拿大、日本，以及漫威宇宙中的岛国马德里坡。人类与变种人的命运悬于一线。罗根知道，这个世界需要一位英雄。可惜他们只能将就一下，指望金刚狼了。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/02/25/Marvels_Wolverine_T.jpg" width="100%"/></p><p>游戏在上个月已经开启了预购，标准版价格69.99美元，数字豪华版价格79.99美元，预购奖励有经典棕色战衣、“爪刃外观：镜面反光爪”、额外1点技能点、4款PSN头像。数字豪华版除了游戏本体和预购奖励外，还会额外提供多套专属外观与奖励内容，包括5套专属战衣、5款专属爪刃外观、额外3点技能点。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 14:16:00 +08</pubDate>
+							</item>
+							<item>
+								<title>《这龙带刀》今天发售：硬核动作RPG，Steam首发优惠39.6元</title>
+								<link>http://www.expreview.com/107227.html</link>
+								<description><![CDATA[<p>《这龙带刀（DinoBlade）》是一款高强度动作RPG，今天登陆PC平台。游戏背景设定在一个被灾难性事件永久改变的史前世界，玩家将扮演一头年轻的棘龙，手握远古之力铸就的巨型大剑，迎战那些同样持有凶器的恐龙宿敌——血战不休，只为阻挡那步步逼近的灭绝之影。</p><div class="debug"><p style="text-align:center;"><iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116797139322234&bvid=BV1vc7g6PEai&cid=39330908118&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="620px"> </iframe>
+ &nbsp; &nbsp;</p><script style="display:none">if (IsMobile()) {
+                jQuery("iframe").attr("width", "100%");
+                jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16);
+            } else jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16 + 120);</script></div><p>手机通道：<a href="https://www.bilibili.com/video/BV1vc7g6PEai/" target="_blank" textvalue="哔哩哔哩">哔哩哔哩</a></p><p>跨越龟裂的峡谷，穿行浓雾弥漫的密林，这片大陆的每一寸土地都藏着致命的壮美。而每一片区域，都盘踞着一头暴虐的阿尔法霸主，它们是前方道路的守门人。想继续走下去？那就先击溃它——否则，你只会沦为它的盘中餐。</p><p>每一次胜利，都会化作你体内奔涌的力量。新技能在觉醒，杀招在咆哮，你的战斗风格将由自己亲手锻造。连击如狂风，闪避、翻滚、弹反，招招都得卡在生死的间隙；散落于世界各处的传说武器，等着被你发现，被你主宰。</p><p>在蛮荒的最深处，埋藏着一个足以左右整个种族的谜——它能带来救赎，也能将你的族群永远推入深渊。崛起吧，成为传奇；征服这片荒野，亲手决定你们的终局。化身利刃，在灭绝的阴影将世界吞噬之前，斩断命运的锁链，重铸历史。</p><p>击败最终首领，解锁终极Boss Rush模式。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/06/23/DinoBlade_T.jpg" width="100%"/></p><p>《这龙带刀》在<a href="https://store.steampowered.com/app/3440070/_/" target="_blank">Steam</a>平台有首发促销，价格39.60元（-10%折扣，原价44元），优惠至7月31日，游戏支持简体中文界面和字幕。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 14:03:00 +08</pubDate>
+							</item>
+							<item>
+								<title>技嘉AORUS INFINITY系列显卡开启预售：风之力极速爆发散热系统，6899元起</title>
+								<link>http://www.expreview.com/107226.html</link>
+								<description><![CDATA[<p>今年5月，技嘉正式发布了全新的AORUS INFINITY系列显卡——AORUS GeForce RTX 5090 INFINITY 32G。随后不断扩展，先后再推出了AORUS GeForce RTX 5080 INFINITY 16G、AORUS GeForce RTX 5070 Ti INFINITY 16G、AORUS GeForce RTX 5080 INFINITY WOOD 16G、以及AORUS GeForce RTX 5070 INFINITY 12G四款产品。目前除了国内限制不能销售的旗舰型号外，其余都已登陆电商平台，并开启了预售抢购。</p><p>AORUS GeForce RTX 5070 INFINITY 12G，价格6899元，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BAUcJK1olVQQCV1xYCkoSM28JGlkcXQEKU1lcAXtTXDdWRGtMGENDFlVDFhNSVzMXQA4KD1heSl5cCUkeA2gAHFwUVBlbEQIABg9IWzFXZw9ABVZnBAhRCyUXbW84XSZLHF4FVQs4aUxsUxppUyRhJ3VSAlJROEonAG4KEloSWgMKUW5tCEwnVQEIGloUXAcDV1ZbOEonA2kBHlISWgEAXVdbD3sQA2Y4SQJFA1lWCwgbWBRBM184GGsSXQ8WUiwcWl8RcV84G2sWbQYDVF9YAEIQC2sNB1sWVQYGUkJdDkISCmgPHFkSWAYKZFxcCU8eM1_WlutiVU1iNy0OezdoXG0JZxkTg4uyRSIqDEweA344XSt1KFVnJwYWai1RdhxLGjBSHHxEIS0eeE9UXglodVlNA3pHJ1cuXShjdjZ1Yl9uVDYHZFlbCXs" target="_blank">点此前往&gt;&gt;&gt;</a><br/>AORUS GeForce RTX 5070 Ti INFINITY 16G，价格9899元，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BAUcJK1olVQQCV1xYCkoSM28JGlkcXQEKU1paCXtTXDdWRGtMGENDFlVDFhNSVzMXQA4KD1heSl5cCUkeA2gAHF8SXBlbEQIABg9IWzFXZw9ABVZnBAhRCyUWbW84fStTVFNKEwY_CAMSXjppXF93NF5aAlJROEonAG4KEloSWgMKUW5tCEwnVQEIGloUXAcDV1ZbOEonA2kBHlISWgEDU15UD3sQA2Y4SQJFA1lWCwgbWBRBM184GGsSXQ8WUiwcWl8RcV84G2sWbQYDVF9ZDEkQBWgOB1sUWwcEUUJdDkISCmgPHFoWXwAAZFxcCU8eM1_WlutyVHRpUVkUbRYfShwNbwhxg4uyRSIqAU8TB344Hid1BkBXHQ0vXCJ_WC5sEyNwNUBqDx85SghDczVodVlRBX4HDBwVfzd0WDNOTAtSWDYHZFlbCXs" target="_blank">点此前往&gt;&gt;&gt;</a><br/>AORUS GeForce RTX 5080 INFINITY 16G，价格14599元，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BAUcJK1olVQQCV1xYCkoSM28JGlgdXQILXVhUCHtTXDdWRGtMGENDFlVDFhNSVzMXQA4KD1heSl5cCUgfA2sBEl0cXRlbEQIABg9IWzFXZw9ABVZnBAhRCyUWbW84fi9WJlJLLg44VQtsdwh4Yg5jQ3N1JFJROEonAG4KEloSWgMKUW5tCEwnVQEIGloUXAcDV1ZbOEonA2kBHlISWgIEXF5ZDnsQA2Y4SQJFA1lWCwgbWBRBM184GGsSXQ8WUiwcWl8RcV84G2sWbQYDVF9YD0MeA2gPB1sXWgEKVEJdDkISCmgPH10SWAYKZFxcCU8eM1_WlutzXA5GJlYWWENAcRUMYyhJg4uyRSIqAUkVB344GCV1Cgd7FVcrbBtxVDxDUwBvJVVkAw0WAAseAytodVlsJkQFPT1aXzRKVBkKSCZpVDYHZFlbCXs" target="_blank">点此前往&gt;&gt;&gt;</a><br/>AORUS GeForce RTX 5080 INFINITY WOOD 16G，价格14899元，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BAUcJK1olVQQCV1xYCkoSM28JGlgdXQILXVdcDHtTXDdWRGtMGENDFlVDFhNSVzMXQA4KD1heSl5cCUgfA2sBElIUWRlbEQIABg9IWzFXZw9ABVZnBAhRCyUWbW84f11PBXhpACg-CBNIRyd9Eh18KVZQNFJROEonAG4KEloSWgMKUW5tCEwnVQEIGloUXAcDV1ZbOEonA2kBHlISWgIGV11aDXsQA2Y4SQJFA1lWCwgbWBRBM184GGsSXQ8WUiwcWl8RcV84G2sWbQYDVF9ZC0gTBW0MB1sXVQUCXUJdDkISCmgPH14SWwIGZFxcCU8eM1_WlutrVHxlCl4gVExBCxpraDoQg4uyRSwtCEkfAX44U1IQOQFDClsKThZ2ZxVgHlhBHQFjMCQ1SQtqUzcNdVldGU9kL14WbEJ3ZxN6cxgWGTYHZFlbCXs" target="_blank">点此前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/AORUS_INFINITY_RTX50_KS1.jpg" width="100%"/></p><p>新产品属于技嘉40周年限定产品的一部分，引入了全新WINDFORCE HYPERBURST散热构架（风之力极速爆发散热系统），参考了Founder Edition的PCB布局，新的散热模块利用风扇、均热板或铜制底板、超导热管、复合金属润滑硅脂等，结合双贯穿式风道，使得气流能贯穿显卡背板两侧，形成畅流无阻的气流通道。显卡搭载了两个HAWK风扇，同时上盖的中心位置的“Overdrive风扇”可在高负载时自动启动，提供额外的冷空气。</p><p>AORUS GeForce RTX 5080 INFINITY 16G和AORUS GeForce RTX 5070 Ti INFINITY 16G在外观上是一样的，而AORUS GeForce RTX 5080 INFINITY WOOD 16G在外观设计上做了一些改动，以银白色与原本色构建，顶部边缘位置加入了木纹装饰，能与之前采用相同设计语言的X870E AERO X3D WOOD搭配组合。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/AORUS_INFINITY_RTX50_KS2.jpg" width="100%"/></p><p>AORUS GeForce RTX 5070 INFINITY 12G相比其他型号的尺寸要比之前的产品小一些，依然配备了16Pin的12V-2×6供电接口。技嘉将供电接口放在了显卡尾部靠下的位置，隐藏在一个小型磁吸背板下，以便将供电线藏起来，显得更美观一些。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 11:58:00 +08</pubDate>
+							</item>
+							<item>
+								<title>X870 AORUS INFINITY上架：技嘉40周年纪念主板，售价5999元</title>
+								<link>http://www.expreview.com/107225.html</link>
+								<description><![CDATA[<p>上个月，技嘉正式面向极致超频玩家推出X870 AORUS INFINITY，为最新的AMD Ryzen 9 9950X3D2 Dual Edition处理器处理器而打造，支持X3D Turbo 2.0模式。这款主板也是技嘉40周年纪念产品的一部分，之前在COMPUTEX 2026上进行过展示。目前新产品已登陆电商平台，并开启了预约抢购，显示价格为5999元。</p><p>技嘉 X870 AORUS INFINITY 主板，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BATMJK1olVQQCV1xYCkoSM28JGlkcXgMBUl9cDXtTXDdWRGtMGENDFlVDFhNSVzMXQA4KD1heSl5cCUkeAGoLHVoUWBlbEQIAOFF3BQQBcyRFPURWPzdUejtcRT9XaDsZUTYDZF1cCkIWBGgNE14lbQYFZAgzCEoWAm4JGlgdWzYDZF5bAU4eBGsPElMRWwAyU15UOBlOUzFXTwRDG1ZdAm5tOEgnBG8BD11nHFQWUixtOEsnAF8IGlsUWQQAXFlVAVcXB2kIH1sJXQALUVdaDEweBGgJGGsXXAcGXW5t1sancB96HC0QNW5HVFcqUQBTerGFq0pnLQYAXFxMOE9nCit_ZQNWB1R4PRoFVx5cZDpsch9NAlBSNSEUASUVB2wMWyNjNmNQMxoLWztkQig4HmsSWwcy" target="_blank">点此前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/06/30/X870_AORUS_INFINITY_T.jpg" width="100%"/></p><p>X870 AORUS INFINITY有别于其他ATX主板，技嘉将安装CPU的AM5插座还特别地做了横置设计，同时DDR5内存插槽也相应地做了逆时针旋转90°。其搭载了AMD X870芯片组，采用了18+2+2相110A数字VRM供电设计，10层PCB设计，配有双8Pin EPS CPU供电接口，可支持AMD Ryzen 9000/8000/7000系列台式机处理器。</p><p>新主板提供了双DIMM插槽，支持最高DDR5-11400+（OC）规格，最大容量256GB，兼容Intel XMP 3.0和AMD EXPO内存配置文件；配有两条PCIe 5.0全长插槽，支持单条PCIe 5.0 x16通道或分拆成双x8通道；提供了三个M.2插槽，其中两个是PCIe 5.0 x4通道，分别支持M.2 25110/22110/2580/2280和M.2 22110/2280规格，另外一个为PCIe 4.0 x4通道，支持M.2 22110/2280规格；配备四个SATA III接口；带有支持Wi-Fi 7和蓝牙5.4的无线网卡。</p><p>在背部I/O上，主板配备了一个USB4端口、三个USB-A 10Gbps端口、四个USB-A 5Gbps端口、一个HDMI 2.1端口，单5GbE网口、PS/2键鼠端口和音频插孔等。前置USB方面，包括一个USB-C 20Gbps接针、一个USB-A 5Gbps接针和两个USB-A 480Mbps接针。</p><p>主板的BIOS集成了技嘉最新的X3D Turbo Mode 2技术，通过内置AI模型智能动态优化，让兼容的AMD Ryzen处理器实现比以往更高的性能释放。同时技嘉还引入了AI D5 黑科技2.0（D5 Bionic Corsa）技术，通过AI技术全面调教软件、硬件和固件，突破了以往的内存性能障碍，将DDR5内存速率提升至11400 MT/s。利用智能实时分析和参数调整，还能最大程度地确保DDR5内存的稳定性。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 11:32:00 +08</pubDate>
+							</item>
+							<item>
+								<title>2026Q2中国智能手机市场延续小幅下滑：华为与苹果表现突出，行业高端化转型</title>
+								<link>http://www.expreview.com/107224.html</link>
+								<description><![CDATA[<p>近日国际数据公司（IDC）<a href="https://mp.weixin.qq.com/s/pNhXHZdiIlO1UIbhjH4atQ" target="_blank">发布</a>了最新的手机季度跟踪报告，显示2026年第二季度中国智能手机市场出货量延续了小幅下滑趋势，同比下降4.3%，出货量为6601万台，已连续五个季度出现同比下滑。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/IDC_Moblie_2026Q2_China1.jpg" width="100%"/></p><p>自3月下旬起，安卓智能手机厂商因存储等核心元器件成本持续攀升，被迫陆续上调产品售价或调整配置方案，对消费者换机意愿形成明显压制，同时“国补”政策对需求的拉动效应也在逐步减弱。今年“618”促销活动已经显示出需求的疲态，整体销量相比去年下降了15%。</p><p>纵观2026年上半年，中国智能手机市场累计出货量约1.34亿台，同比下降4.2%。尽管存储成本大幅上升及其他物料价格维持高位，但是对市场的影响还没有完全显现。目前华为与苹果稳居市场第一梯队，OPPO和vivo构成第二梯队，小米和荣耀尾随其后。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/IDC_Moblie_2026Q2_China2.jpg" width="100%"/></p><p>在整体市场低迷的背景下，华为与苹果的表现突出，第二季度出货量同比增幅分别达到19.4%和24.4%，成为市场中的亮点，对应的市场占有率分别为22.6%和18.1%，位居前两位。OPPO和vivo的市场占有率几乎相同，都在16%左右，分列第三和第四。小米和荣耀则稍微落后一些，市场占有率分别为12.4%和11.3%，排在第五和第六。</p><p>由于存储芯片价格持续冲高，叠加各类上游元器件成本全面上行，国内智能手机行业承压明显，市场价格结构迎来显著分化。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/IDC_Moblie_2026Q2_China3.jpg" width="100%"/></p><p>400美元以下中低端机型盈利空间持续收窄，厂商主动下调产能和投放节奏，市场份额大幅减少。厂商纷纷将研发、产能资源向利润空间更充足的中高端产品集中，市场重心加速上移。其中400–600 美元中高端价位段份额有所提高，而600美元以上高端市场份额则是大幅扩张，行业高端化转型趋势愈发清晰。</p>]]></description>
+								<category>移动数码</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 11:06:00 +08</pubDate>
+							</item>
+							<item>
+								<title>英特尔公布Intel 14A工艺最新进展：开发全面提速，2027H2开启风险试产</title>
+								<link>http://www.expreview.com/107223.html</link>
+								<description><![CDATA[<p>英特尔刚刚<a href="https://www.expreview.com/107214.html" target="_blank">公布</a>了2026年第二季度财报，收入同比大幅增长25%，继续有高于预期的表现，创下了逾十五年来最强劲的营收增长。在季度财报电话会议上，英特尔宣布将2026年的资本支出目标从180亿美元上调至200亿美元以上，另外一大亮点是Intel 14A工艺的进展。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2025/09/09/Intel_14A_T.jpg" width="100%"/></p><p>据Wccftech<a href="https://wccftech.com/intel-14a-enters-high-volume-production-2028-as-risk-production-moved-ahead-to-2027/" target="_blank">报道</a>，英特尔首席执行官陈立武（Lip-Bu Tan）表示，Intel14A工艺将提前至2027年下半年开启风险试产，大规模量产时间定于2028年，在缺陷密度和晶体管性能两项关键指标上已超越Intel 18A同期表现。相比于之前“2028年风险试产、2029年量产”的规划，现在整个Intel14A计划明显提前了，有可能成为英特尔未来的“王牌”。</p><p>去年陈立武曾<a href="https://www.expreview.com/100885.html" target="_blank">强调</a>，Intel 14A必须在性能和产量方面满足其要求，为客户提供服务是一项重大责任，英特尔必须确保能够为客户提供一致、可靠的结果，以便让客户的收入能够依赖于英特尔的晶圆代工服务。考虑到英特尔的财务状况，陈立武非常关注投入和产出的问题。</p><p>经过了近一年的努力，Intel 14A的开发进度显然超出了预期。英特尔将选择在内部产品上推进风险试产工作，以充分验证工艺的潜力，为后续外部客户使用奠定基础。陈立武认为，Intel 14A将在性能、功耗、密度、成本和进度等关键方面成为极具竞争力的制程产品。</p><p>另外目前Intel 18A工艺的产量已超出内部目标约25%，环比增长50%以上，良品率不断改善。从今年初至今，Panther Lake等主力型号的成本已经降低约50%，预计2027年成本会有进一步下降，且幅度较大。基于相同制程节点的Intel&nbsp;18A-P也已经启动风险试产，预计今年末将准备就绪，相比Intel 18A会有约5%的性能提升。</p>]]></description>
+								<category>快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 11:06:00 +08</pubDate>
+							</item>
+							<item>
+								<title>英特尔和AMD与国内客户签署长期协议：服务器CPU价格飙升超过40%，期限一年起</title>
+								<link>http://www.expreview.com/107222.html</link>
+								<description><![CDATA[<p>随着AI数据中心的快速扩展，服务器CPU的需求也在不断上升。英特尔刚刚公布了2026年第二季度财报，收入同比大幅增长25%，其中负责服务器CPU销售的数据中心和人工智能事业部同比增长59%，成为了业绩增长的最核心动力。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2025/05/23/Intel_Xeon6_NV_B300_1.jpg" width="100%"/></p><p>据TrendForce<a href="https://www.trendforce.com/news/2026/07/23/news-intel-amd-reportedly-sign-long-term-server-cpu-deals-with-chinese-customers-amid-tight-supply/" target="_blank">报道</a>，随着产品价格持续上涨，英特尔和AMD正在与中国客户签署长期服务器CPU协议。这些协议通常锁定采购量而非价格，通常为一年期限，不过有些时限可能延至两年或更长的时间。</p><p>分析指出，这标志着服务器CPU市场的转变，过去CPU比起GPU或者存储芯片更容易获得，而现在随着供应收紧，成本可能增加，将影响云服务提供商和互联网公司的AI基础设施部署。为此英特尔和AMD也参照了之前存储器供应商的做法，驱动客户签订长期供应协议。</p><p>随着服务器CPU供应趋于紧张，价格变化已经显现。目前国内服务器CPU价格持续上涨，部分产品环比涨幅超过10%。事实上，自今年初以来，部分CPU的价格上涨了超过40%。早在今年2月，英特尔和AMD都发出了供应短缺的警告，其中英特尔称交付周期可能延长至六个月。</p><p>代理式AI的兴起进一步推动了CPU需求，让供应商获得了更强的议价能力，得以签下提前锁定采购量的长期协议。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 10:16:00 +08</pubDate>
+							</item>
+							<item>
+								<title>OPPO K15正式开售：天玑7360 SUPER，5000万像素前摄，到手1954元</title>
+								<link>http://www.expreview.com/107221.html</link>
+								<description><![CDATA[<p>近日，OPPO K15智能手机正式开售，该机型主打入门电竞体验，配备天玑7360-SUPER移动平台，搭载主动散热风扇，配备OLED直屏、8000mAh电池以及5000万前置摄像头。OPPO K15已上架电商平台，仅有12+256GB一个配置，日常价2299元，目前购买可享受国补以及最高三期免息优惠，到手1954.15元。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/oppo-k15-fm.jpg" width="100%"/></p><p>OPPO K15，京东商城地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BASwJK1olXDYCVV9fDk0QAG8MElolGVlaCgFtUQ5SQi0DBUVNGFJeSwUIFxlJX3EIGloXWwAFV15ZAUoIWipURmsUNHkCUV0WCi4WZThvYFJOCmFpFgALBEcnAl8LGlkcXAEFUVZYOHsXBF9edVsUXAcDVVtcD08nAl8IHVIQVAEBU1ZcDEsQM2gIEmtHBFZcCwoCXg1HXDk4K2sWbQECXUpbegpFF2l6K2sVbQUyVF9dCU8VAWcPE1gJXQMEVl9VFEsRCmoBHFgSVAEHXVdtCkoWB2Y4K4WY7WEHJzVbeiB_QmsLfxMRNmHc2e5MdDweAW0MCmthIGNkPQA0axEQWW1uSyZ9FmJYB1w7WDZ8URRxHj57XwcKCT4EVhBsVC9uUw5tO2B2ZFttAEMeBV8" target="_blank">点击前往&gt;&gt;&gt;</a></p><p>OPPO K15，天猫商城地址：<a href="https://detail.tmall.com/item.htm?ali_refid=a3_430582_1006%3A1104499183%3AH%3APCap5yUOAW6fojhZWY1uiw%3D%3D%3Aaca5280739d9d322c2aff0e0934044a5&ali_trackid=282_aca5280739d9d322c2aff0e0934044a5&id=1063818410300&mi_id=0000llbE0bkeMRw9hhR_YDnAM0XX_OvfaQf8FyiPT_BUxTY&mm_sceneid=1_0_31703846_0&skuId=6280169623351&spm=a21n57.1.hoverItem.1&utparam=%7B%22aplus_abtest%22%3A%229fa2bf083df6307d04e6f2c5dd222fd5%22%7D&xxc=ad_ztc" target="_blank">点击前往&gt;&gt;&gt;</a></p><p>三维尺寸方面，OPPO K15的具体数据为75.13mm（宽）×158.3mm（长）×8.27mm（厚），产品重约205g。</p><p>核心配置方面，OPPO K15搭载了天玑7360-SUPER移动平台，这款SoC基于台积电4nm制程工艺制造，CPU架构为4×Arm Cortex-A78+4×Cortex-A55，最高主频2.5GHz，GPU型则采用了Arm® Mali-G615@1047MHz。此外，这款机型还搭载了LPDDR4X内存以及UFS 3.1闪存。散热系统方面，OPPO K15搭载了微型离心风扇主动散热系统，并辅以VC均热板保证被动散热效能。</p><p>屏幕方面，OPPO K15配备了6.59英寸OLED直屏，分辨率为2760×1256，最高支持120Hz刷新率以及240Hz触控采样率，支持60/90/120Hz智能切换，全局最高亮度可达600尼特，全局激发最高亮度可达1200尼特，支持10bit色深，支持100% DCI-P3色域。</p><p>影像系统方面，OPPO K15配备了5000万像素广角摄像头（f/1.8，5P 镜头，支持AF，支持两轴OIS，等效全画幅26mm）+5000万像素超广角摄像头（f/2.2，6P镜头，等效全画幅16mm）+5000万像素前置摄像头（f/2.0，5P镜头，支持AF，等效全画幅18mm）。影像功能方面，OPPO K15最高支持10倍数字变焦，支持实况照片拍摄，支持AI相机功能。</p><p>续航充电方面，OPPO K15配备了8000mAh电池，最大支持80W超级闪充以及80 W UFCS融合快充，兼容67W及以下超级闪充，44W三方UFCS融合快充，55W PPS以及13.5W PD。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/oppo-k15.jpg" width="100%"/></p><p>其他功能方面，OPPO K15支持IP69防尘防水，支持Wi-Fi 6，支持北斗（B1I+B2a）+GPS（L1+L5）卫星定位，支持红外遥控，支持屏下指纹。</p>]]></description>
+								<category>移动数码</category>
+								<author>冼廷斌</author>
+								<pubDate>Fri, 24 Jul 2026 11:07:57 +08</pubDate>
+							</item>
+							<item>
+								<title>老卡焕新生：玩家用RTX 3090搭配RTX 3050实现4K 144帧</title>
+								<link>http://www.expreview.com/107220.html</link>
+								<description><![CDATA[<p>NVIDIA GeForce RTX 
+3090作为老一辈旗舰显卡，其实它的游戏性能放现在也不会太差，它对光追和DLSS的支持还是相当好的，但由于NVIDIA没有把帧生成技术下方给RTX 
+30以下的显卡，所以总让人感觉它还是欠缺些什么。</p><p>游戏玩家<a target="_blank" href="https://www.reddit.com/r/losslessscaling/comments/1v39q8s/my_dual_gpu_setup/?utm_source=embedv2&utm_medium=post_embed&utm_content=post_body&embed_host_url=https://www.tomshardware.com/pc-components/gpus/nvidia-rtx-3090-and-rtx-3050-team-up-to-h">quziwuzzi</a>分享了一项颇具创意的双卡方案，将GeForce 
+RTX 3090与RTX 3050组合，借助Lossless Scaling帧生成技术，在4K分辨率下将游戏帧率从71 FPS翻倍提升至144 
+FPS，让旧旗舰显卡重新焕发战斗力。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/24/3090+3050.jpg" width="100%"/></p><p>Lossless Scaling是Steam平台上一款售价仅29元的实用工具，支持AI超分辨率和帧生成功能。与NVIDIA DLSS、AMD FSR或Intel 
+XeSS等厂商专属方案不同，它的最大优势在于广泛的兼容性——无需游戏官方适配，即可在几乎任何游戏或视频软件中运行。</p><p>这位玩家使用耕升GeForce RTX 
+3090 Phoenix作为游戏渲染的主渲染卡，而华硕Dual RTX 3050 OC则专门负责帧生成工作。这种分工使RTX 
+3090能够专注于画面渲染，将帧生成的计算压力完全卸载给RTX 3050，从而避免了单卡同时处理两项任务时的资源争抢问题。他表示在单独使用RTX 3090时，4K分辨率下最高可获得71 FPS；而加入RTX 3050进行帧生成后，帧率直接翻倍达到144 
+FPS，双卡方案恰好能将其性能充分利用。</p><p>Lossless 
+Scaling支持2倍、3倍和4倍帧生成倍率，可将感知帧率成倍提升。虽然该技术甚至兼容集成显卡，但要获得最佳效果仍需搭配独立显卡。该玩家实测表明，RTX 
+3050足以胜任4K分辨率下的帧生成任务，2X、3X及自适应模式均运行稳定。这一方案为手中仍持有上代显卡的玩家提供了一条低成本的性能升级路径，玩家无需升级新一代显卡，在机器上加一张入门级显卡再搭配该软件，就能让老显卡继续发挥余热。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>Strike</author>
+								<pubDate>Fri, 24 Jul 2026 10:09:00 +08</pubDate>
+							</item>
+							<item>
+								<title>OpenAI推出 Health in ChatGPT，可连接Apple Health等个人健康数据</title>
+								<link>http://www.expreview.com/107218.html</link>
+								<description><![CDATA[<p>OpenAI今日宣布他们推出了<a href="https://openai.com/index/health-in-chatgpt/" target="_blank">Health in ChatGPT</a>，该功能面向美国 18 岁及以上、已登录的 ChatGPT 用户，在网页端与 iOS 端的 Free、Go、Plus、Pro 套餐中陆续上线，Codex 中暂不可用。</p><p>用户可选择安全地连接 Apple Health、美国医院系统的受支持医疗记录，以及 One Medical、Function Health 等健康数据。借助这些信息，ChatGPT 能在对话中结合个人健康背景，对比新旧检查结果、总结就诊间变化，或分析睡眠、活动与锻炼的关系，帮助用户更主动地管理健康。OpenAI 强调，该功能是辅助而非替代专业医疗人员。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/heagpt.jpg" width="100%"/></p><p>OpenAI 称每周超过 3 亿人向 ChatGPT 提出健康相关问题，但相关背景往往零散分布在患者门户、医疗记录、各类 App 与可穿戴设备之间。早期测试显示，在获得权限的用户中，超过 70% 的健康对话发生在专门的健康空间之外，因此新版允许 ChatGPT 在常规对话中调用已连接的健康信息，用户也可发 @Health 主动带入健康上下文。</p><p>模型能力方面，GPT-5.5 Instant 已向所有免费用户提供前沿健康智能，在识别紧急就医需求、询问缺失背景、解释不确定信息上取得进展；付费用户可用、面向健康场景最强的 GPT-5.6 Sol 则进一步强化了复杂推理与审慎判断。OpenAI 表示，其与全球数百名医生合作构建真实场景与评分标准，GPT-5.6 各版本在 HealthBench Professional 评测中均优于 GPT-5.5。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/heagpt2.jpg" width="100%"/></p><p>隐私与安全是重点。OpenAI 称所有 ChatGPT 对话均采用静态与传输加密，Health 中连接的信息额外加密；连接的医疗记录与 Apple Health 数据，以及使用这些数据的对话，均不会用于训练基础模型或投放广告。默认情况下调用前会征求许可，用户可逐次批准或选择始终允许，也可在「设置 &gt; 插件 &gt; Health」中更改；随时可断开连接，相关数据将在 30 天内从系统中删除。</p>]]></description>
+								<category>快讯</category>
+								<author>易铭恩</author>
+								<pubDate>Fri, 24 Jul 2026 10:06:49 +08</pubDate>
+							</item>
+							<item>
+								<title>英伟达向合作伙伴发出涨价通知：上调GeForce RTX显卡所用GDDR7/6出货价格</title>
+								<link>http://www.expreview.com/107217.html</link>
+								<description><![CDATA[<p>进入2026年后，由于持续的DRAM供应短缺，英伟达的主要合作伙伴都上调了GeForce显卡的价格，显存容量越大的型号受到的影响越明显，这意味着高端型号的涨幅会越大。到了5月再次传出英伟达要调整GeForce RTX 50系列的价格，不过最终受到影响的是GeForce RTX 5090与GeForce RTX 5090 D v2两款产品，主要针对GDDR7的价格。</p><p style="text-align: center;"><img class="expwatermark" data-original="aHR0cHM6Ly9pbWcuZXhwcmV2aWV3LmNvbS9yZXZpZXcvMjAyNS8wOS9HQUxBWF81MDkwRFYyX0hPRi9leHB0b19tYXJrLzEwOC5qcGc="/></p><p>据Benchlife<a href="https://benchlife.info/nvidia-raise-gddr6-gddr7-kit-price-again/" target="_blank">报道</a>，上个月AMD向合作伙伴下发涨价通知，决定上调GPU+显存套件的供货价格，整体涨幅大概在10%。现在英伟达也发出了类似的通知，不但上调GeForce RTX 50系列显卡所用的GDDR7出货价格，而且包括使用GDDR6的其他GeForce显卡。这次英伟达也算是对5月调价的补充，顺势对整个产品线进行一次调整。</p><p>考虑到DRAM供应短缺的情况持续，价格上涨的趋势仍在，玩家可能每个季度都将面临显卡涨价的可能。事实上，除了GPU+显存套件的价格调整外，其他元器件、散热模组、PCB、甚至包装材料的成本都在变得更高，只不过涨幅比起来没那么明显而已。</p><p>前一段时间有<a href="https://www.expreview.com/107098.html" target="_blank">报道</a>称，英伟达按下了GeForce RTX 50 SUPER系列的暂停键，原因是改用的24Gb（3GB）GDDR7模块价格太高了。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 09:34:00 +08</pubDate>
+							</item>
+							<item>
+								<title>荣耀MagicBook 14/16新增配置：Ultra 5 336H+16G+1T，补贴价5524元起</title>
+								<link>http://www.expreview.com/107216.html</link>
+								<description><![CDATA[<p>荣耀在今年4月发布了2026款MagicBook 14/16轻薄笔记本，搭载Pather Lake架构的Ultra X7 358H和Ultra 5 336H，并配有AI赋能的HONOR Turbo X技术，增强离电时的性能与续航体验。近日荣耀为这两款笔记本提供了新配置：Ultra 5 336H+16G+1T，新配置享受国家补贴和限时优惠，还有学生补贴，所有补贴算上后到手价5524元起，详情咨询在线客服。</p><p>荣耀&nbsp;MagicBook 14 轻薄笔记本，Ultra 5 336H+16G+1T，补贴价：5524元，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BASsJK1olXDYCVV9fAUoTAGwLG1IlGVlaCgFtUQ5SQi0DBUVNGFJeSwUIFxlJX3EIGloXVAcGV11eCEIIWipURmtzWwYFPA4JWCtHW3FzaRtICV92Vw4bBEcnAl8LGlkcXAEFUVZYOHsXBF9edVsUXAcDVV9VCU4nAl8IHVIQVAIFUl9aC0kTM2gIEmtHBFZcCwoCXg1HXDk4K2sWbQECXUpbegpFF2l6K2sVbQUyVF9dCU4QC2kAH10JXQYBVF1aFEsRCmoBH1wQVAADUVltCkoWB2Y4K4WY7WEGMgtbCUgeU2hbbAVmBG7c2e5MYzIfA28LCmsQIWZZEgsUWzlDagdTWjtPVWV6CDYGSS8RYmwNTTt7X0JaLFsFSgNgfwxTRx0RLgIHZFttD00WMw" target="_blank">点此前往&gt;&gt;&gt;</a><br/>荣耀 MagicBook 16 轻薄笔记本，Ultra 5 336H+16G+1T，补贴价：5694元，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BASsJK1olXDYCVV9eAEgXAmgPHVslGVlaCgFtUQ5SQi0DBUVNGFJeSwUIFxlJX3EIGloWVQUCVVlaDksIWipURmtuHm93Mz0pcCtMWxpVAQ4XWQ5fUFgbBEcnAl8LGlkcXAEFUVZYOHsXBF9edVsUXAcDVV9VCU4nAl8IHVIQVAIFUlxbCUkWM2gIEmtHBFZcCwoCXg1HXDk4K2sWbQECXUpbegpFF2l6K2sVbQUyVF9dCUkSBmgIElgJXQcHUl5dFEsRCmoBH1wTXwIBV15tCkoWB2Y4K4WY7X91LiYLC0wQdywNYzlGKXHc2e5MejsVB2kPCmtmNGNnE18KfQBDAG9tGxhxFX1rNl44CDhrdWlqGj57X1xfKwlUUUNWWBptEwdGOnFdZFttD00WMw" target="_blank">点此前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://www.expdiy.com/img/news//2026/04/17/MAGICBOOK_14_2026.jpg" width="100%"/></p><p>MagicBook 14/16使用全金属机身设计，提供星辰灰/浮光金两种配色，重量分别为1.39kg和1.69kg；14寸的MagicBook 14配备一块2880×1800分辨率的IPS屏，支持120Hz刷新率和100% sRGB高色域；16英寸的MagicBook 16则为一块2560×1600分辨率的电竞屏幕，拥有180Hz刷新率，色域100% sRGB。两块屏幕均支持荣耀AI护眼技术，通过了德国莱茵TUV 硬件级低蓝光和无频闪认证。</p><p>新配置里的Ultra 5 336H拥有4个性能核+4个能效核+4个低功耗能效核，睿频4.8GHz，其独立的NPU可提供47 TOPS的AI算力；配备16GB LPDDR5X-8533内存，以及1TB PCIe 4.0硬盘，预留有1个硬盘拓展位。两款笔记本均配备了92Whr电池，配合HONOR Turbo X技术，可提供15.6小时的真实场景续航；同时还支持100W氮化镓快充和80W反向充电。机身左右配有双Type-C接口和双Type-A接口、以及1个HDMI接口，完全能满足日常办公所需。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>梁文杰</author>
+								<pubDate>Fri, 24 Jul 2026 09:35:18 +08</pubDate>
+							</item>
+							<item>
+								<title>HKC推出25Q300A显示器：24.5寸Fast-IPS，支持2K@300Hz，到手1299元</title>
+								<link>http://www.expreview.com/107215.html</link>
+								<description><![CDATA[<p>近日，HKC推出了25Q300A显示器，该产品主打电竞体验，配备24.5寸Fast-IPS面板，支持2K@300Hz，支持HDR 400，支持自研DIC动态模糊消除技术，配备HDMI 2.1接口以及多项可调支架。HKC&nbsp;25Q300A显示器已上架电商平台，目前购买最高可享受三期免息优惠，支持三年全国联保，日常价1399元，目前到手1299元。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/24/HKC-25Q300A.jpg" width="100%"/></p><p>HKC 25Q300A显示器，京东商城地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BATYJK1olXQAHVl9YCE0fBV8IGlgXXAcAVVxcD0MUAV9MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksWAG0JGlkUXwcFXF1fFxJSXzI4GTxQXkRWISM9QBN3QmgOZC1OJw9ZNFJROEonAG4KEloSWgMKUW5tCEwnQgEIGlsVWAYEVW5cOEsRCmoBH10dXw8EVlttD0seMz1RSwVKCVlUEg4CXnsnM2w4HFscSQBwFQxJDjknM284GGsVXAYDUF5YCkIVAXMIHlwUWwQeVFhUDUITBWcKGV8cVDYAVV9ZAXsn3eK4aVtdKnAEKwsfAU1pUGt7fYWY7RdwJF5ZD08GM21WHllNH1tUCDgef0lJQzENRQgTKgRcMgYVfQB-BgEKSRx0Pg9BVAVZSjt2Wh1_fwclWDYFUl9t" target="_blank">点击前往&gt;&gt;&gt;</a></p><p>三维尺寸方面，HKC 25Q300A显示器的具体数据为560mm（长）×493mm（宽）×234mm（高）。</p><p>屏幕方面，HKC 25Q300A显示器配备24.5英寸Fast-IPS面板，分辨率为2560×1440，最高支持300Hz刷新率，最快响应时间可达1ms，可视角度为178°/178°（水平/垂直），SDR最高亮度可达350尼特，HDR最高亮度可达400尼特，面板对比度可达1000：1，支持HDR 400。色彩方面，HKC 25Q300A显示器支持1670万色（8bit色深），支持95%DCI-P3色域覆盖以及140%sRGB色域容积，官方宣称其ΔE≤2。护眼方面，HKC 25Q300A显示器支持硬件低蓝光。</p><p>接口方面，HKC 25Q300A显示器配备了2×HDMI 2.1＋1×DP 1.4＋1×Audio out。</p><p>其他功能方面，HKC 25Q300A显示器支持HKC自研的DIC动态模糊消除技术，可有效减少画面拖影，提高瞄准精度，同时显示器内置顶置游戏模式，支持虚拟准星、暗场亮效、计时器以及FreeSync防撕裂功能。</p><p>支架方面，HKC 25Q300A显示器配备小尺寸底座，支持100mm高度调节、-5°~20°俯仰调节以及±90°垂直旋转，支持75×75mm VESA壁挂。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>冼廷斌</author>
+								<pubDate>Fri, 24 Jul 2026 09:51:58 +08</pubDate>
+							</item>
+							<item>
+								<title>英特尔发布2026年第二季度财报：创下十五年来最强劲营收增长，同比飙升25%</title>
+								<link>http://www.expreview.com/107214.html</link>
+								<description><![CDATA[<p>英特尔公布了2026年第二季度财报，收入同比大幅增长，继续有高于预期的表现，但是依然延续了上个季度及去年同期的亏损趋势。</p><p>英特尔首席执行官陈立武（Lip-Bu Tan）表示，AI正在推动前所未有的计算需求，随着英特尔持续推进战略实施，在CPU产品组合、ASIC、先进封装技术、以及庞大的晶圆代工网络领域把握长期增长机遇。得益于提升执行速度、强化责任机制、以及聚焦客户需求方面取得的积极成效，英特尔第二季度业绩创下了逾十五年来最强劲的营收增长。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2025/02/25/Intel_Xeon_6_AI_1.jpg" width="100%"/></p><p>英特尔在2026年第二季度的总收入为161亿美元，高于市场144亿美元的平均预期，相比2025年同期的129亿美元同比增长了25%；净亏损为110亿美元，而2025年同期的净亏损为29亿美元；毛利率为40.4%，高于2025年同期的27.5%，也高于上个季度的39.4%；每股摊薄亏损为2.16美元，2025年同期每股摊薄亏损为0.67美元，上个季度每股摊薄亏损为0.73美元。</p><p>在2026年第二季度中，以业务部门划分：客户端计算与物理AI事业部（CCPG）营收为89亿美元，同比增长13%；数据中心和人工智能事业部（DCAI）营收为63亿美元，同比增长59%；英特尔代工（Intel Foundry）营收为58亿美元，同比增长31%；所有其他业务（包括Altera和Mobileye等）的营收为7亿美元，同比下降33%。</p><p>可以看到英特尔正受益于大规模的AI基础设施建设，推动了其服务器CPU的销售，成为了业绩增长的最核心动力。英特尔称，已经开始与客户就服务器CPU签订长期供应协议，其中部分协议将锁定价格。这一做法之前在存储领域已经看到，现在变得更加普遍。一方面需求已经超出供应能力，另一方面越来越多供应商试图在AI热潮的背景下维持当前的高定价及市场主导地位。</p><p>英特尔预计2026年第三季度的收入在158到168亿美元之间，高于市场151亿美元的平均预期，毛利率为41%，每股摊薄收益为0.31美元。</p>]]></description>
+								<category>快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Fri, 24 Jul 2026 09:02:00 +08</pubDate>
+							</item>
+							<item>
+								<title>AMD发布锐龙AI嵌入式P100处理器，并推出基于它的Kria AI机器人平台</title>
+								<link>http://www.expreview.com/107213.html</link>
+								<description><![CDATA[<p>AMD其实已经在CES 2026上推出了基于Zen 5架构的锐龙AI嵌入式P100系列处理器，而在Advancing AI 
+2026大会上，他们又推出了锐龙AI嵌入式X100系列，这款新推出的处理器采用Strix Halo核心，拥有更多的处理器和规模更大的核显。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/Ryzen_AI_X100-1.jpg" width="100%"/></p><p style="text-align:left;">这款处理器专为满足物理人工智能领域的各项需求而设计，具备卓越的性能表现。它最多配备16个Zen 5 CPU核心、40组RDNA 
+3.5架构的iGPU计算单元以及50 TOPS算力的XDNA 
+2架构NPU，这些都全部整合在同一块嵌入式SoC上。虽然每个计算引擎都能实现出色的独立运行性能，但统一的内存架构则可加速实际应用中的任务处理，从而提升任务的确定性并降低延迟。锐龙AI嵌入式X100系列针对机器人技术、工业自动化、医疗与航空航天等领域以及其它智能实时嵌入式系统等物理人工智能应用进行了优化。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/Ryzen_AI_X100-2.jpg" width="100%"/></p><p style="text-align:left;">嵌入式处理器的工作环境比客户端和数据中心处理器恶劣得多，必须在严格的功耗、散热及空间限制下提供稳定性能，锐龙AI嵌入式X100系列处理器具备工业级的可靠性，可在-40至105℃的温度范围内正常运行，并且能够在恶劣环境下持续运转长达10 
+年，满足全天候运行的需求。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/Ryzen_AI_X100-3.jpg" width="100%"/></p><p style="text-align:left;">锐龙AI嵌入式X100与对手最新的Panther 
+Lake相比，CPU多线程性能最高领先2.1倍，图形处理性能最多领先1.7倍，而AI文本生成效率则领先3.5倍。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/Ryzen_AI_X100-4.jpg" width="100%"/></p><p style="text-align:left;">锐龙AI嵌入式X100系列处理器有X199、X188、X168三个型号，分别拥有16、12和8个CPU核心，除了X199拥有完整的40组CU外，另外两款都只有32组CU。该系列处理器的样品已于2026年6月开始供应，预计正式量产时间为2026年第四季度。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/Ryzen_AI_X100-5.jpg" width="100%"/></p><p style="text-align:left;">基于这款处理器，AMD还推出了AMD Kria 
+AI解决方案，它旨在帮助开发者和客户快速构建和部署下一代自主机器人和物理AI系统。该产品组合包括AMD Kria 
+AI系统模块和机器人载板，均搭载锐龙AI嵌入式X100系列处理器。同时还包含了AMD Kria AI机器人开发平台，这是首个支持异构CPU、GPU、NPU和FPGA计算能力的开放型一体化自主机器人解决方案。该平台将AMD的机器人技术能力从机械结构延伸至智能大脑，能够在满足严格功耗、散热及延迟要求的优化架构上，实现AI感知、推理以及自主决策与控制功能的一体化。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/Ryzen_AI_X100-6.jpg" width="100%"/></p><p style="text-align:left;">该平台每秒可执行超过8000次控制决策，实现确定性实时控制，同时还能在不到100毫秒的时间内完成视觉-语言-动作类的AI推理，支持包括PyTorch、ONNX、ROS 
+2以及MoveIt在内的行业标准框架，同时还能使用AMD 
+ROCm软件及AMD机器人软件套件。这套解决方案预计在今年第四季度通过ODM合作伙伴供货，而开发套件已经在向早期体验客户提供样品，同样定于第四季度上市。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/Ryzen_AI_X100-7.jpg" width="100%"/></p><p style="text-align:left;">同时AMD正式发布了AMD机器人合作伙伴网络，该网络汇集了众多经过验证的硬件与软件合作伙伴，旨在加速基于AMD平台的机器人和物理人工智能系统的开发和部署。它能帮助客户简化开发流程，在部署前验证系统，降低集成复杂性，并加速从原型到生产的进程，而无需依赖专有运行时或封闭的开发环境。ODM厂商和AI模型合作伙伴提供参考平台和系统，以实现快速集成；中间件、传感器、机器人技术和集成合作伙伴提供优化的机器人软件和流程；仿真和验证合作伙伴支持数字孪生开发、测试和AI模型训练。</p><p style="text-align: left;">该计划涵盖AMD计算平台，从搭载AMD锐龙AI嵌入式处理器和AMD Versal自适应SoC的嵌入式边缘系统，到搭载AMD 
+EPYC处理器和AMD Instinct 
+GPU的数据中心基础设施。能为客户提供开放、经过验证且可直接用于生产的机器人解决方案，涵盖感知、规划、控制、仿真、训练和部署等各个环节。AMD机器人合作伙伴网络现已开放注册，符合条件的机器人公司可以免费注册加入。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>潘靖江</author>
+								<pubDate>Fri, 24 Jul 2026 10:46:39 +08</pubDate>
+							</item>
+							<item>
+								<title>Epic平台免费领取《预言奇谈》，至7月30日23点截止</title>
+								<link>http://www.expreview.com/107212.html</link>
+								<description><![CDATA[<p>Epic Games Store本周送出的游戏是《预言奇谈（Foretales）》，领取的截止时间是2026年7月30日23点，喜欢的玩家不要错过。</p><p>《预言奇谈》，游戏领取地址：<a href="https://store.epicgames.com/p/foretales-d6c5bd" target="_blank">点击前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Epic_20260723Free_T.jpg" width="100%"/></p><p>《预言奇谈》是由Alkemi开发、Dear Villagers发行的一款奇幻风格的叙事卡牌游戏，于2022年9月15日首度发售。在游戏里，你将以独特的视角展开冒险，通过多种玩法风格和故事线拯救世界，避免世界末日的来临……不同的选择都将导向不同的结局，如果选择不当，也可能带来毁灭。准备好经历这伟大的冒险了吗？</p><p>凌乱的世界中，一个可怕的诅咒使其陷入了危机，世界的末日即将来临；唯一能阻止它的人，是一个名叫沃尔佩恩的窃贼。创世灵蛛创建了诸多世界，但却在世界变得凌乱不已后消失的无影无踪，将用于创造天地的神器托付给了她的孩子们——蚊灵。然而，蚊灵们是否会妥当地利用这创造天地万物和稳定世界的权力呢？创造天地的神器具有创造和摧毁诸多大小世界的力量。如果不查明蚊灵和邪教团体的真正目的，世界将永远沉沦在混乱的大漩涡之中！</p><p>在《预言奇谈》中，世界因为一个邪恶的预言而注定毁灭。传说中的末日就快来临，时间所剩无几，要想找到拯救世界的方法，你需要在众多情形中为自己和同伴做出最佳抉择，不同的抉择都将导向不同的结果！</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 23:06:00 +08</pubDate>
+							</item>
+							<item>
+								<title>《最终幻想 X/X-2 HD重制版》今天登陆NS2：数字版先行，实体版8月27日到来</title>
+								<link>http://www.expreview.com/107211.html</link>
+								<description><![CDATA[<p>史克威尔艾尼克斯（Square Enix）宣布，《最终幻想 X》与《最终幻想 X-2》的HD重制版今天登陆Nintendo Switch 2平台，首发的是数字版，eShop港服售价364港币。实体版则要等到8月27日，将附带一个特别的封套，上面印有“FFX 25周年标志”，属于只有在纪念年入手才有的限量收藏品。今年恰逢《最终幻想 X（FINAL FANTASY X）》迎来25周年，属于纪念活动的一部分。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/FF10_NS2_FS.jpg" width="100%"/></p><p>这次的Nintendo Switch2版本包含了《最终幻想 X》与《最终幻想 X-2》的本体与追加内容，采用了全高清画面重制，同时重新编曲配乐，新增了高速模式与取消随机遇敌等便利功能，并针对新平台做了优化，提升了游戏体验。</p><p>《最终幻想 X》该作于2001年7月19日发售，是首部在PlayStation 2游戏主机上发行的《最终幻想》系列作品，也是SQUARE和ENIX合并前，最后一部SQUARE单独制作的《最终幻想》作品。作为索尼钦点的御用游戏作品，该作完全确立了PlayStation 2在当时游戏主机大战中的王者位置。</p><p>一直以来，《最终幻想》系列每一代都是单一作品结束，并没有续作，但是该作上推出了《最终幻想 X-2（FINAL FANTASY X-2）》延续了之前的剧情，并于2003年3月13日发售，这个时期PlayStation 2游戏主机正处于最巅峰的时期。</p><p>今年早些时候，史克威尔艾尼克斯已经上线了《最终幻想 X》25周年纪念特设<a href="https://jp.finalfantasy.com/ffx25th" target="_blank">页面</a>。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 18:10:00 +08</pubDate>
+							</item>
+							<item>
+								<title>《孟买大厨 : 垃圾食品模拟器》公布预告：风格独特的烹饪模拟游戏，将登陆PC</title>
+								<link>http://www.expreview.com/107210.html</link>
+								<description><![CDATA[<p>《孟买大厨：垃圾食品模拟器（Mumbai Chef - Junk Food Simulator）》是一款风格独特的烹饪模拟游戏，主角是一位印度街头小吃摊主。烹饪爆红街头美食，帅气地切西葫芦，用石头砸碎冰块，用荒诞的方式煎蛋。无需赶时间——尽情享受畅快的烹饪、古怪的小游戏和形形色色的顾客。</p><p>游戏将登陆PC平台，具体发售日期待定，支持简体中文界面和字幕。</p><div class="debug"><p style="text-align:center;"><iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116966773753151&bvid=BV1qsgm6oE99&cid=40210337348&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="620px"> </iframe>
+ &nbsp; &nbsp;</p><script style="display:none">if (IsMobile()) {
+                jQuery("iframe").attr("width", "100%");
+                jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16);
+            } else jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16 + 120);</script></div><p>手机通道：<a href="https://www.bilibili.com/video/BV1qsgm6oE99/" target="_blank" textvalue="哔哩哔哩">哔哩哔哩</a></p><p>在孟买的小巷深处支起你的摊位，把平价咖喱做得像五星级餐厅的招牌菜一样讲究。挥舞一把用了很久的旧刀，拿出主厨的自信，为每一位都期待着专属小表演的常客献上便宜又过瘾的街头小吃。</p><p>在下一位顾客上门前订好食材，通过一连串夸张的小游戏烹饪街头美食：用石头砸碎冰块，加一点苏打水煎蛋，或者用一把不太锋利的刀切西葫芦。在菜品上桌前，再来一轮辛辣配料，瞬间改变风味。</p><p>顾客一个接一个排队，你有充足的时间专心表演刀工。无论是秀一手华丽的收尾，还是干脆利落地出餐——反正没人在给你计时！既要接待普通顾客，也要招呼形形色色的常客，每个人都有自己的口味和光顾的理由。摊位经营得越久，他们的故事就越会在点单间隙慢慢展开。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Mumbai_Chef_Junk_Food_Simulator_GB.jpg" width="100%"/></p><p>目前《孟买大厨：垃圾食品模拟器》页面已经在<a href="https://store.steampowered.com/app/4924590/Mumbai_Chef__Junk_Food_Simulator/" target="_blank">Steam</a>上线，可添加至愿望单。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 18:00:00 +08</pubDate>
+							</item>
+							<item>
+								<title>《幻兽帕鲁》销量已超3000万份：Steam占比近三分二，中美玩家是主力</title>
+								<link>http://www.expreview.com/107209.html</link>
+								<description><![CDATA[<p>《幻兽帕鲁（Palworld）》是一款支持多人游戏模式的全新开放世界生存制作游戏，于2024年1月19日推出抢先体验版。本月初，游戏1.0正式版已经上线，登陆PlayStation 5、XBOX Series X|S、MacOS、以及PC平台，支持简体中文界面和字幕，相互之间可以进行跨平台游玩。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/10/Palworld_v1.jpg" width="100%"/></p><p>据EuroGamer<a href="https://www.eurogamer.net/palworld-30-million-sales" target="_blank">报道</a>，随着1.0正式版都上线，《幻兽帕鲁》在过去两周里创下了开启抢先体验以来最高的峰值同时在线玩家数，SteamDB显示达到了961,867人。由于游戏热度的攀升，也推动了游戏的销售。</p><p>最新的一份报告显示，截至2026年7月21日，《幻兽帕鲁》的累计销量已达到约3050万份，仅游戏本体带来的收入就有约7亿美元。另外通过Xbox Game Pass和PC Game Pass订阅服务，为游戏额外带来了约1000万名玩家。不过Steam依然是《幻兽帕鲁》的主战场，占据了约64.9%的玩家，Xbox和PlayStation平台的玩家占比分别为31.1%和4%左右。如果从区域来看，中美是《幻兽帕鲁》最主要的市场，占比都在27%左右，也就是说两个地区加起来占比超过了一半。</p><p>由于1.0正式版的推出，除了老玩家纷纷回归，Pocketpair还开启了七折促销活动，新增了约150万份销量，又带来了约2500万美元收入。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 17:32:00 +08</pubDate>
+							</item>
+							<item>
+								<title>飞利浦Evnia 27M2N5500X上市：圆偏光护眼显示器，2K@425Hz，售价1899元</title>
+								<link>http://www.expreview.com/107207.html</link>
+								<description><![CDATA[<p>近日，飞利浦推出了其Evnia 5000系列游戏显示器新品：27M2N5500X。这是一款支持硬件级圆偏光护眼技术的显示器，由飞利浦与京东方（BOE）联合定制，通过模拟太阳光的螺旋扩散原理，显著缓解视疲劳，明显减轻干眼、眼红症状降低散光诱发概率，呵护眼部健康。目前新产品已登陆电商平台，并开始销售了，显示价格为1899元。另外还送50元京东E卡和99小时雷神加速器，具体可咨询在线客服工作人员。</p><p>27M2N5500X 显示器，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BATYJK1olXwMDXV9fDkoQC18IGlgXXAUGV1ZdD0sRBV9MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksWAG0JGF8WVQYFVFhbFxJSXzI4fA4XJUAGVQE9Ch9nfRh9SQRXWHhRJFJROEonAG4KEloSWgMKUW5tCEwnQgEIHlkXWAAKXG5cOEsRCmoOE1ITXwAHV1htD0seMz1RSwVKCVlUEg4CXnsnM2w4HFscSQBwFQxJDjknM284GGsVXAYDUF1UDUMTB3MIGl0TWwceVFhUDU0fCm8PGF4TVDYAVV9ZAXsn3eK4fSt9AXJyCQ5cbk5pShhMQIWY7RdwJF5ZCU0GM2hBciEcPwJyEF8DWzFpc25oYQdUDnx8JFcmcQhnagEKRRpgHkNnL1cEagpifDRgQCslWDYFUl9t" target="_blank">点此前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Evnia_27M2N5500X_T.jpg" width="100%"/></p><p>27M2N5500X搭载了27英寸Fast IPS面板，10bit色深，可视角度为178度（水平和垂直），显示比例为16:9，分辨率为QHD（2560 x 1440），刷新率可达425Hz，响应时间（GtG）为1ms，开启Smart MBR低至0.3ms，典型亮度为350尼特，DCI-P3色域为97%，sRGB色域为100%，色准Delta E＜2，得到了DisplayHDR 400认证。</p><p>该款显示器支持舒视蓝4.0，圆偏光技术+软硬件双重滤蓝光+DC调光及不闪屏技术，为用户提供了更为健康的用眼护眼体验。提供了多项实用辅助功能，包括AI实时暗部增强、AI智能辅助准星、Smart Sniper狙击窗等。机身配备双自定义快捷按键，可将常用显示参数自由组合保存，实现一键快速调用专属配置。</p><p>接口配置方面，27M2N5500X配备了两个HDMI 2.1接口和一个DisplayPort 1.4接口，并带有3.5mm音频插孔。配置了符合人体工程学的支架，支持升降（0mm至130mm）、俯仰（-5°至20°）、侧转（-30°至30°）和垂直（-90°至90°）调节，以灵活适配多场景使用，另外还支持100 x 100 mm规格的VESA壁挂，便于玩家使用悬臂支架。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 17:01:00 +08</pubDate>
+							</item>
+							<item>
+								<title>阿斯加特推出V7 PCIe 4.0 SSD：速度达7GB/s，可适配PS5，售价999元起</title>
+								<link>http://www.expreview.com/107205.html</link>
+								<description><![CDATA[<p>阿斯加特（Asgard）宣布，推出V7 PCIe 4.0 SSD，首批提供了1TB和2TB两种容量。官方称，除了支持主流台式机和笔记本电脑外，新款SSD还能适配用于PlayStation 5游戏主机，轻松满足升级扩容需求。目前新产品已登陆电商平台，并开始销售了，厂商提供五年质保，以换代修，售后无忧。</p><p>V7 PCIe 4.0 SSD 1TB，价格999元，京东地址：<a href="https://u.jd.com/91jaibr" target="_blank">点此前往&gt;&gt;&gt;</a><br/>V7 PCIe 4.0 SSD 2TB，价格1999元，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BASoJK1olXDYCVV9eAEwSB2YLEl0lGVlaCgFtUQ5SQi0DBUVNGFJeSwUIFxlJX3EIGloWVQEHUFdeAU0IWipURmteKF1fUho-fS5edW9ebVx8BHBDKx8LBEcnAl8LGlkcXAEFUVZYOHsXBF9edVsUXAcDUlZUAUknAl8IHVIQWw4EVFxVDE4UM2gIEmtHBFZcCwoCXg1HXDk4K2sWbQECXUpbegpFF2l6K2sVbQUyVF9dAEgXAGoLGVoJXQMEU1lcFEsRCmoOE10VXwEFVVltCkoWB2Y4K4WY7WJ3UQAtDxRuXBpbEglSDnvc2e5MeiAXB2oZKwVcNFJqCAVZfxAWATt6HAhwBENLVgovDxZIBwpYcjUXOG5BLhghaTNTQjtgUl1JB1MyUW5aDkon" target="_blank">点此前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Asgard_V7_PCIe4_SSD.jpg" width="100%"/></p><p>V7系列SSD采用了PCIe 4.0 x4接口，外形为M.2 2280规格，支持NVMe 1.4规范，使用了严格经过测试的NAND闪存颗粒，最大顺序读取速度为7000 MB/s，最大顺序写入速度为6500 MB/s，提供了1TB和2TB两种容量，对应的TBW分别为640TB和1280TB，MTBF为150万小时。其配备了阿斯加特自主设计的铜箔散热片，散热面积约为3.8cm<sup>2</sup>，精选散热工艺，导热系数39W/(m·K)，可有效降低工作温度达7℃，为SSD持续高性能输出提供稳定支持。</p><p>阿斯加特品牌成立于2015年，棣属于国产模组厂嘉合劲威集团旗下，为电脑玩家提供量身定制的存储产品和解决方案。除了固态硬盘外，玩家还能经常在市场上看到阿斯加特品牌的内存产品。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 16:48:00 +08</pubDate>
+							</item>
+							<item>
+								<title>AMD发布EPYC 9006系列处理器：全球首款2nm制程服务器CPU，最高256核</title>
+								<link>http://www.expreview.com/107204.html</link>
+								<description><![CDATA[<p>AMD在旧金山的Advancing AI 2026大会上正式发布了第6代EPYC服务器处理器EPYC 
+9006系列。该系列处理器代号为“Venice”，是AMD首次将服务器CPU按智能体AI的工作负载做了针对性划分的产物。AMD表示，随着新世代AI生态重塑企业基础设施的设计和部署方式，EPYC处理器将与客户共同进化。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_EPYC_IMG/11.jpg" width="100%"/></p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_EPYC_IMG/10.jpg" width="100%"/></p><p>EPYC 9006系列处理器基于Zen 6与Zen 6c架构打造，其中Zen 6架构产品最高为96核心/192线程，而Zen 
+6c则可以达到256核心/512线程，目前计划是有4款不同的产品，分别对应AI生态中不同的定位，值得注意的是这4款EPYC 
+9006系列处理器并非一个型号对应一个规格，而是可以根据实际需求的不同选择不同的配置方案。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_EPYC_IMG/13.jpg" width="100%"/></p><p>EPYC 9006 SP7是整个系列的旗舰，专为<span lang="zh-cn">高密度代理沙盒执行而打造</span>，可提供最高256核/512线程的规格，当中的高频版则可以提供96核/192线程以及最高5.0GHz频率的规格，内存带宽最高可达1.6TB/s，原生支持64Gbps速率的PCIe 
+6.0通道，单路最多128条通道，功耗方面可达600W。目前该系列处理器已经在量产阶段，计划今年Q4出货。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_EPYC_IMG/14.jpg" width="100%"/></p><p style="text-align:left;">EPYC 9006 
+SP8走的是均衡路线，讲究高效与恰到好处，适合代理工作负载、企业系统、边缘站点、较小的集群和功耗受限的机架，核心数从8核到128核可选，PCIe 
+6.0通道同样给到128条，支持1P和2P配置，同样有高频和NEBS友好型号，8通道内存设计，预计在2027年上半年开始出货。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_EPYC_IMG/15.jpg" width="100%"/></p><p style="text-align:left;">EPYC 9006X SP7专为HPC、技术计算和数据密集型工作负载而设计，最高为96核心，频率达到5.15GHz的水平，搭载了AMD 
+3D 
+V-Cache，L3缓存高达1152MB，配上16通道内存和12800MT/s的大带宽，适合针对高频率、大缓存和高内存带宽的模拟、建模、分析、检索和其他内存敏感型工作负载，预计在2027年下半年出货。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_EPYC_IMG/16.jpg" width="100%"/></p><p style="text-align:left;">EPYC 9006 LP是AI主机节点专用型号，最高72核心，频率也拉到了5.0GHz，内存换成了LPDDR5X类型，CPU-GPU之间的互联采用增强型xGMI通道，最高可实现112Gbps速率，专门优化CPU到GPU的数据通路，设计目标是在密集机架规模AI系统中为GPU提供足够的链接贷款，预计在2027年下半年出货。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_EPYC_IMG/17.jpg" width="100%"/></p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_EPYC_IMG/23.jpg" width="100%"/></p><p style="text-align:left;">AMD还给到了一组非常直观的数据，从2017年第一代EPYC处理器的“Naples”到今天的“Venice”，处理器的数据吞吐能力提升到18倍。其中“Venice”与前代的“Turin”相比，AI运算的综合性能前者相当于后者的1.8倍，同时还带来了16通道内存、PCIe 
+6.0等更强的扩展能力。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_EPYC_IMG/48.jpg" width="100%"/></p><p style="text-align: left;">另外根据<a target="_blank" href="https://www.expreview.com/105963.html">AMD此前公布的信息</a>显示，EPYC 
+9006系列服务器处理器将采用2nm工艺制造，因此结合前述信息，EPYC 
+9006系列处理器的身上将具备两个重要标签，一个是首款量产的2nm制程高性能服务器处理器，同时也是AMD首款可根据应用生态需求，按照使用场景选择型号与规格的服务器处理器，对于AMD来说这显然是一款里程碑级别的产品。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>潘靖江</author>
+								<pubDate>Fri, 24 Jul 2026 10:45:00 +08</pubDate>
+							</item>
+							<item>
+								<title>鑫谷带来无界巡天400T机箱：钛光金配色，三面MESH面板，售价279元</title>
+								<link>http://www.expreview.com/107203.html</link>
+								<description><![CDATA[<p>近日，鑫谷推出了无界巡天400T机箱。这是一款M-ATX产品，优化了散热表现，并具有良好的兼容性，拥有便利安装设计，提升装机体验。目前新产品已登陆电商平台，并开始销售了，显示价格为279元。</p><p>无界巡天400T机箱（钛光金配色），京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BATUJK1olWAYFVVxZC0gfB18IGloWVQEBU1ZZDE0nRzBQRQQlBENHFRxWFlVPRjtUBABAQlRcCEBdCUoUC2gLHFMRWQAdDRsBVXttYAh3TSd1PmVCIiJYDCMRVTV8eiV1UQoyVW5eCUkeAmgPHlMQbTYCU24PZkMfC2sAG18cVA4LZF9tCE0eBmkAH1MTWQYEUm5aCEInUTZYRQRBAlBEBAELOHsnAF8PG1IBW3RDBkpbensnA18LK1sUXQcGV1hZC04XH28LHFMSWRoCUldYDkMTC2gLGVgdbQQDVVpUOHvJjt9haC1JPnJxBhs-TwhTV2pKxdalTHp1XVpZDFonS2YNf1xUAwNVEgM8bDFLSm17ZBB0OXxeNV09UwsSbW1AXxJzJgZJMFc9bDdlRm9WX2sQbQEEVW4" target="_blank">点此前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Segotep_XT400T_1.jpg" width="100%"/></p><p>无界巡天400T采用了巡天超级MESH气流系统，在顶部、侧面、正面都有大面积高速冲孔网格，可过滤灰尘毛发，导入干净新风，加速散热。选用专属钛光金配色，全磨砂表面处理，典雅与性能并存。面板采用无螺丝快拆模组设计，便利装机，也易于清洁。</p><p>无界巡天400T的整体尺寸为380 x 200 x 335 mm，可以支持Mini-ITX和Micro-ATX规格的主板。机箱前置I/O配置上，拥有两个USB 3.0接口及音频和麦克风插孔。其提供了1个3.5英寸硬盘位（可改为2.5英寸）和1个2.5英寸硬盘位；有4个PCI扩展槽；CPU散热器限高165mm；显卡限长370mm；支持ATX电源，限长140mm。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Segotep_XT400T_2.jpg" width="100%"/></p><p>该款机箱提供了最多5个散热风扇位置，打造整机高效散热，具体包括：顶部位置可安装2个120mm风扇，支持120/240水冷；底部位置可安装2个120mm风扇；后置位置可安装1个120mm风扇。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 16:20:00 +08</pubDate>
+							</item>
+							<item>
+								<title>追风者XT V5-LCD机箱开售：内置7英寸LCD显示屏，售价499元</title>
+								<link>http://www.expreview.com/107202.html</link>
+								<description><![CDATA[<p>追风者（Phanteks）刚刚宣布扩展XT系列产品线，推出XT M5、XT V5和XT V5-LCD紧凑型ATX机箱。其中XT V5-LCD内置7英寸LCD显示屏，可通过Windows版NEXLINQ控制软件自定义设置，为用户提供了额外的个性化选择。目前新产品已登陆电商平台，并开始销售了。另外有限时晒单送好礼活动，送三个120反向积木风扇，具体可咨询在线客服工作人员。</p><p>XT V5-LCD（黑色）机箱，价格499元，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BATYJK1olXwICUFxVCUMfAV8IGlgWVAECUV5cAUsSAF9MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksWAGwBHFsQXQcLVFteFxJSXzI4YCAULVZ_FV04CDlCSyh-GiAWOBxZElJROEonAG4KEloSWgMKUW5tCEwnQgEIHFIRXw4GUG5cOEsRCmoOE14UWQYFU1ptD0seMz1RSwVKCVlUEg4CXnsnM2w4HFscSQBwFQxJDjknM284GGsVXAYDUF9VCU8XBHMIH1sTXg4eVFhUDU0fAWgIGl4dXTYAVV9ZAXsn3eK4c1NmW2J3ED1YUTBJa2p9QoWY7Rd-I1xfAEoGMy9JHh5dNA96F1YWYA5Kfmp-cjhINUNfKVcfYz1BBgEKYCF3FHBBMxU4YRQURTpYZyAlWDYFUl9t" target="_blank">点此前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Phanteks_XT_V5_LCD_T.jpg" width="100%"/></p><p>新产品有着简洁的外观设计，前+侧双玻璃面板可通透展示硬件，大面积散热网孔设计，结合风道优化，带来了良好的散热。可视化大屏的分辨率为1024 x 600，刷新率为60Hz，带有64MB存储，可显示硬件状态、视频播放、自定义主题，个性拉满。其整体尺寸为452 x 235 x 430 mm，可支持Mini-ITX、Micro-ATX和ATX规格的主板。</p><p>机箱提供了最多2个SSD+1个HDD的存储组合安装位置；有7个PCI扩展槽；CPU散热器限高175mm；显卡限长425mm，带有防下垂支架，可以选购显卡竖装支架，实现显卡90°竖装；支持ATX电源，限长155mm。前置I/O配置上，拥有1个USB Type-C（20Gbps）、1个USB 3.0接口、音频和麦克风插孔，以及开关键。</p><p>散热风扇位置方面，最多可安装7个120mm风扇，具体包括：顶部位置可安装3个120mm风扇，可支持120/240/360水冷（长410mm，宽122mm）；后置位置可安装1个120mm风扇，可支持120水冷；底部位置可安装3个120mm风扇，可支持120/240/360水冷（需要将底部支架拆掉）。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 15:54:00 +08</pubDate>
+							</item>
+							<item>
+								<title>美国数据中心用电量激增，预计2035年将消耗全国约20%电力</title>
+								<link>http://www.expreview.com/107201.html</link>
+								<description><![CDATA[<p>过去几年里，美国正在大规模建设人工智能（AI）基础设施，Alphabet、亚马逊、Meta和微软预计在2026年投入超过6500亿美元。不过这些数据中心项目遇到了很大的困难，很重要一个原因就是电力供应问题。之前有<a href="https://www.expreview.com/105096.html" target="_blank">报道</a>称，美国今年一半数据中心建设项目被推迟或取消。即便如此，经过多年的疯狂建设，美国数据中心的用电量正在飞速上升。</p><p style="text-align:center;"><img src="https://img.expreview.com/news/2022/07/08/MS_Ireland_Datacenter.jpg" width="100%"/></p><p>据TomsHardware<a href="https://www.tomshardware.com/tech-industry/data-centers/bnef-nearly-doubles-its-us-data-center-power-forecast-to-194gw" target="_blank">报道</a>，预计到2035年，美国数据中心的用电量将提高至194吉瓦，相比于去年12月的预测值大幅上调了83%。按照现在的增长速度，2035年美国数据中心的用电量将是现在的四倍，将消耗全国约20%电力，远高于现在的5.9%。</p><p>2035年近200吉瓦容量中，大概一半专门留给AI模型训练与推理。以电力需求计算，2033年全球有64%的AI芯片部署在美国本土。另外在2030年，美国数据中心的用电量占比大概在12%。从其他一系列数字可以看出，美国AI算力的扩张速度确实跑在了电网规划前面。</p><p>虽然最终的实际情况可能与模型算出的增长曲线有出入，但是不可否认的是，全球已经走在了大规模数据中心建设的道路上。如果继续保持高速发展的节奏，预计到2033年，全球数据中心将带来1935太瓦时的新增用电需求，几乎相当于印度全年的用电量。</p>]]></description>
+								<category>快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 15:22:00 +08</pubDate>
+							</item>
+							<item>
+								<title>SK海力士否认收购英特尔俄亥俄州晶圆厂，双方仍可能建立新的合作关系</title>
+								<link>http://www.expreview.com/107200.html</link>
+								<description><![CDATA[<p>英特尔在2022年1月宣布投资超过200亿美元，在美国俄亥俄州兴建两座新的晶圆厂，原计划在2025年投产，不过时间不断延后。去年英特尔承认放缓了俄亥俄州新建晶圆厂项目的建设进度，可能要等到2030年至2031年之间才开始运营，不过还传出英特尔正在寻求潜在的投资或制造合作伙伴关系，其中包括了SK海力士。最近有新传言称，SK海力士有意收购英特尔在俄亥俄州的晶圆厂，以生产存储芯片。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2022/01/22/Intel_ohio_1.jpg" width="100%"/></p><p>据TrendForce<a href="https://www.trendforce.com/news/2026/07/23/news-sk-hynix-reportedly-eyed-as-potential-partner-to-operate-intels-ohio-fab-after-denying-acquisition-plans/" target="_blank">报道</a>，SK海力士否认了相关的报道，表示没有寻求或决定收购英特尔位于俄亥俄州的晶圆厂，不过出于业务的需要，会一直在持续评估各种投资和并购机会。有消息人士指出，SK海力士的兴趣是初步的，双方尚未进行正式的谈判，而英特尔可能只是为了拖延项目。</p><p>另外有消息称，英特尔与SK海力士之间有潜在的合作机会，可能会探索类似于SK海力士与台积电在HBM及先进封装领域那样的合作。SK海力士正在测试英特尔的EMIB封装，评估其结合内存与系统半导体的潜力。</p><p>英特尔和SK海力士在存储领域并非第一次合作，近年来最出名的莫过于英特尔在2020年10月19日，以90亿美元的价格向SK海力士出售了其NAND闪存以及存储业务。这笔交易在去年初宣告完成，SK海力士将这部分业务转移到新成立的子公司Solidigm运营。</p>]]></description>
+								<category>快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 14:43:00 +08</pubDate>
+							</item>
+							<item>
+								<title>面向AI工厂时代的跃升，AMD发布Instinct MI400系列GPU与CDNA 5架构</title>
+								<link>http://www.expreview.com/107199.html</link>
+								<description><![CDATA[<p>在Advancing AI 2026大会上，AMD正式发布了Instinct MI400系列GPU，这是其数据中心GPU的最新一代产品，目前有面向前沿AI和AI工厂部署、适合大规模AI训练与推理的MI455X，以及面向高精度、高性能科学计算的MI430X。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_MI455X_IMG/13.jpg" width="100%"/></p><p>AMD Instinct MI455X是此次大会上的主角之一，其基于AMD第五代计算专用GPU微架构CDNA 
+5打造，在计算性能、内存系统、可扩展性、能效和安全等多个方面相较上代产品有明显提升。据AMD提供的信息显示，在MI455X中，其XCD计算核心将采用2nm工艺制造，FCD和IOD核心则采用3nm工艺制造，晶体管总数达到3200亿个，通过CoWoS-L封装技术将8个XCD、2个IOD和2个FCD与12组HBM4显存集成于同一封装内。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_MI455X_IMG/30.png" width="100%"/></p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_MI455X_IMG/28.png" width="100%"/></p><p>MI455X相比MI355X虽然延续了8个XCD的设计，但XCD中的计算单元（CU）被替换为全新的工作组处理器（WGP），共计配置有256组WGP，Wave64执行架构也被Wave32执行架构所取代，进一步降低了指令延迟、分支分歧惩罚和寄存器压力，更适合延迟敏感型计算任务。</p><p style="text-align: center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_MI455X_IMG/14.jpg" width="100%"/></p><p style="text-align: left;">在峰值算力方面，MI455X在MXFP4和MXFP8数据格式下达到40 PFLOPS和20 PFLOPS的水平，相比MI355X均实现了4倍提升，同时新增原生BF16向量数据类型支持、MXFP4分数缩放功能以及tanh等超越函数指令，且现有超越函数指令的吞吐量亦实现了翻倍，显著加速了激活函数和softmax等关键机器学习运算。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_MI455X_IMG/29.png" width="100%"/></p><p style="text-align:left;">显存方面，MI455X将从MI355X的8组HBM3E（288GB，8TB/s带宽）升级为12组HBM4（432GB，23.3TB/s带宽），HBM4现显存将每堆栈接口位宽从1024-bit翻倍至2048-bit，内存容量提升1.5倍，峰值带宽提升约2.9倍。同时L2缓存将从上一代的32MB大幅扩展至192MB（6倍增长），实现54TB/s的总缓存带宽，每个WGP的本地数据存储（LDS）容量翻倍至384KB，全GPU合计96MB。此外，MI455X还将引入了多播内存操作，即单次内存读取可同时广播至多个WGP单元，有效减少冗余内存流量；Tensor 
+Data Mover新增LDS与DRAM之间的直接传输能力，无需经过中间寄存器暂存，进一步降低数据搬运开销。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/AAI2026/AAI2026_MI455X_IMG/15.jpg" width="100%"/></p><p>基于CDNA 5架构打造的MI445X在可扩展性上的提升尤为明显，MI355X仅提供有7条Infinity 
+Fabric链路，总Scale-Up带宽为1.07TB/s，通常是以8个GPU节点为单位组建集群；而MI455X则配备了36条UALoE（Ultra 
+Accelerator Link over Ethernet）链路，每条链路提供400Gb/s双向带宽，单GPU 
+Scale-Up带宽达到3.6TB/s，是MI355X的3.4倍。因此借助UALoE架构，单一共享内存域中可连接72个MI455X，同时AMD还引入了分离式DMA架构，前端单元自动将传输请求拆分并分配至UALoE接口的后端单元，通信库无需感知底层拓扑。</p><p>MI455X的Scale-Out带宽同样大幅提升。MI355X仅配备一个400Gb/s的Scale-Out NIC，而MI455X支持最多三块AMD 
+Pensando Vulcano 800 
+AI-NIC，提供600GB/s双向Scale-Out带宽，相当于是MI355X的6倍。此外MI455X还具备16通道Infinity 
+Fabric总线，与第六代EPYC 9006 SP7处理器（Zen 6架构，最高256核）连接是可提供256GB/s双向带宽，CPU可获取对GPU内存的硬件一致性缓存访问。</p><p>综上所述，CDNA 5架构与Instinct MI455X可以说是AMD在AI GPU领域的一次重大升级，从4倍算力提升到近3倍内存带宽增长，从8 
+GPU节点到72 GPU共享内存域，配合开放标准的Helios方案和ROCm软件栈，AMD正在凭借自身实力证明，在不依赖封闭生态的前提下同样可构建支撑前沿AI的基础设施。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>潘靖江</author>
+								<pubDate>Fri, 24 Jul 2026 10:46:00 +08</pubDate>
+							</item>
+							<item>
+								<title>RTX Spark PC将于今秋发售，首批产品或由华硕与微星供应</title>
+								<link>http://www.expreview.com/107198.html</link>
+								<description><![CDATA[<p>在COMPUTEX 2026上，英伟达正式<a href="https://www.expreview.com/106166.html" target="_blank">发布</a>了RTX Spark，宣告进军消费级PC处理器市场。新产品定位为全新类别的处理器，专为打造个人AI的Windows 11 PC而生。在前一段时间的BW2026上，英伟达首次在中国大陆地区公开<a href="https://www.expreview.com/106959.html" target="_blank">展示</a>了搭载RTX Spark的笔记本电脑。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/06/01/NV_RTX_Spark_3.jpg" width="100%"/></p><p>据Wccftech<a href="https://wccftech.com/nvidia-rtx-spark-pcs-coming-this-fall-first-systems-by-asus-msi-followed-by-acer-gigabyte/" target="_blank">报道</a>，英伟达已经敲定首批RTX Spark PC，目标是在今年秋季上市。首批产品将由华硕与微星提供，随后是技嘉和宏碁。像微软、联想、惠普和戴尔电脑等这样的厂商都会有自己打造的解决方案，预计会晚一点到来。</p><p>英伟达根据CPU核心数量和GPU的SM规模不同，提供了四个型号，N1X和N1各两款。按照之前的<a href="https://www.expreview.com/106274.html" target="_blank">说法</a>，即便是采用相对低端的N1型号，对应的笔记本电脑起售价也可能达到1799美元，如果换成高端的N1X型号，预计不会低于2899美元。英伟达还提供了一份公版笔记本电脑设计规范，要求所有OEM厂商都要遵循该规范推出搭载RTX Spark的产品，上面集合了目前高端笔记本电脑的特性。</p><p>目前英伟达已经向开发者交付了首批搭载RTX Spark的终端设备，也<a href="https://www.expreview.com/107172.html" target="_blank">发布</a>了针对RTX Spark的Windows 11驱动程序，以便在首批产品上市时，可以提供原生Windows on Arm支持。</p>]]></description>
+								<category>移动数码</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 14:26:00 +08</pubDate>
+							</item>
+							<item>
+								<title>自今年Valve涨价后，Steam Deck销量暴跌82%</title>
+								<link>http://www.expreview.com/107197.html</link>
+								<description><![CDATA[<p>Steam Deck是Valve 近年来最成功的产品之一，自发售以来一直位列Steam最畅销产品榜单之列，大多数时候都能排进前五名，而且位置比较稳定。不过进入2026年后，由于持续的DRAM和NAND闪存短缺影响全球供应链，情况发生了变化。Steam Deck一度出现断货，到了逐步恢复供货后，大家等来的是Steam Deck OLED的涨价。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2023/11/10/sd1.jpg" width="100%"/></p><p>据Wccftech<a href="https://wccftech.com/steam-deck-sales-reportedly-crater-82-after-valves-price-hike-slipping-from-5th-to-14th-on-steam/" target="_blank">报道</a>，从Steam最畅销产品榜单的排位变化，结合第三方统计数据分析，自从上次涨价后，Steam Deck的销量就出现了大幅下滑，降幅达到了82%，从前五跌至十五名附近。</p><p>可以说产品的定价直接影响了玩家的购买欲望，从而销售量出现断崖式下跌。根据估算，Steam Deck在2025年时，每周销量约为1.1万至1.8万台，不过在今年涨价后，到2026年7月时，每周销量已经跌至约1400至3000台。</p><p>Valve在今年5月末宣布大幅<a href="https://www.expreview.com/106096.html" target="_blank">提高</a>了Steam Deck OLED的价格，512GB版从549美元涨至789美元，1TB版从649美元涨至949美元，分别上涨了240美元和300美元，对应涨幅达到了43.7%和46.2%。另外Valve还宣布停止生产Steam Deck LCD 256GB，售罄后将不再补货，只剩下价格更高的OLED版继续供应。</p><p>Valve是在2021年7月发布原版Steam Deck，Steam Deck，到了2023年11月又推出了Steam Deck OLED，从原版的LCD屏幕升级到了OLED，尺寸从7英寸增至7.4英寸，分辨率保持一致，刷新率从60Hz提高到90Hz。另外定制APU也升级至6nm工艺，LPDDR5内存速率提升至6400MT/s，还支持Wi-Fi 6E和蓝牙5.3，电池容量从40Whr增加到50Whr。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 12:25:00 +08</pubDate>
+							</item>
+							<item>
+								<title>Steam愿望单新增自定义类别，搜索与分享体验也得到升级</title>
+								<link>http://www.expreview.com/107196.html</link>
+								<description><![CDATA[<p>Valve今天宣布，<a href="https://store.steampowered.com/news/app/593110/view/710028372767410959" target="_blank">Steam愿望单</a>功能迎来一次重磅更新：不仅加入了玩家期待已久的自定义类别，同时，搜索、分享与礼物等环节也一并优化了。</p><p>Steam开发团队称，随着平台上值得”想要”的游戏越来越多，玩家此前已能靠排序与筛选管理清单，但社区一直希望有更灵活的组织方式。此次核心改动，是允许用户在愿望单中创建并指派自定义类别——例如把某场活动看中的作品单独成组、将最适合用手柄玩的游戏归到一起，或专门建一个”想买给别人的游戏”清单。</p><div class="debug" style="text-align: center;"><iframe src="https://img.expreview.com/news/2026/07/23/steamwl-1.mp4" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" data-ruffle-polyfilled="">
+        </iframe>
+ &nbsp; &nbsp; &nbsp; &nbsp;<script style="display:none">jQuery("iframe").attr("width", "100%");
+            if (IsMobile()) jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16);
+            else jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16 + 120);</script></div><p>类别的用法相当直白：添加类别快速便捷；想只看某类时，点击愿望单顶部的类别名，或每款游戏旁”我的类别”区域的标签即可筛选；在商店页面”已在愿望单中”下拉菜单里也能一键归入常用类别。更实用的是，通知可按类别定制，用户能只为某些类别接收降价或上架提醒，免被无关推送淹没。</p><p>其余改进围绕”好找、好分享”展开：愿望单页搜索被重构并加入自动补全；清单内游戏推出试用版时会高亮提示，并支持在试用版上线时收到通知；将鼠标悬停在每款游戏的宣传图上，会播放微型宣传片；在浏览器、移动设备、Steam 客户端或 SteamOS 之间跳转后，页面能更好地恢复到此前浏览的位置；页面对比度与可读性也做了微调。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/steamwl-2.png"/></p><p>分享能力同样增强：过去只能分享整个愿望单链接，现在可分享某个具体类别乃至某一筛选视图。点击顶部分享按钮会生成唯一 URL，即便清单设为私密，持链接者也能查看，且链接可随时撤销。Steam举例：把”我的生日列表”发给家人，对方无需 Steam 帐户就能直接通过链接送礼。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>易铭恩</author>
+								<pubDate>Thu, 23 Jul 2026 12:03:48 +08</pubDate>
+							</item>
+							<item>
+								<title>PC也能玩初代XBOX主机游戏：微软扩展向下兼容功能，首批四款游戏</title>
+								<link>http://www.expreview.com/107191.html</link>
+								<description><![CDATA[<p>XBOX向下兼容功能长期以来都是游戏主机向下兼容方面的标杆，早有传言称，微软会将该功能搬到PC上，让玩家可以玩到那些从未有过官方PC移植版的经典XBOX游戏，通过PC体验到不一样的游戏乐趣。</p><p>微软<a href="https://news.xbox.com/en-us/2026/07/22/xbox-backward-compatibility-on-pc/" target="_blank">宣布</a>，已经将XBOX向下兼容功能延伸到了Windows PC平台，延续了之前的游戏典藏计划，让老游戏在PC端焕发新的活力。首批上线的初代XBOX游戏有四款，分别是《霹雳酷炫猫（BLiNX: The Time Sweeper）》《松鼠爆破（Conker: Live and Reloaded）》《血色苍穹（Crimson Skies: High Road to Revenge）》和《疯狂大乱斗（Fuzion Frenzy）》</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/XBOX_Backward_PC.jpg" width="100%"/></p><p>微软表示，在PC上引入XBOX向下兼容功能，让玩家更容易地在PC和掌机玩到过去的XBOX经典游戏，从而拥有珍贵的回忆。同样作为玩家，不想在技术不断进步的同时，抛弃游戏的传承，期待游戏库能与时代一同进步，并以全新的方式游玩。</p><p>PC端的XBOX向下兼容功能还带来了新的增强功能，包括：最高四倍分辨率缩放、垂直同步（VSync）、各向异性过滤、增强抗锯齿以及全屏 / 窗口化显示模式等，另外还会加入自定义语言和音频设置选项，成就支持也将在未来几个月内推出。官方也提供了XBOX向下兼容功能的PC系统要求，包括最低和推荐配置。</p><p><strong>最低配置</strong></p><ul class=" list-paddingleft-2" style="list-style-type: disc;"><li><p>操作系统：Windows 11</p></li><li><p>处理器：Intel Core i3-8100 / AMD Ryzen 3 1200 / AMD Ryzen Z2 A</p></li><li><p>内存：8GB</p></li><li><p>显卡：NVIDIA GeForce GTX 950 / AMD Radeon Radeon RX 550 / Intel UHD 770 / Intel Arc A310</p></li></ul><p><strong>推荐配置</strong></p><ul class=" list-paddingleft-2" style="list-style-type: disc;"><li><p>操作系统：Windows 11</p></li><li><p>处理器：Intel Core i5-10400 / AMD Ryzen 5 3600 / AMD Ryzen AI Z2 Extreme</p></li><li><p>内存：8GB</p></li><li><p>显卡：NVIDIA GeForce GTX 1070 Ti / AMD Radeon Radeon RX 6800 / Intel Arc A770</p></li><li><p>DirectX版本：DirectX12 API</p></li></ul><p>和大家预想的一样，相比于现在普遍的新游戏，这样要求并不高。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 11:49:00 +08</pubDate>
+							</item>
+							<item>
+								<title>《斯普拉遁 涂击队》今天正式发售：在充满谜团漩涡的岛屿上教训鲑鱼还有寻宝！</title>
+								<link>http://www.expreview.com/107190.html</link>
+								<description><![CDATA[<p>《斯普拉遁 涂击队》是任天堂《斯普拉遁》系列的首款衍生射击游戏，属于Nintendo Switch 2平台独占游戏，今天正式发售，港服售价379至429港币。虽然本作以单人体验为核心，但是也支持最多四人本地或在线合作。</p><div class="debug"><p style="text-align:center;"><iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116966991922799&bvid=BV1vLgD6hECr&cid=40211775722&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="620px"> </iframe>
+ &nbsp; &nbsp;</p><script style="display:none">if (IsMobile()) {
+                jQuery("iframe").attr("width", "100%");
+                jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16);
+            } else jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16 + 120);</script></div><p>手机通道：<a href="https://www.bilibili.com/video/BV1vLgD6hECr/" target="_blank" textvalue="哔哩哔哩">哔哩哔哩</a></p><p>在充满谜团漩涡的岛屿上教训鲑鱼还有寻宝！《斯普拉遁》系列的首部外传作品登场！「涡潮群岛」聚集着蠢蠢欲动的狂暴鲑鱼。迫降在此的正是最喜欢宝藏的「鱼浆帮」和主角「机械师」。机械师除了能使用武器以外，还可以装备并强化「配件」来对抗鲑鱼。鱼浆帮也可以乘坐机甲为你的冒险提供支持！使用强力奥义将鲑鱼一扫而光！究竟主角一行人能否打倒挡住去路的鲑鱼并获得宝藏呢……！？</p><p>《斯普拉遁 涂击队》里登场的武器将超过100种，一部分可以击败敌人获得，同时武器都有等级与稀有度设定，等级越高威力越大，而稀有武器还能赋予角色特殊能力。玩家可以将喜欢的配件装备到背包后面，且通过不同的配件进行改造，背包槽还将分为速度型、力量型、技术型。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Splatoon_RAIDERS_T.jpg" width="100%"/></p><p>在《斯普拉遁 涂击队》里，玩家将扮演机械师角色，前往名为“斯匹拉莱特群岛”的区域冒险。该职业的特点在于其机械改装能力，作为一款以单人游戏为主的动作射击作品，核心玩法侧重于冒险探索，并强化了叙事元素，增加了任务系统，另外也支持最多四位玩家一起联机游玩。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 11:26:00 +08</pubDate>
+							</item>
+							<item>
+								<title>追风者扩展XT系列：带来XT M5、XT V5和XT V5-LCD紧凑型ATX机箱</title>
+								<link>http://www.expreview.com/107189.html</link>
+								<description><![CDATA[<p>追风者（Phanteks）宣布扩展XT系列产品线，推出XT M5、XT V5和XT V5-LCD紧凑型ATX机箱。这几款产品都曾在今年的COMPUTEX 2026上展出过，有着简洁的外观设计，完美适配桌面使用环境，同时内部可以容纳强大的硬件，提供高性能且不牺牲兼容性。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Phanteks_XT_5_New1.jpg" width="100%"/></p><p>其中XT M5配备网状前面板，预装三个120mm的S25 ARGB风扇，支持最多10个风扇，以实现最强散热；XT V5采用玻璃前面板和侧板，底部安装360mm规格的联体S25 ARGB风扇；XT V5-LCD在拥有XT V5的所有功能，同时内置7英寸LCD显示屏，可通过Windows版NEXLINQ控制软件进行自定义设置，为用户提供了额外的个性化选择。</p><p><strong>主要特点</strong></p><ul class=" list-paddingleft-2" style="list-style-type: disc;"><li><p>支持顶部360mm冷排安装；</p></li><li><p>最多可安装10/7个120mm风扇，实现强劲散热；</p></li><li><p>兼容大型显卡，带有支架；</p></li><li><p>侧透展示风格，兼容NEXLINQ控制软件；</p></li><li><p>预装S25 ARGB风扇（120mm和360mm规格）；</p></li><li><p>配备前置USB 3.2 Gen2x2 Type-C接口；</p></li><li><p>有充足的线缆管理空间，安装顺畅且简单。</p></li></ul><p>追风者也给出了新款XT系列产品的价格，XT M5、XT V5和XT V5-LCD分别定价为79.99美元（约合人民币541.76元）、79.99美元（约合人民币541.76元）和109.99美元（约合人民币744.95元），暂时都只提供黑色外观。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Phanteks_XT_5_New2.jpg" width="100%"/></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Phanteks_XT_5_New3.jpg" width="100%"/></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Phanteks_XT_5_New4.jpg" width="100%"/></p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 10:44:00 +08</pubDate>
+							</item>
+							<item>
+								<title>Thermaltake推出AX 3200W电源：白金效率，配四个原生12V-2×6接口</title>
+								<link>http://www.expreview.com/107188.html</link>
+								<description><![CDATA[<p>Thermaltake（曜越）<a href="https://www.thermaltake.com/ax-3200w.html" target="_blank">宣布</a>，推出AX 3200W电源。这是专为下一代AI计算打造的高性能电源产品，支持ATX 3.1和PCIe 5.1标准，采用单路+12V设计，具备卓越的稳定性和效率，同时配备了四个原生12V-2×6接口，可用于驱动多块显卡，适合专业工作站环境，以满足AI训练、渲染、仿真及其他GPU密集型工作负载的需求。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Thermaltake_AX_3200W_PSU.jpg" width="100%"/></p><p>AX 3200W属于ATX规格的电源，整体尺寸为200mm（长）×150mm（宽）×86mm（高），额定功率3200W，得到了80 PLUS白金认证，提供十年质保。内置140mm双滚珠轴承风扇，提供出色的散热性能和长期耐用性，经过优化的冷却设计可在持续高负载下保持稳定运行，并在专业计算环境中最大限度地降低噪声。</p><p>Thermaltake为新款电源提供了全面的保护，包括过流保护（OCP）、过压保护（OVP）、短路保护（SCP）、过功率保护（OPP）、欠压保护（UVP）和过温保护（OTP），确保了电源在高要求工作负载下的性能和稳定性。</p><p>另外采用了全模块化黑色扁平线设计，减少内部线缆杂乱，有效改善计算机系统风流，并提供便捷安装方式。同时Thermaltake还在12V-2×6连接器上引入了双色设计，让用户更好地判断连接器是否正确插入，有助于降低安装风险。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 10:16:00 +08</pubDate>
+							</item>
+							<item>
+								<title>AMD与Anthropic建立战略合作伙伴关系：部署最高2吉瓦的Instinct MI450系列</title>
+								<link>http://www.expreview.com/107187.html</link>
+								<description><![CDATA[<p>AMD<a href="https://ir.amd.com/news-events/press-releases/detail/1292/amd-and-anthropic-announce-strategic-partnership-to-deploy-up-to-2-gigawatts-of-amd-instinct-mi450-series-gpus" target="_blank">宣布</a>，与Anthropic建立战略合作伙伴关系，部署最高2吉瓦的Instinct MI450系列GPU在其Helios机架级解决方案，将于2027年上半年开始部署。这份公告是AMD与Anthropic合作关系的一个重要里程碑，双方正在构建长期基础，加速下一代AI基础设施的开发与部署。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2025/11/19/Alice_Recoque_T.jpg" width="100%"/></p><p>人工智能（AI）的快速采用推动了对训练和推理能力需求的快速增长，Anthropic正在扩大其计算基础设施，以满足对Claude强劲且不断增长的需求。这次对AMD&nbsp;Helios的采购，标志着AMD在全球AI基础设施建设核心地位的重大扩展。</p><p>除了Instinct MI450系列GPU外，Helios还包含了EPYC“Venice”CPU、Pensando网卡和ROCm软件堆栈。Helios是专为下一代AI训练和推理设计的机架级解决方案，能够满足最严苛AI工作负载所需的性能、效率和规模，这次部署行动也是建立在Anthropic现有使用的Instinct MI355X基础上。</p><p>与此同时，AMD与Anthropic正在启动一项为期多年的工程合作，利用Claude加速AMD软件开发。具体来说，团队将利用Claude优化Instinct GPU的工作负载，加速ROCm软件开发。AMD还计划在整个工程和产品开发团队里，广泛地采用Claude。</p><p>此外，AMD承诺未来将对Anthropic进行战略股权投资，金额高达50亿美元。</p>]]></description>
+								<category>快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 09:23:00 +08</pubDate>
+							</item>
+							<item>
+								<title>三星推出Galaxy Z Fold8系列：五代骁龙8至尊版，主打轻薄体验，8999元起</title>
+								<link>http://www.expreview.com/107186.html</link>
+								<description><![CDATA[<p>近日，三星正式推出了Galaxy Z&nbsp;Fold8系列，该系列共包含Galaxy Z Fold8（阔折叠）、Galaxy Z Flip8（竖着叠）以及Galaxy Z Fold8 Ultra（横折叠）三款机型，这三款产品均搭载第五代骁龙8至尊版（for Galaxy）移动平台，配备第二代动态AMOLED屏幕，支持Galaxy AI。目前三星 Galaxy Z Fold8系列已上架电商平台，预定即可享受24期免息优惠。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/fold-8-fm-1.jpg" width="100%"/></p><p>Galaxy Z Fold8，京东商城地址：<a href="https://u.jd.com/9rc2O01" target="_blank">点击前往&gt;&gt;&gt;</a></p><p>Galaxy Z Fold8，天猫商城地址：<a href="https://detail.tmall.com/item.htm?id=1058838402177&mi_id=0000EDNhenLRZGafc1YH5QG4Paut36LB87aeCGZt-um9IuM&spm=a21xtw.29978518.0.0&xxc=shop" target="_blank">点击前往&gt;&gt;&gt;</a></p><p>Galaxy Z Flip8，京东商城地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BASwJK1olXDYCVV9eAEgWBW8KGl8lGVlaCgFtUQ5SQi0DBUVNGFJeSwUIFxlJX3EIGloWVQUDUl5fCU8IWipURmtKVAJVPz9fCS4UfRsWbiQPPBgEShYtBEcnAl8LGlkcXAEFUVZYOHsXBF9edVsUXAcDVVxYDUknAl8IHVIQWwAGV11fCEgTM2gIEmtHBFZcCwoCXg1HXDk4K2sWbQECXUpbegpFF2l6K2sVbQUyVF9dCU8UAGkJHF4JXQQDVlxYFEsRCmoOHV8WXgcKXFltCkoWB2Y4K4WY7Xl1LAJcfT1NRxNWaTJVOVrc2e5MdC8TA24NCmtpJGZ8DSUmWkxodwl2WyBcOHpjEzgjSDBSSBddfDt7X2VnMgFebTBORit2WzJHFA9hZFttAEMeBV8" target="_blank">点击前往&gt;&gt;&gt;</a></p><p>Galaxy Z Flip8，天猫商城地址：<a href="https://detail.tmall.com/item.htm?ali_refid=a3_420434_1006%3A1102655787%3AH%3At5oLcDT8m1FFllKNFGw%2F%2BwfMQIU%2FlpYH%3Ae2711e977d017f87870b0f265a6b5466&ali_trackid=282_e2711e977d017f87870b0f265a6b5466&id=1059835445732&mi_id=0000txixAC6LsKWGdiekVzi8ikcAZ8IBvGdx3mpbkXGwXQ0&mm_sceneid=1_0_15237275_0&priceTId=2147840b17847753047141170e0e3d&skuId=6117861909609&spm=a21n57.1.hoverItem.3&utparam=%7B%22aplus_abtest%22%3A%22eae32cf993d4810c263670c8c5fd48cc%22%7D&xxc=ad_ztc" target="_blank">点击前往&gt;&gt;&gt;</a></p><p>Galaxy Z Fold8 Ultra，京东商城地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BASwJK1olXDYCVV9fAUoSCmYNElwlGVlaCgFtUQ5SQi0DBUVNGFJeSwUIFxlJX3EIGloXVAcHXVdYAUwIWipURmtuAFNKMkAuDigXWxpSbAlvHXFrFCQtBEcnAl8LGlkcXAEFUVZYOHsXBF9edVsUXAcDVVxYDUknAl8IHVIQWwAGV1pYCk0VM2gIEmtHBFZcCwoCXg1HXDk4K2sWbQECXUpbegpFF2l6K2sVbQUyVF9dAEgXBmwPH1oJXQUFUl9ZFEsRCmoOHV8WWQcDUF5tCkoWB2Y4K4WY7XwAXCIODDJBaxpxfh1lBXDc2e5MejsXAW0ICmtKG2Z9AQhdfhBBQRp3Hg1zJFR7LCsiDR1oVi5fbDt7X1JBIFYZYyJ2V293XSNyAUdgZFttAEMeBV8" target="_blank">点击前往&gt;&gt;&gt;</a></p><p>Galaxy Z Fold8 Ultra，天猫商城地址：<a href="https://detail.tmall.com/item.htm?id=1058047643093&mi_id=0000wIpm0-WYfwaohWs0fCbyGWSaYn_4oO18VqBWZKv88NY&spm=a21xtw.29978518.0.0&xxc=shop" target="_blank">点击前往&gt;&gt;&gt;</a></p><h1>Galaxy Z Fold8</h1><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/fold-8.jpg" width="100%"/></p><p>机身设计方面，Galaxy Z Fold8的折叠态三维尺寸为123.9（高）×81.9（宽）×9.7（厚）mm，展开态则为123.9（高）×161.4（宽）×4.5（厚）mm，产品重约201g，机身边框采用装甲铝材质打造，屏幕盖板搭载康宁®大猩猩®玻璃，支持IP48防水。</p><p>Galaxy Z Fold8主打阔折叠体验，外屏使用了5.5英寸的第二代动态AMOLED屏幕，比例为16：10，内屏则配备了7.6英寸的第二代动态AMOLED，比例为4：3，均支持1~120Hz自适应刷新率，峰值亮度均可达到3000尼特，其中外屏分辨率为1972×1248 (WUXGA+)，内屏分辨率为1848×2448 (QXGA+)。此外，这款机型屏幕底部采用双层钛缓震层结构加固设计，可进一步提升显示屏结构强度。</p><p>影像系统方面，Galaxy Z Fold8配备了5000万像素广角摄像头+5000万像素超广角摄像头+1000万外屏前置摄像头+1000万像素内屏前置摄像头，支持2倍光学品质变焦以及10倍数码变焦，支持双摄同时录制，支持智能识别主角，内置AI修图功能。</p><p>其他功能参数方面，Galaxy Z Fold8配备4800mAh电池，支持Galaxy AI。</p><p>Galaxy Z Fold8共提供有云凝白、岩影灰、柔薰紫以及春野绿（三星商城专属颜色）三款配色，各内存配置以及具体售价如下：</p><ul class=" list-paddingleft-2" style="list-style-type: disc;"><li><p>12+256GB：12999元</p></li><li><p>12+512GB：14599元</p></li><li><p>16+1TB：17799元</p></li></ul><h1>Galaxy Z Flip8</h1><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/flip-8.jpg" width="100%"/></p><p>机身设计方面，Galaxy Z Flip8主打轻便个性体验，其折叠态三维尺寸为85.7（高）×75.4（宽）×13.1（厚）mm，展开态则为166.9（高）×75.4（宽）×6.1（厚）mm，产品重约180g，机身边框采用装甲铝材质打造，屏幕盖板搭载康宁®大猩猩®玻璃，支持IP48防水。</p><p>屏幕方面，Galaxy Z Flip8外屏使用了4.1英寸的Super AMOLED屏幕，内屏则配备了6.9英寸的第二代动态AMOLED，外屏支持60/120Hz刷新率，内屏则支持均1~120Hz自适应刷新率，峰值亮度均可达到2600尼特，其中外屏分辨率为1048×948，内屏分辨率为2520×1080 (FHD+)。此外这款机型还搭载了超薄精工装甲铰链，主屏开合操作流畅顺滑。</p><p>影像系统方面，Galaxy Z Flip8配备了5000万像素广角摄像头+1200万像素超广角摄像头+1000万外屏前置摄像头，支持2倍光学品质变焦以及10倍数码变焦，支持双摄同时录制，支持立式自由拍摄，内置AI修图功能。</p><p>其他功能参数方面，Galaxy Z Flip8配备4300mAh电池，支持Galaxy AI。</p><p>Galaxy Z Fold8共提供有云凝白、岩影灰、甜莓粉以及清柚绿（三星商城专属颜色）三款配色，各内存配置以及具体售价如下：</p><ul class=" list-paddingleft-2" style="list-style-type: disc;"><li><p>12+256GB：8999元</p></li><li><p>12+512GB：10599元</p></li></ul><h1>Galaxy Z Fold8 Ultra</h1><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/fold-8-ultra.jpg" width="100%"/></p><p>机身设计方面，Galaxy Z Fold8 Ultra折叠态三维尺寸为158.4（高）×72.8（宽）×8.9（厚）mm，展开态则为158.4（高）×143.2（宽）×4.1（厚）mm，产品重约215g，机身边框采用装甲铝材质打造，屏幕盖板搭载康宁®大猩猩®玻璃，支持IP48防水。</p><p>屏幕方面，Galaxy Z Fold8 Ultra外屏使用了4.1英寸的Super AMOLED屏幕，外屏使用了6.5英寸的第二代动态AMOLED屏幕，内屏则配备了8.0英寸的第二代动态AMOLED，均支持1~120Hz自适应刷新率，峰值亮度均可达到3000尼特，其中外屏分辨率为2520×1080 (FHD+)，内屏分辨率为2504×2256 (QXGA+)。此外，这款机型屏幕底部采用双层钛缓震层结构加固设计，可进一步提升显示屏结构强度。</p><p>影像系统方面，Galaxy Z Fold8 Ultra配备了2亿像素广角摄像头+5000万像素超广角摄像头+1000万像素长焦摄像头+1000万外屏前置摄像头+1000万像素内屏前置摄像头，支持3倍光学变焦、2倍光学品质变焦以及30倍数码变焦，支持超视觉夜拍系统，支持双摄同时录制，支持智能识别主角，内置AI修图功能。</p><p>其他功能参数方面，Galaxy Z Flip8配备5000mAh电池，支持Galaxy AI。</p><p>Galaxy Z Fold8共提供有云凝白、岩影灰、雅暮紫以及:松杉绿（三星商城专属颜色）三款配色，各内存配置以及具体售价如下：</p><ul class=" list-paddingleft-2" style="list-style-type: disc;"><li><p>12+256GB：14999元</p></li><li><p>12+512GB：16599元</p></li><li><p>16+1TB：19799元</p></li></ul>]]></description>
+								<category>移动数码</category>
+								<author>冼廷斌</author>
+								<pubDate>Thu, 23 Jul 2026 10:58:00 +08</pubDate>
+							</item>
+							<item>
+								<title>英特尔携手Fortinet：共同开发SP6，推进网络安全创新</title>
+								<link>http://www.expreview.com/107185.html</link>
+								<description><![CDATA[<p>英特尔<a href="https://mp.weixin.qq.com/s/KpvBPgN15SZO5HKry4-Bjw" target="_blank">宣布</a>与Fortinet达成战略合作，共同开发Fortinet安全处理器6（SP6）。这次合作进一步深化了双方的长期关系，将Fortinet在专有、专用安全处理器领域的专业技术与英特尔在先进设计、封装和制造方面的能力相结合，以加速、强化Fortinet安全处理器6的开发，同时有助于提升Fortinet全球供应链的韧性和多样性。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/23/Intel_Fortinet_T.jpg" width="100%"/></p><p>Fortinet表示，专用ASIC芯片在过去的二十多年里一直是其关键差异化优势，以满足客户需求，提供卓越的安全防护效果、性能和效率。通过与英特尔深化合作，能够结合利用其先进半导体技术、制造能力和全球供应链，有助于加速并强化自身ASIC战略，同时为全球各地的企业提供更好的支持。</p><p>这次合作不仅将Fortinet在专用安全处理器领域的领先地位与英特尔广泛的生态系统IP组合、已验证的分解式半导体设计专长，以及专为AI应用和成本敏感型应用定制的先进封装解决方案相结合，还旨在推出一款高度集成的安全处理器，以支持日益复杂的安全服务，并满足当今企业对性能的高要求。</p><p>英特尔与Fortinet还将探索更多机遇，进一步深化在半导体技术、制造以及支撑未来网络安全创新的基础设施等领域的合作，并推进Fortinet的长期ASIC路线图，提供更强的性能和更丰富的服务。</p>]]></description>
+								<category>快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 09:15:00 +08</pubDate>
+							</item>
+							<item>
+								<title>分析称索尼取消实体盘将导致二手市场萎缩，二手零售商或因此遭受损失</title>
+								<link>http://www.expreview.com/107184.html</link>
+								<description><![CDATA[<p>索尼在这个月月初宣布从2028年1月起，所有PlayStation主机上发布的新游戏实体游戏光盘生产将停止。这一举动的理由是消费者对数字媒体的偏好远超实体光盘，加上更广泛的娱乐产业逐渐从实体光盘转向数字，因此这一举动也是顺应消费趋势的自然之举。而近日有国外分析师<a href="https://www.cnbc.com/2026/07/22/sonys-playstation-disc-decision-threatens-a-7-billion-resale-market-.html" target="_blank">称</a>，索尼的这个决定对Playstation二手光盘市场将产生影响，这个目前规模超70亿美元的市场或许会在未来持续萎缩，二手零售商也会因此遭受损失。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/PS5_DISC.jpg" width="100%"/></p><p>文章中称，索尼在2013年首次公布Playstation实体光盘时，其简单的共享属性其实是对微软当年Xbox严格的游戏共享策略的一种“嘲讽”，意味着玩家之间可以通过租借或二手交易的方式，将好玩的游戏与自己的朋友或其他玩家来分享。这种共享属性也催生了规模庞大的二手游戏交易市场，这个包括了二手游戏、主机、配件和外设的市场在2025年的总价值为72亿美元，预计2034年将会达到138亿美元，其中二手游戏的交易销量占到了游戏总销量的三分之一。如今索尼决定取消实体光盘的生产，将会对这种生态造成严重打击，玩家无法通过转卖旧游戏来支持新游戏，同时性价比玩家也无法通过二手市场来低价购入，定价权进一步向索尼与发行商倾斜。</p><p>其实在索尼公布不再生产实体光盘时，社区用户就表示了诸多不满：有人认为这是剥夺了消费者的所有权和选择权，同时认为即便取消实体版，游戏价格也不会因为不需要再承担实体版的额外成本而降价；也有人担心游戏如何长期保存、账号锁权限等问题。</p>]]></description>
+								<category>快讯</category>
+								<author>梁文杰</author>
+								<pubDate>Thu, 23 Jul 2026 11:46:32 +08</pubDate>
+							</item>
+							<item>
+								<title>英伟达GeForce Hotfix 610.82驱动：修复《光环 : 战役进化》等游戏的问题</title>
+								<link>http://www.expreview.com/107183.html</link>
+								<description><![CDATA[<p>英伟达发布GeForce Hotfix 610.82驱动程序，其基于最新的GeForce Game Ready 610.74 WHQL驱动程序基础上。自从基于Blackwell架构的GeForce RTX 50系列显卡发布后，英伟达频繁地发布Hotfix驱动程序，先后发布了十次，其中有四次是在今年。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/06/08/Halo-Campaign-Evolved.jpg" width="100%"/></p><p>英伟达会定期发布显卡驱动程序，一般是有新显卡或者新游戏发售的时候，不过偶尔会针对某款游戏或者之后发现的新漏洞发布Hotfix驱动程序，旨在解决其工程师已经发现并修复的重要问题。通常这些都是针对特定问题的小修复，不涉及任何重大问题。这次的GeForce Hotfix 610.82驱动程序主要解决了以下问题：</p><p><strong>已修复的问题，包括：</strong></p><ul class=" list-paddingleft-2" style="list-style-type: disc;"><li><p>[光环：战役进化] 在使用610.xx版驱动时，GeForce RTX 50系列显卡存在稳定性问题。[6259837]</p></li><li><p>[流放之路2] 修复了在DX12模式下长时间游戏后，可能出现的间歇性长暂停问题。[5090018]</p></li></ul><p>英伟达重申，GeForce Hotfix驱动程序被视为测试版本，质量保证流程比起一般的WHQL驱动程序要少得多。这次的610.82驱动程序不会有其他任何修复或者功能增强，如果并非使用对应型号显卡遇到相关问题的用户不需要下载更新，等待下一个WHQL或Game Ready版本即可。</p><p>《战地风云6》第4赛季更新上线后，大量PC出现驱动程序崩溃的情况，其中GeForce RTX 50系列显卡成为了重灾区。电子艺界（EA）已经<a href="https://www.expreview.com/107168.html" target="_blank">确认</a>存在稳定性问题，特别是在地图“津留礁”等有着大面积水域的场景里，更容易触发显卡驱动程序崩溃。官方承诺与英伟达合作寻找解决方案，不过这次的610.82驱动程序并没有涉及《战地风云6》的部分。</p><p>NVIDIA GeForce Hotfix 610.82驱动程序（Windows 10/11 64位），地址：<a href="https://nvidia.custhelp.com/app/answers/detail/a_id/5870/" target="_blank">点此前往&gt;&gt;&gt;</a></p>]]></description>
+								<category>软件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Thu, 23 Jul 2026 09:10:00 +08</pubDate>
+							</item>
+							<item>
+								<title>先马推出S300系列一体式水冷：冷头配备6英寸大屏，黑白同价499元</title>
+								<link>http://www.expreview.com/107182.html</link>
+								<description><![CDATA[<p>先马（SAMA）近日推出了新款S300系列一体式水冷散热器，这款水冷的冷头搭载了一块6英寸直面IPS LCD屏幕，并且辅以全域ARGB幻彩三联扇。目前产品已登陆国内平台，暂时只有360规格可选，页面显示黑白同价499元。</p><p>先马S300 360 黑色，京东地址：<a href="https://item.jd.com/100296322487.html" target="_blank" textvalue="点此前往&gt;&gt;&gt;">点此前往&gt;&gt;&gt;</a><br/>先马S300 360 白色，京东地址：<a href="https://item.jd.com/100385641638.html" target="_blank" textvalue="点此前往&gt;&gt;&gt;">点此前往&gt;&gt;&gt;</a></p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/SAMA_S300.jpg" width="100%"/></p><p>先马S300系列水冷冷头尺寸（不算屏幕模块）为70*70*84 mm，自身带有镂空设计，配有无限镜灯效模块，内置1800~2600±10%&nbsp; RPM转速的水泵，支持4Pin PWM调速。6英寸IPS屏幕分辨率暂未提及，底座通过磁吸触点连接，设有四大方位定点，轻松实现屏幕旋转，配合自家的SAMA智控软件实现系统工况监控与内容自定义，支持MP4、GIF、JPG、PNG、BMP全格式素材。软件采用全新界面设计，相比以往更简洁易操作。</p><p>水冷冷排采用常规27 mm厚度设计。标配散热风扇型号为一体式联排的冰轨360，出厂预装在冷排上，采用28 mm加厚设计。风扇四面镜光折射纵深霓虹设计，侧透/竖装/冷排多视角无光线死角，任意安装都有完整立体无界光影；内置液压轴承，转速为800~1900±10%&nbsp;&nbsp;RPM，最大静压/风量分别为1.73 mmH<sub>2</sub>O和57.69 CFM，单风扇噪音值不超过34.3分贝，仅引出一对4Pin PWM和5V ARGB线材方便用户理线。</p><p>水冷扣具兼容当下主流的Intel LGA 1700/1851和AMD AM4/AM5平台，厂商提供6年质保，漏液按照使用年限折旧赔付。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>郑滔</author>
+								<pubDate>Thu, 23 Jul 2026 09:24:00 +08</pubDate>
+							</item>
+							<item>
+								<title>飞利浦发布27M4N3500PT显示器：一屏三模，最高支持2K@275Hz，1099元</title>
+								<link>http://www.expreview.com/107181.html</link>
+								<description><![CDATA[<p>近日，飞利浦推出了27M4N3500PT显示器，该产品参数与此前发布的27M4N5500PT基本一致，但支架仅支持俯仰调节，价格则下调至1099元，相较于后者便宜了100元。飞利浦&nbsp;27M4N3500PT显示器主打电竞体验，支持2K@275Hz/FHD@360/HD@540Hz三模功能，最快响应时间可达0.3ms MBR，支持HDR 10，目前购买最高可享受六期免息优惠。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/philips-27M4N3500PT-1.jpg" width="100%"/></p><p>飞利浦 27M4N3500PT显示器，京东商城地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BATcJK1olXw4LUFZfDU8eBF8IGlgXXAYAXFxbAEkQA19MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksWAG0JG1kdXwAKVlldFxJSXzI4Wj1yWVJjIDY4cw9gQWhIeiUTG39wElJROEonAG4KEloSWgMKUW5tCEwnQgELH1kUWgEEUVdtCXsXBWYNHV0UWAQDUFhVOEwXCl9aQgtLAlJdAhgNVx0nM18LK1wVVBIEJh8PHE1lM18IK1glXQcCVVtVAUweBm8UG1oUWg8DSF5bAU4RBW4NGFkWXwMyVl9cDEInM7GFqyEUIlVbUxcqXQN3WBlyXFPL0LYTJi5dDEoREl8JHztnGXZ0VgMOWBllAR9QRV4TNVRwVi4veBlfCw9mGQ1MI1JlMCIYUDtLfTxzQCdebQMyU1hcOA" target="_blank">点击前往&gt;&gt;&gt;</a></p><p>三维尺寸方面，飞利浦 27M4N3500PT显示器的具体数据为614mm（长）×213mm（深）×518mm（高），产品重约5.59kg。</p><p>屏幕方面，飞利浦 27M4N3500PT显示器配备了27英寸的Fast-IPS面板，支持2K@275Hz/FHD@360/HD@540Hz三模功能，最快响应时间可达1ms GTG以及0.3ms MBR，全屏最高亮度可达350尼特，面板对比度可达1000：1，支持HDR 10。色彩方面，飞利浦 27M4N3500PT显示器支持8bit色深，支持100%sRGB、98%DCI-P3以及94%Adobe RGB色域覆盖，官方宣称其ΔE＜2。护眼方面，飞利浦 27M4N3500PT显示器支持硬件级低蓝光以及不闪屏技术。</p><p>接口方面，飞利浦 27M4N3500PT显示器配备了2×HDMI 2.1 TMDS＋1×DP 1.4＋1×耳机接口。</p><p>其他功能方面，飞利浦 27M4N5500PT显示器支持区块级动态低蓝光显示，即可分区控制画面低蓝光区域，支持零感同步技术，可大幅降低操作延迟，支持P Center控制软件，支持各类游戏辅助功能。</p><p>支架方面，飞利浦 27M4N3500PT显示器配备了小尺寸底座，支持-5°~20°俯仰调节，支持100×100mm VESA壁挂。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>冼廷斌</author>
+								<pubDate>Thu, 23 Jul 2026 09:37:28 +08</pubDate>
+							</item>
+							<item>
+								<title>零刻ME Pro四盘位NAS再添新配置：搭载奔腾银牌J5005，首发价1799元</title>
+								<link>http://www.expreview.com/107180.html</link>
+								<description><![CDATA[<p>去年末，零刻推出了ME Pro，分为双/四盘位NAS，采用了DIY抽屉式设计，可升级主板，选择英特尔、AMD和Arm架构的处理器。近日零刻增添了搭载英特尔奔腾银牌J5005处理器的四盘位版本，已登陆到电商平台，并开始销售了，厂商提供五年质保和30天试玩，具体可咨询在线客服工作人员。</p><p>零刻 ME Pro，8GB内存+128GB存储，价格1999元，首发到手价1799元，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BATYJK1olXwUDUlhYDUkXBF8IGlgXXAYHUFdaD08fCl9MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksWAG0JG14RVAEFUFZUFxJSXzI4ZkVUHnJiTjc9Ch9IBQt2W1NRI21XAlJROEonAG4KEloSWgMKUW5tCEwnQgEIGF0XWQQHUW5cOEsRCmoOG18dWAQGVV9tD0seMz1RSwVKCVlUEg4CXnsnM2w4HFscSQBwFQxJDjknM284GGsVXAYDXV5bCUoRBHMIHl0UWAYeVFhUDU0XB2cNG1gUVTYAVV9ZAXsn3eK4fl4cBnN1FiQ2DhNIYmx9QYWY7Rd-MFpdCU4GMw9LexppCXN1BwcmewptYzB1cAhOLkd4NCgtCx0QYwEKWQ5GLXV3PSA6XB5EAAZ1GiQlWDYFUl9t" target="_blank">点此前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/22/ME_Pro_F_J5005.jpg" width="100%"/></p><p>ME Pro采用了一体成型金属外壳，采用包布工艺设计，配有磁吸散热网罩和便捷螺丝刀，四盘位版本的整体尺寸为166 x 166 x 146 mm，深空灰配色；DIY抽屉式设计不但方便用户升级，也容易清理灰尘；导热硅胶+铝支架有利于为硬盘散热；内置鼓风机风扇，配有SSD导热硅胶；附赠120W电源适配器。</p><p>新设备搭载了英特尔奔腾银牌J5005处理器，拥有4核心4线程，L3缓存为18MB，基础频率和睿频分别为1.5GHz和2.8GHz，带有4MB的L3缓存；集成了Intel UHD Graphics 605核显；带有双SO-DIMM插槽，支持双通道DDR4内存；配有两个M.2 2280（一个PCIe 2.0 x1通道 + 一个支持SATA SSD）插槽和四个2.5/3.5英寸SATA硬盘位；支持Wi-Fi 6和蓝牙5.4。</p><p>接口配置方面，包括：前面I/O配置为一个USB 5Gbps Type-A接口；后面I/O配置为一个USB 5Gbps Type-C接口、一个USB 5Gbps Type-A接口、一个USB 480Mbps接口、双网口（均为2.5Gbps）、一个HDMI接口（支持4K@60Hz）和3.5mm音频插孔。</p>]]></description>
+								<category>快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Wed, 22 Jul 2026 18:09:00 +08</pubDate>
+							</item>
+							<item>
+								<title>思科开源Antares安全小模型，专攻定位代码库中的漏洞</title>
+								<link>http://www.expreview.com/107179.html</link>
+								<description><![CDATA[<p>日前，思科在<a href="https://blogs.cisco.com/ai/introducing-antares-the-most-efficient-open-weight-ai-models-for-vulnerability-localization" target="_blank">官方博客</a>上宣布，其Foundation AI 团队已推出安全小语言模型（SLM）Antares，该系列模型专攻最耗时、也最烧钱的一类安全工作——在庞大代码库里精准定位已知漏洞藏在哪个文件、哪一行。目前 350M 与 1B 两个版本已作为开源模型上架<a href="https://huggingface.co/collections/fdtn-ai/antares" target="_blank"> Hugging Face</a>，更大的 Antares-3B 也预告推出。</p><p>官方称，这两款&quot;小而专&quot;的模型在新设计的漏洞定位基准测试（500 个任务）中，以极低推理成本跑赢十余款更大、含闭源在内的主流模型；更关键的是可本地运行，敏感代码无需上云即可排查。在不少观察者看来，这延续了思科近一年围绕&quot;负责任、可度量地落地 AI 安全&quot;的组合拳。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/antares-1.jpg" width="100%"/></p><p>其思路近似人类调查员：从漏洞描述出发，搜索代码模式、读取候选文件、走不通就回退，逐步收敛到最可能有问题的几个文件，给出排序清单与轨迹。思科也划清边界——它不取代依赖分析、密钥扫描、动态测试等整套工具链。</p><p>新加坡国立大学副教授 Reza Shokri 称，看到这么小的模型在代码库里揪出本需更大模型或更多人工才能发现的问题，&quot;确实让人眼前一亮&quot;；而斯坦福大学语言、数据与推理实验室主任 Amin Saberi 直言：&quot;安全不该是奢侈品，但先进 AI 检测长期属于有前沿预算的组织，Antares 改变了这个等式。&quot;在攻击者已在用 AI 的当下，这种效率让&quot;全天候安全扫描&quot;对每支团队都成为可能。</p><p style="text-align:center;"><img border="0" src="https://img.expreview.com/news/2026/07/23/antares-2.jpg" width="100%"/></p><p>Antares 并非孤立。此前思科已推 Foundry Security Spec 与 CodeGuard，分别定义智能体安全评估蓝图、把&quot;默认安全&quot;规则嵌入 AI 编程智能体。三者逻辑清晰：规格框住外壳、CodeGuard 抬高预防下限、Antares 补上最贵的&quot;事后定位&quot;。开放权重、配上基准与知识，正是为降低中小团队用上 AI 防御的门槛。</p>]]></description>
+								<category>快讯</category>
+								<author>易铭恩</author>
+								<pubDate>Thu, 23 Jul 2026 09:57:28 +08</pubDate>
+							</item>
+							<item>
+								<title>乔思伯带来X400CG机箱：无A柱曲面海景房，最多13个风扇位，售价699元</title>
+								<link>http://www.expreview.com/107178.html</link>
+								<description><![CDATA[<p>乔思伯宣布，推出X400CG机箱，提供了白色和灰色外观可选。其采用了曲面玻璃立体骨骼框架设计，在之前的X400基础上，取消了前面板A柱，以曲面玻璃拼接270°超宽景，可以更好地展示机箱内效果。目前新产品已登陆电商平台，并开始销售了，显示价格为699元。</p><p>X400CG（灰色）机箱，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BAUkJK1olWAYFVVxZC0gfB18IGloWVA8KVlleD0knRzBQRQQlBENHFRxWFlVPRjtUBABAQlRcCEBdCUoUCmYAGVwWWgQdDRsBVUVTXDdWRCdBCF5SMQ4LBEh5AgEIK1NJNVtrDy0DaiNPCiZJY1h8P00cUBhRBHsWM2wJGVIUWgEHXFttOEsQMz1mE1MdWQ4CUFdUAEInAl8IHVIQWwYGVV9VAUseM2gIEmtHBFZcCwoCXg1HXDk4K2sWbQECXUpbegpFF2l6K2sVbQUyVF9dCU4RAW4AGFsJXQECVV9YFEsRCmoOG18UXA8KU1xtCkoWB2Y4K4WY7WADJhkmAAthcxJLZgZjAXnc2e5MYzIXC2cOCmtyBVl0NlkZaQpBQA1-aw9WVF9RVTwreB9xWQRwewR7X29wHAMLSUhPeDN-WlJAOWZrZFttD00WMw" target="_blank">点此前往&gt;&gt;&gt;</a><br/>X400CG（白色）机箱，京东地址：<a href="https://union-click.jd.com/jdc?e=618%7Cpc%7C&p=JF8BAUkJK1olWAYFVVxZC0gfB18IGloWVA8KUVtfDkknRzBQRQQlBENHFRxWFlVPRjtUBABAQlRcCEBdCUoUCmYAHl4XWwQdDRsBVUVTXDdWRCdBCF5SMQ4LBEh5AgEIK19pD0dhFCQAbTl1fWx7ZQFWCnh5JC5RBHsWM2wJGVIUWgEHXFttOEsQMz1mE1MdWQ4CUFdUAEInAl8IHVIQWwYHXFhdCU0WM2gIEmtHBFZcCwoCXg1HXDk4K2sWbQECXUpbegpFF2l6K2sVbQUyVF9dCU8TAWgOElkJXQQAUlpVFEsRCmoOG14dWg4HVlxtCkoWB2Y4K4WY7XYGVy0-CiBDRjIKHDxJFQ_c2e5MYzIfA28LCmt-JWNhUQUCaitWWWlreyRPKVhLI1g-aB1fZRcAWj57X3N1BCEHQy4SBDVreF1NAAVlZFttD00WMw" target="_blank">点此前往&gt;&gt;&gt;</a></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/22/JONSBO_X400CG_1.jpg" width="100%"/></p><p>新产品沿用了BO400的骨骼框架设计语言，外围骨骼框架的线条更为硬朗，2H硬度表面深灰色/银白色金属质感涂层，融入了电竞游戏机甲风，层次分明。机箱采用了左右分仓结构，搭配双透玻璃，营造简洁视觉焦点并更多视角展示硬件。乔思伯还采用了专利设计导风罩，精确导向辅助散热。另外背线侧提供了理线罩，提供了更好的装机友好度。</p><p>X400CG的整体尺寸为460.2mm x 310.3mm x 476.5mm（含脚座），支持Mini-ITX、Micro-ATX和ATX规格的主板，兼容背插产品。其提供了最多2个3.5英寸硬盘位，还有1个2.5英寸硬盘位；有7个全高PCI扩展槽；CPU散热器限高176mm；显卡限长427mm；支持ATX电源，限长180mm。前置I/O配置上，拥有一个USB 3.2 Gen2 Type-C接口、两个USB 3.2 Gen1 Type-A接口、以及音频和麦克风插孔。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/22/JONSBO_X400CG_2.jpg" width="100%"/></p><p>机箱提供了最多13个散热风扇安装位置，具体包括：顶部位置可安装3个120mm / 2个140mm风扇，支持240/280/360冷排；侧面位置可安装3个120mm风扇，支持360冷排；后置位置可安装2个120mm风扇；背部可安装2个120mm风扇；底部位置可安装3个120mm风扇。</p>]]></description>
+								<category>硬件快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Wed, 22 Jul 2026 17:38:00 +08</pubDate>
+							</item>
+							<item>
+								<title>《灰烬之纱》玩法预告：以黑暗蒸汽朋克宇宙为背景的即时战术游戏，将登陆PC</title>
+								<link>http://www.expreview.com/107177.html</link>
+								<description><![CDATA[<p>《灰烬之纱（Veil of Ashes）》 是一款以黑暗蒸汽朋克宇宙为背景的即时战术游戏，将登陆PC平台，具体发售日期待定。</p><div class="debug"><p style="text-align:center;"><iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116961388267880&bvid=BV1ejgz6cErW&cid=40180778490&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="620px"> </iframe>
+ &nbsp; &nbsp;</p><script style="display:none">if (IsMobile()) {
+                jQuery("iframe").attr("width", "100%");
+                jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16);
+            } else jQuery("iframe").attr("height", jQuery("#post_body").width() * 9 / 16 + 120);</script></div><p>手机通道：<a href="https://www.bilibili.com/video/BV1ejgz6cErW/" target="_blank" textvalue="哔哩哔哩">哔哩哔哩</a></p><p>在多人及单人混战中，争夺多样化地图上的战略据点，指挥从步兵、坦克到巨型战争巨兽的丰富单位。</p><p>无论是单人作战还是对战其他玩家，在战术严苛的战场上指挥步兵小队、坦克与战争巨兽，夺取关键据点。战斗中积累增援点数，召唤更强单位、发动战术打击或请求支援。通过营队编辑器自由组建部队参战，打造均衡阵容应对威胁，解锁无数独特战术与玩法。</p><p><strong>可选择三大阵营：</strong></p><ul class=" list-paddingleft-2" style="list-style-type: disc;"><li><p>神圣帝国（Sacrum Imperium） - 由“新教会”领导的狂热神权阵营，以压倒性火力和超重型圣甲坦克碾碎敌人。</p></li><li><p>封建洛亨帝国（Lohenreich） - 骑士们驾驶重装甲枪骑兵坦克，率领忠诚的装甲仆从兵冲锋陷阵。</p></li><li><p>公社（Communes） - 以敏捷的疾风装甲车与志愿兵、征召兵的人海战术淹没对手。</p></li></ul><p>1704年，世界被史无前例的烈焰吞噬。无数国家与统治者在末日之火中湮灭。但伴随火焰降临的，还有辛尼姆（Cinium）——如天使羽翼般洁白的能量碎片，蕴藏无尽力量。它为未来的一切埋下种子。 两百年后，新旧帝国从灰烬中重生。世界已被工业与尘埃主宰。余烬风暴将越来越多的土地化为死寂荒漠，天空笼罩于灰幕之下。 无论和平或战争，辛尼姆驱动着生死攸关的工业巨械。强大的蒸汽引擎推动坦克与巨兽奔驰战场，为争夺日渐萎缩的生存之地而战。</p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/22/Veil_of_Ashes_GB_1.jpg" width="100%"/></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/22/Veil_of_Ashes_GB_2.jpg" width="100%"/></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/22/Veil_of_Ashes_GB_3.jpg" width="100%"/></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/22/Veil_of_Ashes_GB_4.jpg" width="100%"/></p><p style="text-align: center;"><img src="https://img.expreview.com/news/2026/07/22/Veil_of_Ashes_GB_5.jpg" width="100%"/></p><p>目前《灰烬之纱》页面已经在<a href="https://store.steampowered.com/app/3511540/Veil_of_Ashes/" target="_blank">Steam</a>上线，可添加至愿望单。</p>]]></description>
+								<category>游戏快讯</category>
+								<author>吕嘉俭</author>
+								<pubDate>Wed, 22 Jul 2026 16:56:00 +08</pubDate>
+							</item>
+							
+		</channel>
+	</rss>

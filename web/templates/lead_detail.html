@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block title %}Lead #{{ lead.id }} — CTW{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="summary">
+    <span>Lead <b>#{{ lead.id }}</b></span>
+    <span>P <b>{{ '%.1f'|format(lead.priority_score) }}</b></span>
+    <span>{{ lead.lead_status }}</span>
+    <span>{{ lead.lead_type }}</span>
+    {% if lead.notified %}<span>notified</span>{% endif %}
+    {% if latest_fb %}<span>feedback: {{ latest_fb }}</span>{% endif %}
+  </div>
+  <h1 style="font-size:1.15rem;margin:8px 0">{{ lead.headline_hint or "(no headline)" }}</h1>
+  <p class="muted">{{ lead.why_now or "" }}</p>
+  {% if lead_times %}
+  <ul class="muted">
+    {% if lead_times.get('signal_to_media') is not none %}<li>Signal → media: {{ lead_times.signal_to_media }} min</li>{% endif %}
+    {% if lead_times.get('signal_to_doc') is not none %}<li>Signal → doc: {{ lead_times.signal_to_doc }} min</li>{% endif %}
+    {% if lead_times.get('doc_to_media') is not none %}<li>Doc → media: {{ lead_times.doc_to_media }} min</li>{% endif %}
+  </ul>
+  {% endif %}
+  <p class="muted">News {{ lead.news_count }} · Community {{ lead.community_count }} · Doc {{ lead.documentary_count }} · Sources {{ lead.source_count }}</p>
+</div>
+
+<div class="card fb-btns">
+  <b>Editorial feedback</b>
+  <span class="muted">(quick tap — see Editorial outcome below for the fuller record)</span>
+  {% if latest_fb %}<span class="muted">current: {{ latest_fb }}</span>{% endif %}
+  <div style="margin-top:6px">
+  {% for fb in ['USEFUL','NOT_USEFUL','WRITTEN','DUPLICATE','FALSE_POSITIVE'] %}
+    <form method="post" action="/leads/{{ lead.id }}/feedback" style="display:inline"
+          onsubmit="this.querySelector('button').disabled=true">
+      <input type="hidden" name="feedback" value="{{ fb }}">
+      <button type="submit" class="btn {{ 'current' if latest_fb==fb else '' }}">{{ fb.replace('_',' ') }}</button>
+    </form>
+  {% endfor %}
+  </div>
+</div>
+
+<div class="card">
+  <b>Editorial outcome</b>
+  {% if current_outcome %}
+  <p class="muted" style="margin-top:6px">
+    current: <b>{{ current_outcome.outcome }}</b>
+    · recorded {{ current_outcome.recorded_at }}
+    {% if current_outcome.is_final %}· final{% endif %}
+    {% if current_outcome.related_article_url %}
+      · article: <a href="{{ current_outcome.related_article_url }}" target="_blank" rel="noopener">{{ current_outcome.related_article_title or current_outcome.related_article_url }}</a>
+    {% endif %}
+    {% if current_outcome.external_confirmation_url %}
+      · confirmation: <a href="{{ current_outcome.external_confirmation_url }}" target="_blank" rel="noopener">link</a>
+    {% endif %}
+  </p>
+  {% if current_outcome.notes %}<p class="muted">{{ current_outcome.notes }}</p>{% endif %}
+  {% else %}
+  <p class="muted" style="margin-top:6px">No outcome recorded yet.</p>
+  {% endif %}
+
+  <form method="post" action="/leads/{{ lead.id }}/outcome" style="margin-top:8px">
+    <select name="outcome" required>
+      {% for v in outcome_values %}
+      <option value="{{ v }}" {{ 'selected' if current_outcome and current_outcome.outcome==v else '' }}>{{ v }}</option>
+      {% endfor %}
+    </select>
+    <input type="text" name="article_url" placeholder="article URL (optional)" style="width:220px">
+    <input type="text" name="confirmation_url" placeholder="confirmation URL (optional)" style="width:220px">
+    <input type="text" name="notes" placeholder="notes (optional)" style="width:220px">
+    <button type="submit" class="btn">Record outcome</button>
+  </form>
+
+  {% if outcomes and outcomes|length > 1 %}
+  <p class="muted" style="margin-top:8px"><b>History</b></p>
+  <ul class="muted">
+    {% for o in outcomes[1:] %}
+    <li>{{ o.recorded_at }} — {{ o.outcome }}{% if o.notes %} ({{ o.notes }}){% endif %}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h2>Why this score?</h2>
+    {% if structured and structured.weighted_contributions %}
+    <table>
+      <thead><tr><th>Component</th><th>Raw</th><th>Weight</th><th>Contribution</th></tr></thead>
+      <tbody>
+      {% for c in structured.weighted_contributions %}
+        <tr>
+          <td>{{ c.component }}</td>
+          <td class="mono">{{ '%.1f'|format(c.raw) }}</td>
+          <td class="mono">{{ '%.2f'|format(c.weight) }}</td>
+          <td class="mono">{% if c.component != 'media_saturation' %}{{ '%+.2f'|format(c.contribution) }}{% else %}—{% endif %}</td>
+        </tr>
+      {% endfor %}
+        <tr><td>time_decay</td><td class="mono" colspan="2"></td><td class="mono">{{ '%+.2f'|format(structured.time_decay) }}</td></tr>
+        <tr><td><b>priority</b></td><td colspan="2"></td><td class="mono"><b>{{ '%.2f'|format(structured.priority_score) }}</b></td></tr>
+      </tbody>
+    </table>
+    {% for c in structured.weighted_contributions %}
+      {% if c.facts %}
+      <p class="muted" style="margin-top:6px"><b>{{ c.component }}</b>
+        {% for f in c.facts %}<br>· {{ f }}{% endfor %}
+      </p>
+      {% endif %}
+    {% endfor %}
+    <p class="muted" style="margin-top:8px"><b>Caps / penalties</b><br>
+      {% for n in structured.caps_and_penalties %}· {{ n }}<br>{% endfor %}
+    </p>
+    {% else %}
+    <div class="scorebox">{{ explanation }}</div>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>Why this status?</h2>
+    <ul>
+    {% for r in (structured.status_reasons if structured else []) %}
+      <li>{{ r }}</li>
+    {% else %}
+      <li class="muted">{{ lead.lead_status }}</li>
+    {% endfor %}
+    </ul>
+    <h2 style="margin-top:14px">Discord decision</h2>
+    {% if structured and structured.alert_decision %}
+    {% set ad = structured.alert_decision %}
+    <p>
+      <b>{{ ad.reason_code }}</b>
+      · eligible={{ ad.eligible }} · would_send={{ ad.would_send }}
+    </p>
+    <p class="muted">{{ ad.detail }}</p>
+    <p class="muted">notified={{ ad.notified }} · last={{ ad.last_notified_at or "—" }}</p>
+    <table>
+      <thead><tr><th>Gate</th><th>Actual</th><th>Threshold</th><th>Result</th></tr></thead>
+      <tbody>
+      {% for ch in ad.checks %}
+        <tr>
+          <td>{{ ch.code }}</td>
+          <td class="mono">{{ ch.actual }}</td>
+          <td class="mono">{{ ch.threshold }}</td>
+          <td>{% if ch.passed %}PASS{% else %}<b>FAIL</b>{% endif %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="muted">No alert decision available.</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h2>Provenance timeline</h2>
+    <p class="muted">{{ structured.chronology_summary if structured else "" }}</p>
+    <ul class="timeline">
+    {% for item in timeline %}
+      <li>
+        <span class="mono muted">{{ item.t or "unknown" }}</span>
+        <span class="layer-{{ item.layer }}">{{ item.layer }}</span>
+        <span>
+          <b>{{ item.source }}</b>
+          {% if item.extra %}<span class="muted">· {{ item.extra }}</span>{% endif %}
+          {% if item.inferred %}<span class="muted">· inferred</span>{% endif %}
+          <br>
+          {% if item.url %}<a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>
+          {% else %}{{ item.title }}{% endif %}
+        </span>
+      </li>
+    {% else %}
+      <li class="muted">No timeline members</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class="card">
+    <h2>What changed?</h2>
+    <ul>
+    {% for m in (structured.material_changes if structured else []) %}
+      <li><span class="mono muted">{{ m.observed_at }}</span> <b>{{ m.event_type }}</b> — {{ m.summary or "" }}</li>
+    {% else %}
+      <li class="muted">No material LeadEvents recorded yet.</li>
+    {% endfor %}
+    </ul>
+    <h2 style="margin-top:14px">Evidence</h2>
+    <p>{{ lead.evidence_summary or "—" }}</p>
+    <h2>Uncertainty</h2>
+    <p class="muted">{{ lead.uncertainty_summary or "—" }}</p>
+  </div>
+</div>
+
+<p class="muted"><a href="/newsroom">← Newsroom</a>
+  · CLI: <span class="mono">python main.py --explain-lead {{ lead.id }}</span>
+</p>
+{% endblock %}

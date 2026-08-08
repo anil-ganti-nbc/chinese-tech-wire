@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Ingestion run #{{ run.id }} — CTW{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Ingestion run #{{ run.id }}</h2>
+  <div class="summary">
+    <span>Status <b>{{ run.status }}</b></span>
+    <span>Trigger <b>{{ run.trigger }}</b></span>
+    <span>Started <b>{{ fmt(run.started_at) }}</b></span>
+    <span>Duration <b>{{ run.duration_seconds or "—" }}s</b></span>
+  </div>
+  <div class="summary">
+    <span>Articles +{{ run.articles_new }}</span>
+    <span>Community +{{ run.community_threads_new }}</span>
+    <span>Documentary +{{ run.documentary_records_new }}</span>
+    <span>Leads +{{ run.leads_created }}</span>
+    <span>Alerts sent {{ run.alerts_sent }}</span>
+    <span>Err {{ run.error_count }}</span>
+  </div>
+  {% if run.alert_decision_summary %}
+  <h3>Alert funnel</h3>
+  <pre class="mono muted">{{ run.alert_decision_summary }}</pre>
+  {% endif %}
+  {% if run.summary %}<p class="mono muted">{{ run.summary }}</p>{% endif %}
+</div>
+<div class="card">
+  <h2>Source runs in window</h2>
+  <table>
+    <thead><tr><th>Source</th><th>OK</th><th>Found</th><th>New</th><th>Req err</th><th>ms</th><th>Error</th></tr></thead>
+    <tbody>
+    {% for s in src_runs %}
+      <tr>
+        <td>{{ s.source }}</td>
+        <td>{{ s.success }}</td>
+        <td class="mono">{{ s.articles_found }}</td>
+        <td class="mono">{{ s.articles_new }}</td>
+        <td class="mono">{{ s.request_errors }}</td>
+        <td class="mono">{{ s.response_time_ms or "—" }}</td>
+        <td class="muted">{{ s.error_message or "—" }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7" class="muted">No SourceRun rows in this window.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <h2>Notifications for this run</h2>
+  <table>
+    <thead><tr><th>Lead</th><th>Outcome</th><th>Reason</th><th>P</th><th>HTTP</th></tr></thead>
+    <tbody>
+    {% for n in notifs %}
+      <tr>
+        <td>{% if n.lead_id %}<a href="/leads/{{ n.lead_id }}">#{{ n.lead_id }}</a>{% else %}—{% endif %}</td>
+        <td>{{ n.outcome }}</td>
+        <td>{{ n.reason_code }}</td>
+        <td class="mono">{{ n.priority_score }}</td>
+        <td class="mono">{{ n.webhook_http_status or "—" }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="muted">None linked to this run id.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p><a href="/health">← Health</a></p>
+{% endblock %}

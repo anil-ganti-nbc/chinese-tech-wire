@@ -1,0 +1,7 @@
+# Build-only dependency for packaging the dashboard launcher.
+# Not required to run CTW from source — only to build ChineseTechWire.exe.
+#
+#   pip install -r requirements-build.txt
+#   .venv\Scripts\pyinstaller.exe ChineseTechWire.spec --noconfirm
+#
+pyinstaller>=6.0.0

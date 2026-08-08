@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Editorial validation — CTW{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Editorial validation</h2>
+  <p class="muted">Observational only — this page never scores, scrapes, alerts, or changes policy. It reads existing tables and reports what's measurable.</p>
+  <form class="filters" method="get" action="/validation">
+    <input type="number" name="since_days" value="{{ since_days or '' }}" min="0" step="0.5" placeholder="since days (optional)">
+    <button type="submit">Filter</button>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Funnel: Leads → Alerts → Useful → Written</h2>
+  <p class="mono">
+    {{ funnel.counts.total_leads }} leads
+    → {{ funnel.counts.alerted_leads }} alerted
+    → {{ funnel.counts.useful_leads }} useful
+    → {{ funnel.counts.written_leads }} written
+  </p>
+  <table>
+    <thead><tr><th>Metric</th><th>Value</th><th></th></tr></thead>
+    <tbody>
+    {% for name, d in funnel.rates.items() %}
+      <tr>
+        <td>{{ name.replace('_',' ') }}</td>
+        <td class="mono">{{ d.label }}</td>
+        <td>{% if d.warning %}<span class="muted">{{ d.warning }}</span>{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <p class="muted">Outcome coverage: {{ outcomes.leads_with_outcome }} / {{ outcomes.total_leads }} ({{ outcomes.outcome_coverage_pct }}%). Unlabeled leads are UNLABELED, not assumed not-useful.</p>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h2>Source editorial performance</h2>
+    <p class="muted">Separate from operational source health. Attribution is cluster-based (actual stored records, not just first-* fields) — no composite score, raw metrics only; volume ≠ usefulness.</p>
+    <table>
+      <thead><tr><th>Source</th><th>Layer</th><th>Records</th><th>Leads touched</th><th>1st signal</th><th>1st media</th><th>1st doc</th><th>Alerted</th><th>Useful</th><th>Written</th><th>False</th><th>Dup</th></tr></thead>
+      <tbody>
+      {% for s in sources %}
+        <tr>
+          <td>{{ s.source }}</td>
+          <td class="muted">{{ s.layer }}</td>
+          <td class="mono">{{ s.records_contributed }}</td>
+          <td class="mono">{{ s.leads_touched }}</td>
+          <td class="mono">{{ s.first_signal_count }}</td>
+          <td class="mono">{{ s.first_media_count }}</td>
+          <td class="mono">{{ s.first_documentary_count }}</td>
+          <td class="mono">{{ s.alerted_leads_touched }}</td>
+          <td class="mono">{{ s.useful_leads_touched }}</td>
+          <td class="mono">{{ s.written_leads_touched }}</td>
+          <td class="mono">{{ s.false_leads_touched }}</td>
+          <td class="mono">{{ s.duplicate_leads_touched }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="12" class="muted">No sources.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Lead-type performance</h2>
+    <table>
+      <thead><tr><th>Type</th><th>Total</th><th>Alerted</th><th>Useful</th><th>Written</th><th>False</th></tr></thead>
+      <tbody>
+      {% for t in lead_types %}
+        <tr>
+          <td>{{ t.lead_type }}</td>
+          <td class="mono">{{ t.total }}</td>
+          <td class="mono">{{ t.alerted }}</td>
+          <td class="mono">{{ t.useful }}</td>
+          <td class="mono">{{ t.written }}</td>
+          <td class="mono">{{ t.false }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6" class="muted">No leads.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h2>Alert usefulness</h2>
+    <p class="mono">{{ alerts.total_sent_leads }} leads alerted · written rate {{ alerts.written_rate.label }}
+      {% if alerts.written_rate.warning %}<span class="muted">[{{ alerts.written_rate.warning }}]</span>{% endif %}
+    </p>
+    <table>
+      <thead><tr><th>Alert reason</th><th>Sent</th><th>Useful</th><th>Written</th><th>Written rate</th></tr></thead>
+      <tbody>
+      {% for reason, s in alerts.by_alert_reason.items() %}
+        <tr>
+          <td>{{ reason }}</td>
+          <td class="mono">{{ s.sent }}</td>
+          <td class="mono">{{ s.useful }}</td>
+          <td class="mono">{{ s.written }}</td>
+          <td class="mono">{{ s.written_rate.label }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="muted">No sent alerts yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Lead-time analytics</h2>
+    <table>
+      <thead><tr><th>Interval</th><th>n</th><th>Median</th><th>p25 / p75</th></tr></thead>
+      <tbody>
+      {% for name, s in lead_times.intervals.items() %}
+        <tr>
+          <td>{{ name.replace('_',' ') }}</td>
+          {% if s.status == 'INSUFFICIENT_TIMESTAMP_DATA' %}
+          <td colspan="3" class="muted">INSUFFICIENT_TIMESTAMP_DATA</td>
+          {% else %}
+          <td class="mono">{{ s.count }}</td>
+          <td class="mono">{{ s.median_minutes }}m</td>
+          <td class="mono">{{ s.p25_minutes }}m / {{ s.p75_minutes }}m</td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h2>Lifecycle attrition</h2>
+    <table>
+      <thead><tr><th>Status</th><th>Count</th></tr></thead>
+      <tbody>
+      {% for status, n in lifecycle.status_counts.items() %}
+        <tr><td>{{ status }}</td><td class="mono">{{ n }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p class="muted" style="margin-top:8px"><b>Cross-reference</b></p>
+    <ul class="muted">
+      <li>WRITTEN leads that never reached WATCHING: {{ lifecycle.cross_reference.written_leads_never_reached_watching }}</li>
+      <li>USEFUL leads that remained NEW: {{ lifecycle.cross_reference.useful_leads_remained_new }}</li>
+      <li>FALSE leads that reached WATCHING: {{ lifecycle.cross_reference.false_leads_reached_watching }}</li>
+      <li>Alerted leads ultimately IGNORED: {{ lifecycle.cross_reference.alerted_leads_ultimately_ignored }}</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Missed stories</h2>
+    <p class="mono">{{ misses.total }} recorded · {{ misses.linked_to_lead }} linked to a lead · {{ misses.unlinked }} unlinked</p>
+    <table>
+      <thead><tr><th>When</th><th>Title</th><th>Failure stage</th></tr></thead>
+      <tbody>
+      {% for m in recent_misses %}
+        <tr>
+          <td class="mono muted">{{ m.recorded_at }}</td>
+          <td>{{ m.title }}</td>
+          <td class="muted">{{ m.failure_stage }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="3" class="muted">None recorded yet. CLI: <span class="mono">python main.py --record-miss --miss-title "..."</span></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<p class="muted">CLI: <span class="mono">python main.py --editorial-report / --source-performance / --lead-type-performance / --alert-performance / --lifecycle-report / --missed-story-report</span></p>
+{% endblock %}

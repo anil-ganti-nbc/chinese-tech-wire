@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+{% block title %}Health — CTW{% endblock %}
+{% block content %}
+<div class="summary">
+  <span>Articles <b>{{ n_art }}</b></span>
+  <span>Community <b>{{ n_ct }}</b></span>
+  <span>Documentary <b>{{ n_doc }}</b></span>
+  <span>Leads <b>{{ n_lead }}</b></span>
+</div>
+
+<div class="card">
+  <h2>Scheduler / last ingestion</h2>
+
+  <div id="sched-status">
+    {% if snapshot.scheduler.available %}
+    <p>Scheduler: <b>{{ snapshot.scheduler.status or "UNKNOWN" }}</b></p>
+    {% if snapshot.scheduler.next_run %}<p class="muted">Next run: {{ snapshot.scheduler.next_run }}</p>{% endif %}
+    {% if snapshot.scheduler.last_run %}<p class="muted">Last run: {{ snapshot.scheduler.last_run }}{% if snapshot.scheduler.last_result is not none %} (result {{ snapshot.scheduler.last_result }}){% endif %}</p>{% endif %}
+    {% else %}
+    <p>Scheduler: <b>UNKNOWN</b></p>
+    <p class="muted">{{ snapshot.scheduler.reason or "status unavailable" }}</p>
+    {% endif %}
+  </div>
+
+  <div id="current-run-box" class="card" style="margin-top:8px;{% if not snapshot.current_run %}display:none{% endif %}">
+    {% if snapshot.current_run %}
+    <p><b>RUNNING</b> · started {{ snapshot.current_run.started_at or "" }} · {{ snapshot.current_run.elapsed_seconds or 0 }}s elapsed</p>
+    {% endif %}
+  </div>
+
+  <div id="manual-result-box" class="card" style="margin-top:8px;display:none"></div>
+
+  <div style="margin-top:8px">
+    <button type="button" class="btn" id="run-now-btn" {% if snapshot.current_run %}disabled{% endif %}>&#9654; Run collector now</button>
+    <span id="run-now-msg" class="muted">{% if snapshot.current_run %}Collector already running{% endif %}</span>
+  </div>
+
+  <div id="last-run-box" style="margin-top:8px">
+    {% if snapshot.last_completed_run %}
+    <h3 style="margin:8px 0 4px">Last run</h3>
+    <p><b>{{ snapshot.last_completed_run.status }}</b> · {{ snapshot.last_completed_run.started_at or "" }} · {{ snapshot.last_completed_run.duration_seconds or "—" }}s</p>
+    <div class="summary">
+      <span>Articles +{{ snapshot.last_completed_run.articles_new }}</span>
+      <span>Community +{{ snapshot.last_completed_run.community_threads_new }}</span>
+      <span>Documentary +{{ snapshot.last_completed_run.documentary_records_new }}</span>
+      <span>Leads +{{ snapshot.last_completed_run.leads_created }}</span>
+      <span>Alerts {{ snapshot.last_completed_run.alerts_sent }}</span>
+      <span>Warn {{ snapshot.last_completed_run.warning_count }}</span>
+      <span>Err {{ snapshot.last_completed_run.error_count }}</span>
+    </div>
+    {% if snapshot.last_completed_run.summary %}<p class="muted mono">{{ snapshot.last_completed_run.summary }}</p>{% endif %}
+    {% else %}
+    <p class="muted">No IngestionRun yet. Run: <span class="mono">python main.py --full-once</span></p>
+    {% endif %}
+  </div>
+
+  <h3 style="margin:12px 0 4px">Recent ingestion runs — showing {{ snapshot.recent_runs|length }} of {{ snapshot.recent_runs_total }}</h3>
+  <table>
+    <thead><tr><th>Started</th><th>Trigger</th><th>Status</th><th>Dur</th><th>+Art</th><th>+Comm</th><th>+Doc</th><th>+Lead</th><th>Err</th></tr></thead>
+    <tbody id="recent-runs-body">
+    {% for r in snapshot.recent_runs %}
+      <tr>
+        <td class="mono muted">{{ r.started_at or "" }}</td>
+        <td>{{ r.trigger }}</td>
+        <td><b>{{ r.status }}</b></td>
+        <td class="mono">{{ r.duration_seconds or "—" }}</td>
+        <td class="mono">{{ r.articles_new }}</td>
+        <td class="mono">{{ r.community_threads_new }}</td>
+        <td class="mono">{{ r.documentary_records_new }}</td>
+        <td class="mono">{{ r.leads_created }}</td>
+        <td class="mono">{{ r.error_count }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="9" class="muted">No runs yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <p class="muted">
+    {% if runs_offset > 0 %}<a href="/health?runs_offset={{ [runs_offset - runs_limit, 0]|max }}">&larr; Newer</a>{% endif %}
+    {% if runs_offset + runs_limit < snapshot.recent_runs_total %}<a href="/health?runs_offset={{ runs_offset + runs_limit }}">Older runs &rarr;</a>{% endif %}
+  </p>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h2>Last activity</h2>
+    <p>News: {% if last_art %}<b>{{ last_art.source }}</b> {{ fmt(last_art.discovered_at) }}{% else %}—{% endif %}</p>
+    <p>Community: {% if last_ct %}<b>{{ last_ct.platform }}</b> {{ fmt(last_ct.discovered_at) }}{% else %}—{% endif %}</p>
+    <p>Documentary: {% if last_doc %}<b>{{ last_doc.source }}</b> {{ fmt(last_doc.observed_at) }}{% else %}—{% endif %}</p>
+  </div>
+  <div class="card">
+    <h2>Integrations</h2>
+    <p>Discord: <b>{{ discord }}</b></p>
+    <p>Translation: <b>{{ translation_status }}</b></p>
+    <p class="muted">Gemini rate limits are non-critical (DEGRADED, not failure).</p>
+  </div>
+</div>
+<div class="grid2">
+  <div class="card">
+    <h2>News sources (row counts)</h2>
+    <table>
+      {% for k,v in src_counts.items()|sort %}<tr><td>{{ k }}</td><td class="mono">{{ v }}</td></tr>{% else %}
+      <tr><td class="muted" colspan="2">none</td></tr>{% endfor %}
+    </table>
+  </div>
+  <div class="card">
+    <h2>Community platforms</h2>
+    <table>
+      {% for k,v in plat_counts.items()|sort %}<tr><td>{{ k }}</td><td class="mono">{{ v }}</td></tr>{% else %}
+      <tr><td class="muted" colspan="2">none</td></tr>{% endfor %}
+    </table>
+    <h2 style="margin-top:12px">Documentary</h2>
+    <table>
+      {% for k,v in doc_counts.items()|sort %}<tr><td>{{ k }}</td><td class="mono">{{ v }}</td></tr>{% else %}
+      <tr><td class="muted" colspan="2">none</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Source health {% if attention_count %}<span class="muted">({{ attention_count }} need attention)</span>{% endif %}</h2>
+  <p class="muted">Derived from SourceRun history. Quiet ≠ healthy. Disabled Geekbench is not a failure.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Source</th><th>Layer</th><th>Status</th><th>Last attempt</th><th>Last success</th>
+        <th>Last new</th><th>24h</th><th>7d</th><th>Fail</th><th>Zero</th><th>Error</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in source_health_rows or [] %}
+      <tr class="{% if r.status in ['FAILING','DEGRADED'] %}row-warn{% endif %}">
+        <td><b>{{ r.source }}</b></td>
+        <td>{{ r.layer }}</td>
+        <td><b>{{ r.status }}</b></td>
+        <td class="mono muted">{{ fmt(r.last_attempt) }}</td>
+        <td class="mono muted">{{ fmt(r.last_success) }}</td>
+        <td class="mono muted">{{ fmt(r.last_nonzero) }}</td>
+        <td class="mono">{{ r.records_24h }}</td>
+        <td class="mono">{{ r.records_7d }}</td>
+        <td class="mono">{{ r.fail_streak }}</td>
+        <td class="mono">{{ r.zero_streak }}</td>
+        <td class="muted">{{ r.last_error or r.note or "—" }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="11" class="muted">No health data yet — run a full cycle so SourceRun rows exist.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if snapshot.recent_runs %}
+<p class="muted">Open a run: {% for r in snapshot.recent_runs[:5] %}<a href="/runs/{{ r.id }}">#{{ r.id }}</a> {% endfor %}</p>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var runsOffset = {{ runs_offset }};
+  var runsLimit = {{ runs_limit }};
+  var manualRunId = sessionStorage.getItem('ctw_manual_run_id');
+
+  function fmtNum(v) { return (v === null || v === undefined) ? '—' : v; }
+  function fmtDur(s) { return (s === null || s === undefined) ? '—' : (s + 's'); }
+  function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = (s === null || s === undefined) ? '' : String(s);
+    return d.innerHTML;
+  }
+
+  function renderScheduler(sch) {
+    var box = document.getElementById('sched-status');
+    if (!box || !sch) return;
+    if (sch.available) {
+      var html = '<p>Scheduler: <b>' + esc(sch.status || 'UNKNOWN') + '</b></p>';
+      if (sch.next_run) html += '<p class="muted">Next run: ' + esc(sch.next_run) + '</p>';
+      if (sch.last_run) html += '<p class="muted">Last run: ' + esc(sch.last_run) +
+        (sch.last_result !== null && sch.last_result !== undefined ? ' (result ' + esc(sch.last_result) + ')' : '') + '</p>';
+      box.innerHTML = html;
+    } else {
+      box.innerHTML = '<p>Scheduler: <b>UNKNOWN</b></p><p class="muted">' + esc(sch.reason || 'status unavailable') + '</p>';
+    }
+  }
+
+  function renderCurrent(run) {
+    var box = document.getElementById('current-run-box');
+    var btn = document.getElementById('run-now-btn');
+    var msg = document.getElementById('run-now-msg');
+    if (run) {
+      box.style.display = '';
+      box.innerHTML = '<p><b>RUNNING</b> · started ' + esc(run.started_at) + ' · ' + fmtDur(run.elapsed_seconds) + ' elapsed</p>';
+      btn.disabled = true;
+      msg.textContent = 'Collector already running';
+    } else {
+      box.style.display = 'none';
+      btn.disabled = false;
+      if (msg.textContent === 'Collector already running') msg.textContent = '';
+    }
+  }
+
+  function renderLast(run) {
+    var box = document.getElementById('last-run-box');
+    if (!box) return;
+    if (!run) {
+      box.innerHTML = '<p class="muted">No IngestionRun yet. Run: <span class="mono">python main.py --full-once</span></p>';
+      return;
+    }
+    var html = '<h3 style="margin:8px 0 4px">Last run</h3>' +
+      '<p><b>' + esc(run.status) + '</b> · ' + esc(run.started_at) + ' · ' + fmtDur(run.duration_seconds) + '</p>' +
+      '<div class="summary">' +
+      '<span>Articles +' + fmtNum(run.articles_new) + '</span>' +
+      '<span>Community +' + fmtNum(run.community_threads_new) + '</span>' +
+      '<span>Documentary +' + fmtNum(run.documentary_records_new) + '</span>' +
+      '<span>Leads +' + fmtNum(run.leads_created) + '</span>' +
+      '<span>Alerts ' + fmtNum(run.alerts_sent) + '</span>' +
+      '<span>Warn ' + fmtNum(run.warning_count) + '</span>' +
+      '<span>Err ' + fmtNum(run.error_count) + '</span>' +
+      '</div>';
+    if (run.summary) html += '<p class="muted mono">' + esc(run.summary) + '</p>';
+    box.innerHTML = html;
+  }
+
+  function renderRecentRuns(rows) {
+    if (runsOffset !== 0 || !rows) return; // don't clobber a paginated/older view
+    var tbody = document.getElementById('recent-runs-body');
+    if (!tbody) return;
+    var html = '';
+    rows.forEach(function (r) {
+      html += '<tr><td class="mono muted">' + esc(r.started_at) + '</td><td>' + esc(r.trigger) + '</td>' +
+        '<td><b>' + esc(r.status) + '</b></td><td class="mono">' + fmtDur(r.duration_seconds) + '</td>' +
+        '<td class="mono">' + fmtNum(r.articles_new) + '</td><td class="mono">' + fmtNum(r.community_threads_new) + '</td>' +
+        '<td class="mono">' + fmtNum(r.documentary_records_new) + '</td><td class="mono">' + fmtNum(r.leads_created) + '</td>' +
+        '<td class="mono">' + fmtNum(r.error_count) + '</td></tr>';
+    });
+    tbody.innerHTML = html || '<tr><td colspan="9" class="muted">No runs yet.</td></tr>';
+  }
+
+  function renderTracked(run) {
+    var box = document.getElementById('manual-result-box');
+    if (!box) return;
+    if (!run) { box.style.display = 'none'; return; }
+    box.style.display = '';
+    if (run.status === 'RUNNING') {
+      box.innerHTML = '<p>Manual collection started&hellip;</p>';
+      return;
+    }
+    var title = run.status === 'SUCCESS' ? 'Manual run completed successfully'
+      : run.status === 'PARTIAL' ? 'Manual run completed with warnings'
+      : 'Manual run failed';
+    var html = '<p><b>' + esc(title) + '</b></p>' +
+      '<div class="summary">' +
+      '<span>Duration: ' + fmtDur(run.duration_seconds) + '</span>' +
+      '<span>Articles: +' + fmtNum(run.articles_new) + '</span>' +
+      '<span>Community threads: +' + fmtNum(run.community_threads_new) + '</span>' +
+      '<span>Documentary records: +' + fmtNum(run.documentary_records_new) + '</span>' +
+      '<span>StoryLeads: ' + fmtNum(run.leads_created) + '</span>' +
+      '<span>Alerts sent: ' + fmtNum(run.alerts_sent) + '</span>' +
+      '<span>Warnings: ' + fmtNum(run.warning_count) + '</span>' +
+      '<span>Errors: ' + fmtNum(run.error_count) + '</span>' +
+      '</div>';
+    if (run.failed_sources && run.failed_sources.length) {
+      html += '<p class="muted" style="margin-top:6px"><b>Failed source' + (run.failed_sources.length > 1 ? 's' : '') + ':</b></p><ul class="muted">';
+      run.failed_sources.forEach(function (f) {
+        html += '<li>' + esc(f.source) + ' — ' + esc(f.error || 'error') + '</li>';
+      });
+      html += '</ul>';
+    }
+    html += '<button type="button" class="btn" id="dismiss-manual-result">Dismiss</button>';
+    box.innerHTML = html;
+    var dismissBtn = document.getElementById('dismiss-manual-result');
+    if (dismissBtn) {
+      dismissBtn.onclick = function () {
+        sessionStorage.removeItem('ctw_manual_run_id');
+        manualRunId = null;
+        box.style.display = 'none';
+      };
+    }
+  }
+
+  function poll() {
+    var url = '/api/health/runtime?runs_offset=' + runsOffset + '&runs_limit=' + runsLimit;
+    if (manualRunId) url += '&manual_run_id=' + encodeURIComponent(manualRunId);
+    fetch(url).then(function (r) { return r.json(); }).then(function (data) {
+      renderScheduler(data.scheduler);
+      renderCurrent(data.current_run);
+      renderLast(data.last_completed_run);
+      renderRecentRuns(data.recent_runs);
+      if (manualRunId) renderTracked(data.tracked_run);
+    }).catch(function () {});
+  }
+
+  var btn = document.getElementById('run-now-btn');
+  if (btn) {
+    btn.addEventListener('click', function () {
+      btn.disabled = true;
+      var msg = document.getElementById('run-now-msg');
+      msg.textContent = 'Manual collection started…';
+      fetch('/operations/run-now', { method: 'POST' })
+        .then(function (r) { return r.json().then(function (data) { return { status: r.status, data: data }; }); })
+        .then(function (res) {
+          if (res.status === 409) {
+            msg.textContent = 'Collector already running';
+            if (res.data.run_id) {
+              manualRunId = res.data.run_id;
+              sessionStorage.setItem('ctw_manual_run_id', manualRunId);
+            }
+            poll();
+            return;
+          }
+          if (res.data.started) {
+            msg.textContent = '';
+            if (res.data.run_id) {
+              manualRunId = res.data.run_id;
+              sessionStorage.setItem('ctw_manual_run_id', manualRunId);
+            }
+          } else {
+            msg.textContent = 'Failed to start: ' + (res.data.reason || 'unknown error');
+            btn.disabled = false;
+          }
+          poll();
+        })
+        .catch(function () {
+          msg.textContent = 'Failed to start (network error)';
+          btn.disabled = false;
+        });
+    });
+  }
+
+  poll();
+  setInterval(poll, 7000);
+})();
+</script>
+{% endblock %}

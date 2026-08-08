@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Community — CTW{% endblock %}
+{% block content %}
+<form class="filters" method="get">
+  <select name="platform">
+    <option value="">All platforms</option>
+    {% for p in ['chiphell','mobile01','ptt','coolaler'] %}
+    <option value="{{ p }}" {{ 'selected' if platform==p else '' }}>{{ p }}</option>
+    {% endfor %}
+  </select>
+  <select name="signal">
+    <option value="">All signals</option>
+    {% for s in ['PHOTO_EVIDENCE','LEAK','RUMOR','SPECULATION','FIRSTHAND_CLAIM','REPOST','DISCUSSION'] %}
+    <option value="{{ s }}" {{ 'selected' if signal==s else '' }}>{{ s }}</option>
+    {% endfor %}
+  </select>
+  <select name="hours">
+    {% for h in [12,24,48,72,168] %}
+    <option value="{{ h }}" {{ 'selected' if hours==h else '' }}>{{ h }}h</option>
+    {% endfor %}
+  </select>
+  <button class="btn" type="submit">Filter</button>
+</form>
+<table>
+  <thead>
+    <tr><th>Score</th><th>Platform</th><th>Signal</th><th>Title</th><th>Evid</th><th>1st</th><th>Vel</th><th>R/V</th><th>Age</th></tr>
+  </thead>
+  <tbody>
+  {% for t in threads %}
+  <tr>
+    <td class="score {% if t.priority_score >= 80 %}hi{% elif t.priority_score >= 60 %}mid{% else %}lo{% endif %}">{{ '%.0f'|format(t.priority_score or 0) }}</td>
+    <td>{{ t.platform }}</td>
+    <td class="muted">{{ t.signal_type }}</td>
+    <td>{% if t.url %}<a href="{{ t.url }}" target="_blank" rel="noopener">{{ t.title_original }}</a>{% else %}{{ t.title_original }}{% endif %}
+      {% if t.story_cluster_id %}<div class="muted"><a href="/clusters/{{ t.story_cluster_id }}">cluster #{{ t.story_cluster_id }}</a></div>{% endif %}
+    </td>
+    <td class="mono">{{ '%.0f'|format(t.evidence_score or 0) }}</td>
+    <td class="mono">{{ '%.0f'|format(t.firsthand_score or 0) }}</td>
+    <td class="mono">{{ '%.0f'|format(t.velocity_score or 0) }}</td>
+    <td class="mono muted">{{ t.reply_count }}/{{ t.view_count }}</td>
+    <td class="mono muted">{{ age_str(t.discovered_at) }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="9" class="muted">No community threads</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+<div class="pager">page {{ page }} · {{ threads|length }}/{{ total }}</div>
+{% endblock %}

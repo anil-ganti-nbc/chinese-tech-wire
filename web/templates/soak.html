@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Soak — CTW{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Soak observation</h2>
+  <p class="muted">Raw counts only — no automatic conclusions.</p>
+  <div class="summary">
+    <span>Articles <b>{{ n_art }}</b></span>
+    <span>Community <b>{{ n_ct }}</b></span>
+    <span>Documentary <b>{{ n_doc }}</b></span>
+    <span>Leads <b>{{ n_lead }}</b></span>
+  </div>
+  <p>Earliest article: <b>{{ fmt(earliest) }}</b> · Latest: <b>{{ fmt(latest) }}</b></p>
+</div>
+<div class="grid2">
+  <div class="card">
+    <h2>Leads by status</h2>
+    <table>
+      {% for k,v in by_status.items()|sort %}<tr><td>{{ k }}</td><td class="mono">{{ v }}</td></tr>{% else %}
+      <tr><td class="muted" colspan="2">none</td></tr>{% endfor %}
+    </table>
+  </div>
+  <div class="card">
+    <h2>Leads by type</h2>
+    <table>
+      {% for k,v in by_type.items()|sort %}<tr><td>{{ k }}</td><td class="mono">{{ v }}</td></tr>{% else %}
+      <tr><td class="muted" colspan="2">none</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+<div class="card">
+  <h2>Editorial feedback</h2>
+  <table>
+    {% for k,v in by_fb.items()|sort %}<tr><td>{{ k }}</td><td class="mono">{{ v }}</td></tr>{% else %}
+    <tr><td class="muted" colspan="2">No feedback yet</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

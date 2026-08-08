@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Clusters — CTW{% endblock %}
+{% block content %}
+<table>
+  <thead>
+    <tr><th>ID</th><th>Title</th><th>N</th><th>C</th><th>D</th><th>First signal</th><th>First media</th><th>Updated</th></tr>
+  </thead>
+  <tbody>
+  {% for c in clusters %}
+  <tr>
+    <td class="mono"><a href="/clusters/{{ c.id }}">#{{ c.id }}</a></td>
+    <td>{{ c.representative_title or '—' }}</td>
+    <td class="mono">{{ counts[c.id].news }}</td>
+    <td class="mono">{{ counts[c.id].community }}</td>
+    <td class="mono">{{ counts[c.id].documentary }}</td>
+    <td class="muted">{{ c.first_signal_source or '—' }} {{ fmt(c.first_signal_at) }}</td>
+    <td class="muted">{{ c.first_media_source or '—' }} {{ fmt(c.first_media_at) }}</td>
+    <td class="mono muted">{{ fmt(c.updated_at) }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="8" class="muted">No clusters</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+<div class="pager">page {{ page }} · {{ clusters|length }}/{{ total }}</div>
+{% endblock %}
