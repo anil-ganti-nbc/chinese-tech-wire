@@ -22,6 +22,8 @@ Usage:
   python main.py --lead-audit ID
   python main.py --source-health
   python main.py --source-health --source benchlife
+  python main.py --identity
+  python main.py --health
   python main.py --test-translation
   python main.py --translate "中文标题"
 
@@ -482,6 +484,10 @@ def main() -> None:
                         help="With --preview-alerts, ignore policy_activated_at gate")
     parser.add_argument("--source-health", action="store_true",
                         help="Print per-source health classification")
+    parser.add_argument("--identity", action="store_true",
+                        help="Print runtime identity (clank_id, version, release_channel) as JSON")
+    parser.add_argument("--health", action="store_true",
+                        help="Print truthful runtime health as JSON (exits non-zero only when failed)")
     parser.add_argument("--feedback-report", action="store_true",
                         help="Analyze stored lead feedback (read-only)")
     parser.add_argument("--test-translation", action="store_true", help="Translate a fixed headline and show cache status")
@@ -558,6 +564,21 @@ def main() -> None:
     # Init DB
     init_db(settings.database_url)
     Path("data").mkdir(exist_ok=True)
+
+    if args.identity:
+        import json
+        from runtime_bridge import get_identity
+        print(json.dumps(get_identity(), indent=2, default=str))
+        return
+
+    if args.health:
+        import json
+        from runtime_bridge import get_health
+        payload = get_health()
+        print(json.dumps(payload, indent=2, default=str))
+        if payload.get("operational_state") == "failed":
+            sys.exit(1)
+        return
 
     if args.test_discord:
         from pipeline.notify import test_webhook

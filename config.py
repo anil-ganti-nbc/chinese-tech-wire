@@ -59,6 +59,11 @@ class Settings(BaseSettings):
     gemini_model: str = Field(default="gemini-2.0-flash", alias="GEMINI_MODEL")
     database_url: str = Field(default="sqlite:///data/ctw.db", alias="DATABASE_URL")
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
+    # Cloud migration / runtime bridge. Chinese Tech Wire is a Tier B
+    # (staging/soak only) clank — this must never default to a
+    # production-sounding value. "soaking" is the least-trusted channel;
+    # an operator has to explicitly opt in to anything else via env var.
+    release_channel: str = Field(default="soaking", alias="CTW_RELEASE_CHANNEL")
 
 
 def load_yaml_config() -> Dict[str, Any]:
