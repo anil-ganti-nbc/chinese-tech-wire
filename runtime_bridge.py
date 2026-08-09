@@ -34,6 +34,22 @@ PACKAGE_VERSION = "0.5.6.1"
 RUNTIME_BRIDGE_VERSION = "stage1.0"
 
 
+def _source_revision() -> str:
+    """Full Git SHA this image was built from, baked in at build time.
+
+    Set via the Dockerfile's `GIT_REVISION` build arg -> `CTW_SOURCE_REVISION`
+    env var. Never read from a `.git` directory at runtime (none exists in the
+    image). Local/non-Docker runs report "unknown" rather than a fabricated
+    value. Same pattern proven on OEM Radar's Hetzner deployment.
+    """
+    return os.environ.get("CTW_SOURCE_REVISION", "unknown")
+
+
+def _source_revision_short() -> str:
+    revision = _source_revision()
+    return revision if revision == "unknown" else revision[:12]
+
+
 def get_version_info() -> Dict[str, str]:
     return {
         "clank_id": CLANK_ID,
@@ -41,6 +57,8 @@ def get_version_info() -> Dict[str, str]:
         "package_name": "chinese-tech-wire",
         "release_channel": settings.release_channel,
         "runtime_bridge": RUNTIME_BRIDGE_VERSION,
+        "source_revision": _source_revision(),
+        "source_revision_short": _source_revision_short(),
     }
 
 
@@ -58,6 +76,8 @@ def get_identity() -> Dict[str, Any]:
         "clank_version": PACKAGE_VERSION,
         "release_channel": settings.release_channel,
         "runtime_bridge": RUNTIME_BRIDGE_VERSION,
+        "source_revision": _source_revision(),
+        "source_revision_short": _source_revision_short(),
     }
 
 
