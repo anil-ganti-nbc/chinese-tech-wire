@@ -1,5 +1,7 @@
 # Chinese Tech Wire — V0.1
 
+> Status: Staging / additional soak testing required
+
 Lightweight local news discovery tool that monitors major Chinese technology sites, normalizes metadata, scores stories for a hardware/semiconductor journalist, clusters duplicates, and pushes high-value leads to Discord.
 
 **Not an automated writer.** Goal: surface potentially newsworthy Chinese hardware / semiconductor / consumer-tech stories before or shortly after they hit English media.
