@@ -4,13 +4,20 @@
 # ai/handoff/DECISIONS.md.
 FROM python:3.12-slim-bookworm
 
-LABEL clank.id="chinese-tech-wire"
+# Full Git SHA this image was built from. Must be passed at build time (e.g.
+# `--build-arg GIT_REVISION=$(git rev-parse HEAD)`, or via docker-compose.yml's
+# build.args, defaulting to "unknown" for local/non-Git builds). Never derived
+# from a .git directory at runtime. Same pattern proven on OEM Radar.
+ARG GIT_REVISION=unknown
+LABEL clank.id="chinese-tech-wire" \
+      org.opencontainers.image.revision="${GIT_REVISION}"
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     DATABASE_URL=sqlite:////app/data/ctw.db \
-    CTW_RELEASE_CHANNEL=soaking
+    CTW_RELEASE_CHANNEL=soaking \
+    CTW_SOURCE_REVISION=${GIT_REVISION}
 
 WORKDIR /app
 
