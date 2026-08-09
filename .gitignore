@@ -12,3 +12,6 @@ logs/
 build/
 dist/
 *.exe
+
+# Local AI-tool config, not project content
+.claude/
