@@ -28,15 +28,40 @@ schema-affecting or portability-blocking defect was found.
   `.dockerignore`) and never touched by any Docker verification in this phase — all
   container tests ran against disposable named volumes, removed after use.
 
-## Explicitly deferred (needs a cloud host, not yet approved — and this clank has no
-## production tier to promote to even once a host exists)
+## Resolved since the above was written (2026-08-10 update)
 
-- External scheduler actually firing over real elapsed time.
-- Host reboot / container-crash recovery.
-- Notification delivery from a real target network (this phase deliberately never
-  exercised a real Discord webhook — `DISCORD_WEBHOOK_URL` was empty throughout, and the
-  one real `--full-once` run correctly evaluated alert eligibility (100 evaluated, 2
-  eligible) while sending 0, since no webhook was configured).
-- Tailscale / private-access model.
-- Any production release channel, compose file, or promotion path — out of scope for this
-  Tier B (staging/soak only) clank in this phase, by design, not by omission.
+- **External scheduler firing over real elapsed time**: resolved. 13 genuine
+  cron-triggered cycles observed on Hetzner (`5 * * * *`), all `SUCCESS`, 0
+  errors, 0 warnings, spanning 2026-08-09 19:47 UTC through 2026-08-10 06:00
+  UTC. See `STAGING_RELEASE_RUNBOOK.md`.
+- **Run-lock / overlap safety**: this clank has no in-application run-lock
+  (unlike OEM Radar/SemInt). An external `flock`-based lock was added at the
+  cron-wrapper level and **verified under a real deliberate overlap**: a
+  second invocation while one was mid-run was refused immediately (exit 1,
+  no output), the first continued normally to `SUCCESS`.
+- **Git-revision provenance**: implemented (`org.opencontainers.image.revision`
+  OCI label + `CTW_SOURCE_REVISION` env var, surfaced through `--identity`/
+  `--version`), the second proof case after OEM Radar. All three provenance
+  sources (GitHub SHA, image label, identity output) confirmed equal.
+
+## Still deferred (genuinely not yet exercised)
+
+- **Host reboot / container-crash recovery** — not tested for this specific
+  clank. The cron entry itself (plain crontab, not a systemd timer) survives
+  a host reboot on its own, but this has not been empirically verified with
+  an actual reboot for Chinese Tech Wire specifically.
+- **Notification delivery from a real target network** — still deliberately
+  untested. `DISCORD_WEBHOOK_URL` remains unset in the staging deployment;
+  every real cycle so far has evaluated ~100 alerts/run and sent 0, by
+  design (staging-safety default), not because delivery was tried and
+  failed.
+- **Tailscale / private-access model** — not applicable to the current
+  Hetzner deployment; deferred to the eventual NAS phase.
+- **Any production release channel, compose file, or promotion path** — out
+  of scope. This clank remains `NEEDS MORE TESTING` / staging-soak; 13 clean
+  scheduled cycles is soak evidence, not a production-readiness
+  determination, and no one has reclassified it.
+- **Restore drill against the live Hetzner volume** — the backup/restore
+  mechanism was proven pre-deployment against a throwaway volume; it has not
+  been re-exercised against the real Hetzner `ctw_staging_data` volume
+  (which now holds real soak history worth not risking casually).
