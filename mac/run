@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Run one manual collector cycle against the local dev database (data/ctw.db).
+# Defaults to a single known-good source (ithome) rather than a full --once
+# cycle across all sources.
+#
+# Usage:
+#   mac/run                       # ithome, live
+#   mac/run --source zol
+#   mac/run --source jiwei --dry-run
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+if [ ! -x ".venv/bin/python" ]; then
+    echo "error: no .venv found. Run mac/bootstrap first." >&2
+    exit 1
+fi
+
+if [ "$#" -eq 0 ]; then
+    echo "==> No source specified; defaulting to --source ithome"
+    exec .venv/bin/python main.py --source ithome
+else
+    exec .venv/bin/python main.py "$@"
+fi

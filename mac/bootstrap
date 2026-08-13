@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Set up (or reuse) a local macOS dev environment for Chinese Tech Wire.
+# Safe to re-run: never destroys an existing .venv, only installs/updates deps.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+PYTHON_VERSION="3.12"
+
+if ! command -v uv >/dev/null 2>&1; then
+    echo "error: 'uv' is not installed or not on PATH." >&2
+    echo "  Install it from https://docs.astral.sh/uv/ and re-run this script." >&2
+    exit 1
+fi
+
+if [ -d ".venv" ]; then
+    echo "==> Reusing existing .venv"
+else
+    echo "==> Creating .venv (Python $PYTHON_VERSION)"
+    uv venv --python "$PYTHON_VERSION" .venv
+fi
+
+echo "==> Installing/updating dependencies"
+uv pip install --python .venv/bin/python -r requirements.txt
+
+if [ ! -f ".env" ] && [ -f "mac/.env.example.macos" ]; then
+    cp "mac/.env.example.macos" ".env"
+    echo "==> Created .env from mac/.env.example.macos (Discord/translation left unset -- safe default)"
+fi
+
+echo ""
+echo "Bootstrap complete."
+echo "  Local dev state lives in the project's own data/ dir (already gitignored)."
+echo "  Next: mac/test, mac/health, mac/dashboard, or mac/run"

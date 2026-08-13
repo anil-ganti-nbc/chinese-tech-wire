@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Run the canonical Chinese Tech Wire test suite in the local macOS venv.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+if [ ! -x ".venv/bin/python" ]; then
+    echo "error: no .venv found. Run mac/bootstrap first." >&2
+    exit 1
+fi
+
+.venv/bin/python -m pytest -q "$@"
