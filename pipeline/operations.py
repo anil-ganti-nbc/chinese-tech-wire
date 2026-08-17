@@ -130,6 +130,23 @@ def failed_sources_for_run(run: IngestionRun, session) -> List[Dict[str, Any]]:
     ]
 
 
+def _collector_interpreter(root: Path) -> str:
+    """Python interpreter to run main.py with. From source, sys.executable
+    already is the running interpreter. When frozen (a packaged .app),
+    sys.executable is the app's own bootloader binary, not a python
+    interpreter — using it here would just re-launch the GUI itself, so use
+    the project's local virtualenv instead."""
+    if not getattr(sys, "frozen", False):
+        return sys.executable
+    for candidate in (root / ".venv" / "bin" / "python3", root / ".venv" / "Scripts" / "python.exe"):
+        if candidate.exists():
+            return str(candidate)
+    raise RuntimeError(
+        f"No project virtualenv found at {root / '.venv'} — cannot launch a manual "
+        "collector run from the packaged app"
+    )
+
+
 def launch_manual_run() -> subprocess.Popen:
     """Starts the exact same production full-cycle path the scheduled task
     uses (`python main.py --full-once`, MANUAL trigger — no --scheduled, so
@@ -138,6 +155,10 @@ def launch_manual_run() -> subprocess.Popen:
     if os.environ.get("CTW_DISABLE_COLLECTOR_LAUNCH") == "1":
         raise RuntimeError("Collector launch is disabled in this local field-test app")
     root = _project_root()
+    main_script = root / "main.py"
+    if not main_script.exists():
+        raise RuntimeError(f"Could not find main.py under resolved project root {root}")
+    interpreter = _collector_interpreter(root)
     log_path = root / "logs" / "manual-run.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)
     log_file = open(log_path, "a", encoding="utf-8")
@@ -145,7 +166,7 @@ def launch_manual_run() -> subprocess.Popen:
     log_file.flush()
 
     proc = subprocess.Popen(
-        [sys.executable, str(root / "main.py"), "--full-once"],
+        [interpreter, str(main_script), "--full-once"],
         cwd=str(root),
         stdout=log_file,
         stderr=subprocess.STDOUT,

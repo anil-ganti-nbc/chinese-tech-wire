@@ -35,7 +35,10 @@ def configure_field_test_runtime() -> tuple[Path, Path]:
     os.environ["CTW_CONFIG_DIR"] = str(resources / "config")
     os.environ["CTW_ENV_FILE"] = str(state / "field-test.env")
     os.environ["DATABASE_URL"] = f"sqlite:///{state / 'ctw.db'}"
-    os.environ["CTW_DISABLE_COLLECTOR_LAUNCH"] = "1"
+    # Field test permits real local collection (isolated DB, no production
+    # delivery/secrets) — do not force CTW_DISABLE_COLLECTOR_LAUNCH here.
+    # The kill switch itself stays in pipeline.operations.launch_manual_run
+    # for anyone who explicitly wants to disable it.
     for secret in ("DISCORD_WEBHOOK_URL", "TRANSLATION_API_KEY", "GEMINI_API_KEY"):
         os.environ.pop(secret, None)
     return state, resources

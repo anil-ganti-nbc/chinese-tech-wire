@@ -269,6 +269,27 @@ def test_project_root_frozen_mode_finds_root_from_dist_subdir(monkeypatch, tmp_p
         monkeypatch.delattr(sys, "frozen", raising=False)
 
 
+def test_project_root_frozen_mode_finds_root_from_macos_app_bundle(monkeypatch, tmp_path):
+    """native/macos/ChineseTechWire.spec builds a macOS .app bundle whose
+    real binary lives 6 levels below the project root (native/macos/dist/
+    Chinese Tech Wire.app/Contents/MacOS/) — deeper than the flat
+    dist/*.exe case above. The upward search must reach that far or manual
+    collector launches silently resolve to the wrong directory."""
+    (tmp_path / "config").mkdir()
+    (tmp_path / "config" / "settings.yaml").write_text("{}", encoding="utf-8")
+    macos_dir = tmp_path / "native" / "macos" / "dist" / "Chinese Tech Wire.app" / "Contents" / "MacOS"
+    macos_dir.mkdir(parents=True)
+    fake_exe = macos_dir / "Chinese Tech Wire"
+    fake_exe.write_bytes(b"")
+    monkeypatch.setattr(sys, "frozen", True, raising=False)
+    monkeypatch.setattr(sys, "executable", str(fake_exe))
+    try:
+        root = launcher.project_root()
+        assert root == tmp_path
+    finally:
+        monkeypatch.delattr(sys, "frozen", raising=False)
+
+
 def test_validate_project_root_fails_loudly_on_missing_config(tmp_path):
     empty_dir = tmp_path / "not_a_ctw_checkout"
     empty_dir.mkdir()
