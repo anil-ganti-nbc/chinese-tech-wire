@@ -11,6 +11,7 @@ happens in that separate process, not in the web request.
 from __future__ import annotations
 
 import logging
+import os
 import subprocess
 import sys
 import time
@@ -134,6 +135,8 @@ def launch_manual_run() -> subprocess.Popen:
     uses (`python main.py --full-once`, MANUAL trigger — no --scheduled, so
     it's never confused with a Task Scheduler run) as a detached background
     process. Does not block on collection."""
+    if os.environ.get("CTW_DISABLE_COLLECTOR_LAUNCH") == "1":
+        raise RuntimeError("Collector launch is disabled in this local field-test app")
     root = _project_root()
     log_path = root / "logs" / "manual-run.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)
