@@ -11,6 +11,8 @@ data/
 logs/
 build/
 dist/
+native/macos/build/
+native/macos/dist/
 *.exe
 
 # Local AI-tool config, not project content

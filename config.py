@@ -40,12 +40,12 @@ if getattr(sys, "frozen", False):
     ROOT = _find_root_upward(Path(sys.executable).resolve().parent)
 else:
     ROOT = Path(__file__).resolve().parent
-CONFIG_DIR = ROOT / "config"
-DATA_DIR = ROOT / "data"
+CONFIG_DIR = Path(os.environ.get("CTW_CONFIG_DIR", ROOT / "config")).expanduser().resolve()
+DATA_DIR = Path(os.environ.get("CTW_DATA_DIR", ROOT / "data")).expanduser().resolve()
 
 
 class Settings(BaseSettings):
-    model_config = {"env_file": ".env", "extra": "ignore"}
+    model_config = {"env_file": None, "extra": "ignore"}
 
     discord_webhook_url: str = Field(default="", alias="DISCORD_WEBHOOK_URL")
     translation_provider: str = Field(default="none", alias="TRANSLATION_PROVIDER")
@@ -75,8 +75,9 @@ def load_yaml_config() -> Dict[str, Any]:
 
 
 def get_settings() -> Settings:
-    load_dotenv(ROOT / ".env")
-    return Settings()
+    env_file = Path(os.environ.get("CTW_ENV_FILE", ROOT / ".env")).expanduser().resolve()
+    load_dotenv(env_file)
+    return Settings(_env_file=env_file)
 
 
 # Global convenience
