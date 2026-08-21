@@ -129,7 +129,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist
-          cyclonedx-py environment --output-reproducible --of JSON -o dist/sbom.cdx.json "python"
+          cyclonedx-py environment --output-reproducible --of JSON -o dist/sbom.cdx.json
           python -c 'import hashlib,json,os,pathlib; files=[p for p in pathlib.Path(".").rglob("*lock*") if p.is_file() and ".git" not in p.parts]; data={"git_sha":os.environ["GITHUB_SHA"],"repository":os.environ["GITHUB_REPOSITORY"],"locks":{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}}; pathlib.Path("dist/provenance.json").write_text(json.dumps(data,sort_keys=True,indent=2)+"\n")'
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
