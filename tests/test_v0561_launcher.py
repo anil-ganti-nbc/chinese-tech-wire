@@ -92,12 +92,11 @@ def test_launcher_binds_only_to_loopback():
         s.listen(1)  # succeeds — port was genuinely free and not held open
 
 
-def test_run_gui_warns_on_non_loopback_host(caplog):
+def test_run_gui_rejects_non_loopback_host():
     from web.app import run_gui
     with patch("uvicorn.run"):
-        with caplog.at_level(logging.WARNING, logger="web.app"):
+        with pytest.raises(ValueError, match="must be loopback"):
             run_gui(host="0.0.0.0", port=19561)
-    assert any("non-loopback" in r.message for r in caplog.records)
 
 
 # ---------------------------------------------------------------------------

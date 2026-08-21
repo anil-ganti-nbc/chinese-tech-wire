@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import logging
+import hmac
+import ipaddress
+import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 from fastapi import FastAPI, Form, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
@@ -13,6 +16,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import desc, func, or_, select
 from markupsafe import escape
+
+from security.redaction import install_logging_redaction
+
+install_logging_redaction()
 
 from database.db import get_session, init_db
 from database.models import (
@@ -41,6 +48,24 @@ templates = Jinja2Templates(directory=str(BASE / "templates"))
 
 app = FastAPI(title="Chinese Tech Wire Newsroom", docs_url=None, redoc_url=None)
 app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
+
+
+@app.middleware("http")
+async def authenticated_mutations_only(request: Request, call_next):
+    if request.method not in {"GET", "HEAD", "OPTIONS"}:
+        supplied = request.headers.get("Authorization", "")
+        injected = getattr(request.app.state, "mutation_authorizer", None)
+        if injected is None:
+            expected = os.environ.get("CTW_DASHBOARD_AUTH_TOKEN", "")
+            authorized = bool(expected) and hmac.compare_digest(supplied, f"Bearer {expected}")
+        else:
+            authorized = bool(injected(supplied))
+        if not authorized:
+            return JSONResponse(
+                status_code=403,
+                content={"detail": "Authenticated dashboard profile required for mutations."},
+            )
+    return await call_next(request)
 
 
 def _now() -> datetime:
@@ -1012,16 +1037,22 @@ def lead_outcome_post(
     return RedirectResponse(f"/leads/{lead_id}?outcome=1", status_code=303)
 
 
-def create_app() -> FastAPI:
+def create_app(
+    *, mutation_authorizer: Callable[[str | None], bool] | None = None
+) -> FastAPI:
     init_db()
+    app.state.mutation_authorizer = mutation_authorizer
     return app
 
 
 def run_gui(host: str = "127.0.0.1", port: int = 8000) -> None:
-    if host not in ("127.0.0.1", "localhost", "::1"):
-        logger.warning(
-            "GUI binding to non-loopback host %s — this exposes the local newsroom UI",
-            host,
+    try:
+        loopback = ipaddress.ip_address(host).is_loopback
+    except ValueError:
+        loopback = host.lower() == "localhost"
+    if not loopback:
+        raise ValueError(
+            "Chinese Tech Wire has no authenticated remote profile; GUI host must be loopback"
         )
     import uvicorn
 

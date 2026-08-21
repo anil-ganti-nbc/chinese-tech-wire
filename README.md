@@ -1,5 +1,9 @@
 # Chinese Tech Wire — V0.1
 
+> **Phase 0: UNVERIFIED_PRODUCTION — promotion frozen.** See
+> [`PHASE0_CONTAINMENT.md`](PHASE0_CONTAINMENT.md); historical secret scanning
+> and credential rotation remain operator-required before release.
+
 > Status: Staging / additional soak testing required
 
 Lightweight local news discovery tool that monitors major Chinese technology sites, normalizes metadata, scores stories for a hardware/semiconductor journalist, clusters duplicates, and pushes high-value leads to Discord.

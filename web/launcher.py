@@ -22,6 +22,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
+from security.redaction import protect_handler
+
 logger = logging.getLogger("ctw.launcher")
 
 # Dedicated CTW range, tried before falling back to an OS-assigned ephemeral
@@ -111,6 +113,7 @@ def setup_launcher_logging(root: Optional[Path] = None) -> Path:
     log_dir.mkdir(parents=True, exist_ok=True)
     log_path = log_dir / "dashboard-launcher.log"
     handler = logging.FileHandler(log_path, encoding="utf-8")
+    protect_handler(handler)
     handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
     logger.addHandler(handler)
     logger.setLevel(logging.INFO)

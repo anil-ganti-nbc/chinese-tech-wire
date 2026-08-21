@@ -2,7 +2,7 @@
 # Do not treat this as, or label this, a production deployment. No
 # production compose file exists for this clank in this phase; see
 # ai/handoff/DECISIONS.md.
-FROM python:3.12-slim-bookworm
+FROM python:3.12-slim-bookworm@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134
 
 # Full Git SHA this image was built from. Must be passed at build time (e.g.
 # `--build-arg GIT_REVISION=$(git rev-parse HEAD)`, or via docker-compose.yml's
@@ -26,9 +26,8 @@ RUN useradd --create-home --uid 10001 --shell /usr/sbin/nologin ctw
 # Dependencies first for layer caching. requirements.txt only — NOT
 # requirements-build.txt, which is PyInstaller-only and irrelevant to the
 # container path (dist/ChineseTechWire.exe is a separate distribution).
-COPY requirements.txt ./
-RUN pip install --upgrade pip \
-    && pip install -r requirements.txt
+COPY requirements.lock ./
+RUN pip install --require-hashes -r requirements.lock
 
 # Application code. Deliberately excludes tests/, ai/, build/, dist/, and
 # the PyInstaller launcher (launcher_main.py, ChineseTechWire.spec) — none

@@ -301,10 +301,7 @@ class GeminiTranslator(Translator):
                 self._backoff_logged = True
             raise TranslateSkip("rate_limited_backoff")
 
-        url = (
-            f"{self.API_BASE}/models/{self.model_name}:generateContent"
-            f"?key={self.api_key}"
-        )
+        url = f"{self.API_BASE}/models/{self.model_name}:generateContent"
         payload = {
             "contents": [
                 {
@@ -321,7 +318,9 @@ class GeminiTranslator(Translator):
         last_err: Optional[Exception] = None
         for attempt in range(self.max_retries + 1):
             try:
-                resp = self._client.post(url, json=payload)
+                resp = self._client.post(
+                    url, json=payload, headers={"x-goog-api-key": self.api_key}
+                )
                 if resp.status_code == 429:
                     self._backoff_until = time.monotonic() + 60.0
                     self._backoff_logged = False  # allow one log when next backoff hits
@@ -372,16 +371,16 @@ class GeminiTranslator(Translator):
                 return None
             except httpx.HTTPError as e:
                 last_err = e
-                logger.warning("[TRANSLATE] Gemini HTTP error: %s", e)
+                logger.warning("[TRANSLATE] Gemini HTTP error_type=%s", type(e).__name__)
                 if attempt < self.max_retries:
                     time.sleep(1.0 * (attempt + 1))
                     continue
                 return None
             except Exception as e:
-                logger.warning("[TRANSLATE] Gemini unexpected error: %s", e)
+                logger.warning("[TRANSLATE] Gemini unexpected error_type=%s", type(e).__name__)
                 return None
         if last_err:
-            logger.warning("[TRANSLATE] Gemini failed after retries: %s", last_err)
+            logger.warning("[TRANSLATE] Gemini failed after retries error_type=%s", type(last_err).__name__)
         return None
 
 
