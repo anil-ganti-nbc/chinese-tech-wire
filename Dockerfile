@@ -38,6 +38,7 @@ COPY community_sources ./community_sources
 COPY documentary_sources ./documentary_sources
 COPY database ./database
 COPY pipeline ./pipeline
+COPY security ./security
 COPY web ./web
 COPY config ./config
 COPY scripts ./scripts
