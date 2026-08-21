@@ -86,6 +86,7 @@ from pipeline.documentary_ingest import run_documentary_source
 from pipeline.newsroom import (
     rebuild_leads, list_leads, format_brief, explain_lead, add_feedback,
 )
+from security.redaction import install_logging_redaction
 from documentary_sources import DOCUMENTARY_REGISTRY
 from community_sources import COMMUNITY_REGISTRY
 from pipeline.upstream import detect_upstream
@@ -118,6 +119,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
+install_logging_redaction()
 logger = logging.getLogger("ctw")
 
 

@@ -89,6 +89,21 @@ def test_gemini_parse_success():
     assert "Nvidia" in result or "nvidia" in result.lower() or "RTX" in result
 
 
+def test_gemini_key_is_sent_in_header_not_query_string():
+    mock_resp = MagicMock(status_code=200)
+    mock_resp.json.return_value = {
+        "candidates": [{"content": {"parts": [{"text": "Translated headline"}]}}]
+    }
+    mock_resp.raise_for_status = MagicMock()
+    t = GeminiTranslator(api_key="sentinel-header-key", model="gemini-2.0-flash")
+    with patch.object(t._client, "post", return_value=mock_resp) as post:
+        assert t.translate_raw("测试") == "Translated headline"
+    url = post.call_args.args[0]
+    assert "sentinel-header-key" not in url
+    assert "?key=" not in url
+    assert post.call_args.kwargs["headers"] == {"x-goog-api-key": "sentinel-header-key"}
+
+
 def test_gemini_full_translate_uses_cache_on_second_call():
     fake_json = {
         "candidates": [

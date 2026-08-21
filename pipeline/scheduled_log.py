@@ -6,6 +6,8 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
 
+from security.redaction import protect_handler
+
 _configured = False
 
 
@@ -37,17 +39,7 @@ def setup_scheduled_logging(log_dir: str | Path | None = None) -> Path:
     if root_logger.level > logging.INFO:
         root_logger.setLevel(logging.INFO)
 
-    # Never attach secrets — redact common env-looking patterns in a filter
-    class _Redact(logging.Filter):
-        def filter(self, record: logging.LogRecord) -> bool:
-            msg = str(record.getMessage())
-            for key in ("DISCORD_WEBHOOK", "API_KEY", "GEMINI_API", "OPENAI_API", "Bearer "):
-                if key in msg:
-                    record.msg = "[REDACTED sensitive log line]"
-                    record.args = ()
-            return True
-
-    handler.addFilter(_Redact())
+    protect_handler(handler)
     _configured = True
     logging.getLogger("ctw.full_cycle").info("Scheduled logging → %s", logfile)
     return logfile
