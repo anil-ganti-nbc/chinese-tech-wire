@@ -36,7 +36,7 @@ jobs:
         run: |
           lockcheck="$(mktemp -d)"
           cp requirements.txt "$lockcheck/requirements.txt"
-          (cd "$lockcheck" && uv pip compile requirements.txt --universal --generate-hashes --output-file requirements.lock)
+          (cd "$lockcheck" && uv pip compile requirements.txt --python-version 3.12 --universal --generate-hashes --output-file requirements.lock)
           cmp requirements.lock "$lockcheck/requirements.lock"
       - name: Required correctness lint
         run: |
