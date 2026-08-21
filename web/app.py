@@ -8,7 +8,7 @@ import ipaddress
 import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 from fastapi import FastAPI, Form, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
@@ -16,6 +16,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import desc, func, or_, select
 from markupsafe import escape
+
+from security.redaction import install_logging_redaction
+
+install_logging_redaction()
 
 from database.db import get_session, init_db
 from database.models import (
@@ -48,13 +52,15 @@ app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 
 @app.middleware("http")
 async def authenticated_mutations_only(request: Request, call_next):
-    if (
-        request.method not in {"GET", "HEAD", "OPTIONS"}
-        and os.environ.get("CTW_TEST_ALLOW_UNAUTH_MUTATIONS") != "1"
-    ):
-        expected = os.environ.get("CTW_DASHBOARD_AUTH_TOKEN", "")
+    if request.method not in {"GET", "HEAD", "OPTIONS"}:
         supplied = request.headers.get("Authorization", "")
-        if not expected or not hmac.compare_digest(supplied, f"Bearer {expected}"):
+        injected = getattr(request.app.state, "mutation_authorizer", None)
+        if injected is None:
+            expected = os.environ.get("CTW_DASHBOARD_AUTH_TOKEN", "")
+            authorized = bool(expected) and hmac.compare_digest(supplied, f"Bearer {expected}")
+        else:
+            authorized = bool(injected(supplied))
+        if not authorized:
             return JSONResponse(
                 status_code=403,
                 content={"detail": "Authenticated dashboard profile required for mutations."},
@@ -1031,8 +1037,11 @@ def lead_outcome_post(
     return RedirectResponse(f"/leads/{lead_id}?outcome=1", status_code=303)
 
 
-def create_app() -> FastAPI:
+def create_app(
+    *, mutation_authorizer: Callable[[str | None], bool] | None = None
+) -> FastAPI:
     init_db()
+    app.state.mutation_authorizer = mutation_authorizer
     return app
 
 

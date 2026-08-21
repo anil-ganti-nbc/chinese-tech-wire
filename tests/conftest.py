@@ -2,5 +2,9 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
-def _explicit_test_mutation_profile(monkeypatch):
-    monkeypatch.setenv("CTW_TEST_ALLOW_UNAUTH_MUTATIONS", "1")
+def _explicit_test_mutation_profile():
+    from web.app import app
+
+    app.state.mutation_authorizer = lambda _value: True
+    yield
+    app.state.mutation_authorizer = None

@@ -3,6 +3,8 @@ from __future__ import annotations
 import logging
 import os
 import re
+from pathlib import Path
+from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 
@@ -17,6 +19,12 @@ _KEY_VALUE = re.compile(
 )
 _WEBHOOK = re.compile(r"https://(?:discord(?:app)?\.com)/api/webhooks/[^\s]+", re.I)
 _URL = re.compile(r"https?://[^\s<>'\"]+")
+_KNOWN_KEY = re.compile(
+    r"(?:AIza[0-9A-Za-z_-]{35}|sk-[A-Za-z0-9_-]{20,}|github_pat_[A-Za-z0-9_]{20,}|"
+    r"gh[opsu]_[A-Za-z0-9]{20,}|sk-ant-[A-Za-z0-9_-]{20,})"
+)
+_installed = False
+_previous_factory = logging.getLogRecordFactory()
 
 
 def redact_url(value: str) -> str:
@@ -40,6 +48,7 @@ def redact_text(value: object) -> str:
         if secret:
             text = text.replace(secret, "[REDACTED]")
     text = _WEBHOOK.sub("[REDACTED_WEBHOOK]", text)
+    text = _KNOWN_KEY.sub("[REDACTED_KEY]", text)
     text = _BEARER.sub("Bearer [REDACTED]", text)
     text = _KEY_VALUE.sub(r"\1\2[REDACTED]", text)
     text = _URL.sub(lambda match: redact_url(match.group(0)), text)
@@ -48,6 +57,30 @@ def redact_text(value: object) -> str:
 
 def safe_error(exc: BaseException) -> dict[str, str]:
     return {"error_type": type(exc).__name__, "error": redact_text(exc)}
+
+
+def sanitize_payload(value: Any) -> Any:
+    """Recursively sanitize values before diagnostics or artifacts persist."""
+    if isinstance(value, dict):
+        return {str(key): sanitize_payload(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [sanitize_payload(item) for item in value]
+    if isinstance(value, BaseException):
+        return safe_error(value)
+    if isinstance(value, str):
+        return redact_text(value)
+    return value
+
+
+def sanitize_artifact(source: Path, destination: Path, *, max_bytes: int = 5 * 1024 * 1024) -> None:
+    """Write a redacted text artifact without modifying the source."""
+    source = source.resolve()
+    destination = destination.resolve()
+    if source == destination:
+        raise ValueError("artifact redaction must never overwrite its source")
+    if source.stat().st_size > max_bytes:
+        raise ValueError("artifact exceeds the bounded redaction size")
+    destination.write_text(redact_text(source.read_text(encoding="utf-8", errors="replace")), encoding="utf-8")
 
 
 class RedactingFilter(logging.Filter):
@@ -71,6 +104,27 @@ def protect_handler(handler: logging.Handler) -> logging.Handler:
 
 
 def install_logging_redaction() -> None:
+    global _installed
+    if not _installed:
+        def redacting_factory(*args, **kwargs):
+            record = _previous_factory(*args, **kwargs)
+            record.msg = redact_text(record.getMessage())
+            record.args = ()
+            if record.exc_info:
+                exc = record.exc_info[1]
+                record.msg = (
+                    f"{record.msg} error_type={type(exc).__name__} "
+                    f"error={redact_text(exc)}"
+                )
+                record.exc_info = None
+                record.exc_text = None
+            return record
+
+        logging.setLogRecordFactory(redacting_factory)
+        _installed = True
     root = logging.getLogger()
     for handler in root.handlers:
         protect_handler(handler)
+    for name in ("uvicorn", "uvicorn.error", "uvicorn.access"):
+        for handler in logging.getLogger(name).handlers:
+            protect_handler(handler)

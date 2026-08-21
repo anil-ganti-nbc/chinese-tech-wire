@@ -64,6 +64,10 @@ def main() -> int:
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
 
+    from security.redaction import install_logging_redaction
+
+    install_logging_redaction()
+
     from web.launcher import (
         ProjectRootError,
         clear_runtime_state,

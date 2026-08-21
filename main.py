@@ -73,6 +73,10 @@ for _stream in (sys.stdout, sys.stderr):
     except (AttributeError, ValueError):
         pass
 
+from security.redaction import install_logging_redaction, redact_text
+
+install_logging_redaction()
+
 from config import settings, yaml_config
 from database.db import get_session, init_db
 from database.models import Article, SourceRun, StoryCluster
@@ -86,7 +90,6 @@ from pipeline.documentary_ingest import run_documentary_source
 from pipeline.newsroom import (
     rebuild_leads, list_leads, format_brief, explain_lead, add_feedback,
 )
-from security.redaction import install_logging_redaction
 from documentary_sources import DOCUMENTARY_REGISTRY
 from community_sources import COMMUNITY_REGISTRY
 from pipeline.upstream import detect_upstream
@@ -158,7 +161,7 @@ def run_source(source_name: str, dry_run: bool = False) -> int:
                 parse_errors=0,
                 request_errors=1,
                 response_time_ms=int((time.monotonic() - t0) * 1000),
-                error_message=str(e)[:500],
+                error_message=redact_text(e)[:500],
             )
             session.add(run)
         src.close()

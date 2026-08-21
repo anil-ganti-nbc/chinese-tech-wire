@@ -11,6 +11,7 @@ import httpx
 
 from config import settings, yaml_config
 from database.models import Article
+from security.redaction import redact_text
 
 logger = logging.getLogger(__name__)
 
@@ -229,7 +230,7 @@ def send_discord_result(payload: Dict[str, Any], dry_run: bool = False) -> Disco
         logger.error("[DISCORD] Failed: %s", type(e).__name__)
         return DiscordSendResult(
             attempted=True, sent=False, dry_run=False,
-            reason="EXCEPTION", error=f"{type(e).__name__}: {e}"[:300],
+            reason="EXCEPTION", error=redact_text(f"{type(e).__name__}: {e}")[:300],
         )
 
 
