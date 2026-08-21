@@ -34,7 +34,11 @@ RUNTIME_STATE_FILENAME = "dashboard_runtime.json"
 
 
 _ROOT_MARKER = Path("config") / "settings.yaml"
-_ROOT_SEARCH_LEVELS = 4
+# A flat dist/ChineseTechWire.exe sits 1 level below root. A macOS .app
+# bundle built by native/macos/ChineseTechWire.spec nests the executable at
+# native/macos/dist/Chinese Tech Wire.app/Contents/MacOS/, 6 levels below
+# root — search deep enough to cover that plus headroom for future nesting.
+_ROOT_SEARCH_LEVELS = 8
 
 
 def _find_root_upward(start: Path, max_levels: int = _ROOT_SEARCH_LEVELS) -> Optional[Path]:

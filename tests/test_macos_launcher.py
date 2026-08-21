@@ -22,7 +22,7 @@ def test_field_test_runtime_is_isolated(tmp_path, monkeypatch):
     monkeypatch.setenv("CTW_DATA_DIR", str(state))
     monkeypatch.setenv("CTW_CONFIG_DIR", "placeholder")
     monkeypatch.setenv("CTW_ENV_FILE", "placeholder")
-    monkeypatch.setenv("CTW_DISABLE_COLLECTOR_LAUNCH", "0")
+    monkeypatch.delenv("CTW_DISABLE_COLLECTOR_LAUNCH", raising=False)
     monkeypatch.setenv("DATABASE_URL", "postgresql://production.invalid/ctw")
     monkeypatch.setenv("DISCORD_WEBHOOK_URL", "secret")
     monkeypatch.setenv("TRANSLATION_API_KEY", "secret")
@@ -34,7 +34,9 @@ def test_field_test_runtime_is_isolated(tmp_path, monkeypatch):
     assert os.environ["DATABASE_URL"] == f"sqlite:///{resolved / 'ctw.db'}"
     assert os.environ["CTW_ENV_FILE"] == str(resolved / "field-test.env")
     assert os.environ["CTW_CONFIG_DIR"] == str(resources / "config")
-    assert os.environ["CTW_DISABLE_COLLECTOR_LAUNCH"] == "1"
+    # Field test allows real local collection: the launcher must not force
+    # the collector-launch kill switch on.
+    assert "CTW_DISABLE_COLLECTOR_LAUNCH" not in os.environ
     assert "DISCORD_WEBHOOK_URL" not in os.environ
     assert "TRANSLATION_API_KEY" not in os.environ
     assert "GEMINI_API_KEY" not in os.environ

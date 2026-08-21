@@ -10,15 +10,18 @@ Windows Task Scheduler query, no live network.
 
 from __future__ import annotations
 
+import sys
 from datetime import datetime, timedelta, timezone
 from unittest.mock import MagicMock, patch
 
+import pytest
 from sqlalchemy import select
 
 from database.db import get_session, init_db
 from database.models import IngestionRun, SourceRun
 from pipeline.operations import (
     STALE_RUNNING_THRESHOLD_HOURS,
+    _collector_interpreter,
     active_running_run,
     correlate_new_run,
     failed_sources_for_run,
@@ -242,6 +245,34 @@ def test_run_now_launches_production_full_cycle_subprocess(tmp_path, monkeypatch
     assert args[1].endswith("main.py")
     assert "--full-once" in args
     assert "--scheduled" not in args  # MANUAL trigger, not confused with Task Scheduler
+
+
+def test_collector_interpreter_uses_sys_executable_from_source(tmp_path, monkeypatch):
+    monkeypatch.setattr(sys, "frozen", False, raising=False)
+    assert _collector_interpreter(tmp_path) == sys.executable
+
+
+def test_collector_interpreter_uses_project_venv_when_frozen(tmp_path, monkeypatch):
+    """sys.executable is the packaged app's own bootloader binary when
+    frozen — using it to launch main.py would just relaunch the GUI. Must
+    use the project's real virtualenv interpreter instead."""
+    venv_python = tmp_path / ".venv" / "bin" / "python3"
+    venv_python.parent.mkdir(parents=True)
+    venv_python.write_bytes(b"")
+    monkeypatch.setattr(sys, "frozen", True, raising=False)
+    try:
+        assert _collector_interpreter(tmp_path) == str(venv_python)
+    finally:
+        monkeypatch.delattr(sys, "frozen", raising=False)
+
+
+def test_collector_interpreter_raises_when_frozen_without_venv(tmp_path, monkeypatch):
+    monkeypatch.setattr(sys, "frozen", True, raising=False)
+    try:
+        with pytest.raises(RuntimeError, match="virtualenv"):
+            _collector_interpreter(tmp_path)
+    finally:
+        monkeypatch.delattr(sys, "frozen", raising=False)
 
 
 def test_run_now_does_not_block_for_full_collection(tmp_path, monkeypatch):
