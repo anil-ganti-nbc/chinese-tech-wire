@@ -30,11 +30,14 @@ jobs:
           cache: pip
       - name: Clean locked installation
         run: |
+          python -m pip install uv==0.11.32
           python -m pip install --require-hashes -r requirements.lock
       - name: Verify dependency lock
         run: |
-          uv pip compile requirements.txt --generate-hashes --output-file /tmp/requirements.lock
-          cmp requirements.lock /tmp/requirements.lock
+          lockcheck="$(mktemp -d)"
+          cp requirements.txt "$lockcheck/requirements.txt"
+          (cd "$lockcheck" && uv pip compile requirements.txt --universal --generate-hashes --output-file requirements.lock)
+          cmp requirements.lock "$lockcheck/requirements.lock"
       - name: Required correctness lint
         run: |
           python -m pip install ruff==0.12.11

@@ -8,14 +8,18 @@ from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 
-SENSITIVE_QUERY_KEYS = {"key", "api_key", "apikey", "token", "access_token", "auth", "authorization"}
+SENSITIVE_QUERY_KEYS = {
+    "key", "api_key", "apikey", "token", "access_token", "auth",
+    "authorization", "password", "passwd", "client_secret",
+}
 SECRET_ENV_KEYS = (
     "GEMINI_API_KEY", "TRANSLATION_API_KEY", "EMBEDDING_API_KEY",
     "DISCORD_WEBHOOK_URL", "CTW_DASHBOARD_AUTH_TOKEN",
 )
 _BEARER = re.compile(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+")
+_BASIC = re.compile(r"(?i)\bBasic\s+[A-Za-z0-9+/=]+")
 _KEY_VALUE = re.compile(
-    r"(?i)\b(api[_-]?key|token|secret|authorization)\b([\s:=]+)([^\s,;&]+)"
+    r"(?i)\b(api[_-]?key|token|secret|client[_-]?secret|password|passwd|authorization|cookie|set-cookie)\b([\s:=]+)([^\s,;&]+)"
 )
 _WEBHOOK = re.compile(r"https://(?:discord(?:app)?\.com)/api/webhooks/[^\s]+", re.I)
 _URL = re.compile(r"https?://[^\s<>'\"]+")
@@ -38,7 +42,12 @@ def redact_url(value: str) -> str:
         (key, "[REDACTED]" if key.lower() in SENSITIVE_QUERY_KEYS else item)
         for key, item in parse_qsl(parsed.query, keep_blank_values=True)
     ]
-    return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, urlencode(query), ""))
+    netloc = (
+        f"[REDACTED]@{parsed.netloc.rsplit('@', 1)[-1]}"
+        if "@" in parsed.netloc
+        else parsed.netloc
+    )
+    return urlunsplit((parsed.scheme, netloc, parsed.path, urlencode(query), ""))
 
 
 def redact_text(value: object) -> str:
@@ -50,6 +59,7 @@ def redact_text(value: object) -> str:
     text = _WEBHOOK.sub("[REDACTED_WEBHOOK]", text)
     text = _KNOWN_KEY.sub("[REDACTED_KEY]", text)
     text = _BEARER.sub("Bearer [REDACTED]", text)
+    text = _BASIC.sub("Basic [REDACTED]", text)
     text = _KEY_VALUE.sub(r"\1\2[REDACTED]", text)
     text = _URL.sub(lambda match: redact_url(match.group(0)), text)
     return text

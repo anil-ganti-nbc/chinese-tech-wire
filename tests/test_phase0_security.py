@@ -99,3 +99,16 @@ def test_known_provider_key_formats_are_redacted():
     output = redact_text(f"keys {google_key} {github_key}")
     assert google_key not in output
     assert github_key not in output
+
+
+def test_redaction_covers_basic_auth_cookies_passwords_and_url_userinfo():
+    sentinel = "phase0-credential-sentinel"
+    raw = (
+        f"Authorization: Basic c2VjcmV0 Cookie: session={sentinel} "
+        f"password={sentinel} https://operator:{sentinel}@example.test/run?client_secret={sentinel}"
+    )
+    output = redact_text(raw)
+    assert sentinel not in output
+    assert "c2VjcmV0" not in output
+    assert "operator" not in output
+    assert output.count("[REDACTED]") >= 4
