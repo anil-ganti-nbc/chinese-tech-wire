@@ -31,7 +31,7 @@
   <div id="manual-result-box" class="card" style="margin-top:8px;display:none"></div>
 
   <div style="margin-top:8px">
-    <button type="button" class="btn" id="run-now-btn" {% if snapshot.current_run %}disabled{% endif %}>&#9654; Run collector now</button>
+    <button type="button" class="btn" id="run-now-btn" {% if snapshot.current_run %}disabled{% endif %}>&#9654; Run all collectors</button>
     <span id="run-now-msg" class="muted">{% if snapshot.current_run %}Collector already running{% endif %}</span>
   </div>
 
@@ -124,7 +124,7 @@
     <thead>
       <tr>
         <th>Source</th><th>Layer</th><th>Status</th><th>Last attempt</th><th>Last success</th>
-        <th>Last new</th><th>24h</th><th>7d</th><th>Fail</th><th>Zero</th><th>Error</th>
+        <th>Last new</th><th>24h</th><th>7d</th><th>Fail</th><th>Zero</th><th>Error</th><th>Run</th>
       </tr>
     </thead>
     <tbody>
@@ -141,9 +141,16 @@
         <td class="mono">{{ r.fail_streak }}</td>
         <td class="mono">{{ r.zero_streak }}</td>
         <td class="muted">{{ r.last_error or r.note or "—" }}</td>
+        <td>
+          {% if r.layer == 'NEWS' %}
+          <button type="button" class="btn source-run-btn" data-source="{{ r.source }}">Run</button>
+          {% else %}
+          <span class="muted">—</span>
+          {% endif %}
+        </td>
       </tr>
     {% else %}
-      <tr><td colspan="11" class="muted">No health data yet — run a full cycle so SourceRun rows exist.</td></tr>
+      <tr><td colspan="12" class="muted">No health data yet — run a full cycle so SourceRun rows exist.</td></tr>
     {% endfor %}
     </tbody>
   </table>
@@ -158,6 +165,7 @@
   var runsOffset = {{ runs_offset }};
   var runsLimit = {{ runs_limit }};
   var manualRunId = sessionStorage.getItem('ctw_manual_run_id');
+  var dashboardAuthToken = {{ dashboard_auth_token|tojson }};
 
   function fmtNum(v) { return (v === null || v === undefined) ? '—' : v; }
   function fmtDur(s) { return (s === null || s === undefined) ? '—' : (s + 's'); }
@@ -294,7 +302,10 @@
       btn.disabled = true;
       var msg = document.getElementById('run-now-msg');
       msg.textContent = 'Manual collection started…';
-      fetch('/operations/run-now', { method: 'POST' })
+      fetch('/operations/run-now', {
+        method: 'POST',
+        headers: dashboardAuthToken ? { 'Authorization': 'Bearer ' + dashboardAuthToken } : {}
+      })
         .then(function (r) { return r.json().then(function (data) { return { status: r.status, data: data }; }); })
         .then(function (res) {
           if (res.status === 409) {
@@ -324,6 +335,28 @@
         });
     });
   }
+
+  document.querySelectorAll('.source-run-btn').forEach(function (sbtn) {
+    sbtn.addEventListener('click', function () {
+      var source = sbtn.getAttribute('data-source');
+      sbtn.disabled = true;
+      var prevText = sbtn.textContent;
+      sbtn.textContent = 'Running…';
+      fetch('/operations/run-now?source=' + encodeURIComponent(source), {
+        method: 'POST',
+        headers: dashboardAuthToken ? { 'Authorization': 'Bearer ' + dashboardAuthToken } : {}
+      })
+        .then(function (r) { return r.json().then(function (data) { return { status: r.status, data: data }; }); })
+        .then(function (res) {
+          sbtn.textContent = res.data.started ? 'Started' : ('Failed: ' + (res.data.reason || 'error'));
+          setTimeout(function () { sbtn.textContent = prevText; sbtn.disabled = false; }, 4000);
+        })
+        .catch(function () {
+          sbtn.textContent = 'Failed (network)';
+          setTimeout(function () { sbtn.textContent = prevText; sbtn.disabled = false; }, 4000);
+        });
+    });
+  });
 
   poll();
   setInterval(poll, 7000);

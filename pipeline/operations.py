@@ -147,11 +147,16 @@ def _collector_interpreter(root: Path) -> str:
     )
 
 
-def launch_manual_run() -> subprocess.Popen:
-    """Starts the exact same production full-cycle path the scheduled task
+def launch_manual_run(source: Optional[str] = None) -> subprocess.Popen:
+    """Starts the exact same production collection path the scheduled task
     uses (`python main.py --full-once`, MANUAL trigger — no --scheduled, so
     it's never confused with a Task Scheduler run) as a detached background
-    process. Does not block on collection."""
+    process. Does not block on collection.
+
+    If `source` is given, runs only that one collector (`--source NAME`,
+    the same single-source CLI path `python main.py --source NAME` already
+    uses) instead of the full cycle — this backs the Health page's
+    per-collector "Run" buttons, distinct from "Run all collectors"."""
     if os.environ.get("CTW_DISABLE_COLLECTOR_LAUNCH") == "1":
         raise RuntimeError("Collector launch is disabled in this local field-test app")
     root = _project_root()
@@ -162,16 +167,20 @@ def launch_manual_run() -> subprocess.Popen:
     log_path = root / "logs" / "manual-run.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)
     log_file = open(log_path, "a", encoding="utf-8")
-    log_file.write(f"\n--- manual run launched {_now().isoformat()} ---\n")
+    label = f"source={source}" if source else "full cycle"
+    log_file.write(f"\n--- manual run launched ({label}) {_now().isoformat()} ---\n")
     log_file.flush()
 
+    args = [interpreter, str(main_script)]
+    args += ["--source", source] if source else ["--full-once"]
+
     proc = subprocess.Popen(
-        [interpreter, str(main_script), "--full-once"],
+        args,
         cwd=str(root),
         stdout=log_file,
         stderr=subprocess.STDOUT,
     )
-    logger.info("Launched manual collector run: pid=%s", proc.pid)
+    logger.info("Launched manual collector run (%s): pid=%s", label, proc.pid)
     return proc
 
 

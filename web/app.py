@@ -6,6 +6,7 @@ import logging
 import hmac
 import ipaddress
 import os
+import secrets
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
@@ -36,7 +37,7 @@ from database.models import (
     StoryCluster,
     StoryLead,
 )
-from pipeline.newsroom import add_feedback, explain_lead
+from pipeline.newsroom import explain_lead
 from pipeline.explain import explain_lead_structured, build_lead_timeline
 
 logger = logging.getLogger(__name__)
@@ -420,10 +421,35 @@ def lead_detail(request: Request, lead_id: int):
 
 @app.post("/leads/{lead_id}/feedback")
 def lead_feedback_post(lead_id: int, feedback: str = Form(...)):
-    ok = add_feedback(lead_id, feedback.strip())
-    if not ok:
+    """The QC decision endpoint: Useful / Not useful / False positive /
+    Duplicate (this project's "out of stock" equivalent — see
+    pipeline/qc.py) / Written. Delegates to pipeline.qc.record_qc_decision
+    for the transactional archive-and-remove-from-queue contract."""
+    from pipeline.qc import AlreadyQcdError, record_qc_decision
+
+    try:
+        record_qc_decision(lead_id, feedback.strip())
+    except AlreadyQcdError:
+        return RedirectResponse(f"/leads/{lead_id}?fb=already", status_code=303)
+    except ValueError:
         return RedirectResponse(f"/leads/{lead_id}?err=1", status_code=303)
     return RedirectResponse(f"/leads/{lead_id}?fb=1", status_code=303)
+
+
+@app.get("/qc/recent", response_class=HTMLResponse)
+def qc_recent_view(request: Request, limit: int = Query(50, ge=1, le=200)):
+    """Recently archived QC decisions with full provenance — the durable
+    record of what a reviewer decided, read straight from the separate
+    QC archive DB (database/qc_archive.py), independent of current
+    operational lead state."""
+    from pipeline.qc import list_recent_qc
+
+    rows = list_recent_qc(limit=limit)
+    return templates.TemplateResponse(
+        request,
+        "qc_recent.html",
+        {"rows": rows, "limit": limit, "active": "qc_recent"},
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -705,6 +731,10 @@ def health_view(request: Request, runs_offset: int = Query(0, ge=0)):
             "source_health_rows": source_health_rows,
             "attention_count": len(attention),
             "active": "health",
+            # Rendered only into the loopback-served HTML for this page's
+            # own "Run collector now" fetch() call — see run_gui(). Never
+            # logged (redaction.py already scrubs CTW_DASHBOARD_AUTH_TOKEN).
+            "dashboard_auth_token": os.environ.get("CTW_DASHBOARD_AUTH_TOKEN", ""),
         },
     )
 
@@ -723,27 +753,45 @@ def api_health_runtime(
 
 
 @app.post("/operations/run-now")
-def operations_run_now():
-    """Launches the same production full-cycle path the scheduled task
-    uses, as a detached background process — this request does not wait
-    for collection to finish. Rejects the launch if a run is genuinely
-    already active (see pipeline.operations.active_running_run for the
-    stale-RUNNING-row safety window)."""
+def operations_run_now(source: Optional[str] = Query(None)):
+    """Launches a collector as a detached background process — this
+    request does not wait for collection to finish. With no `source`,
+    launches the same production full-cycle path the scheduled task uses
+    ("Run all collectors"). With `source=NAME`, launches only that one
+    collector (`python main.py --source NAME` — the per-collector "Run"
+    buttons in the Health page's source table). Rejects the full-cycle
+    launch if a run is genuinely already active (see
+    pipeline.operations.active_running_run for the stale-RUNNING-row
+    safety window); single-source runs are cheap/independent enough not to
+    need that same mutual-exclusion gate."""
     from pipeline.operations import active_running_run, correlate_new_run, launch_manual_run
+    from main import SOURCE_REGISTRY
 
-    existing = active_running_run()
-    if existing is not None:
-        return JSONResponse(
-            {"started": False, "reason": "ALREADY_RUNNING", "run_id": existing.id},
-            status_code=409,
-        )
+    if source is not None:
+        source = source.strip().lower()
+        if source not in SOURCE_REGISTRY:
+            return JSONResponse(
+                {"started": False, "reason": f"Unknown source: {source}"}, status_code=400
+            )
+    else:
+        existing = active_running_run()
+        if existing is not None:
+            return JSONResponse(
+                {"started": False, "reason": "ALREADY_RUNNING", "run_id": existing.id},
+                status_code=409,
+            )
 
     launch_time = _now()
     try:
-        launch_manual_run()
+        launch_manual_run(source=source)
     except Exception as e:
         logger.exception("Failed to launch manual collector run")
         return JSONResponse({"started": False, "reason": f"launch failed: {e}"}, status_code=500)
+
+    if source is not None:
+        # Single-source runs don't create an IngestionRun row (only
+        # --full-once does), so there's nothing to correlate/poll.
+        return {"started": True, "run_id": None, "source": source}
 
     run_id = correlate_new_run(launch_time)
     return {"started": True, "run_id": run_id}
@@ -1056,7 +1104,21 @@ def run_gui(host: str = "127.0.0.1", port: int = 8000) -> None:
         )
     import uvicorn
 
+    # The Phase 0 containment middleware (authenticated_mutations_only,
+    # above) requires Authorization: Bearer $CTW_DASHBOARD_AUTH_TOKEN on
+    # every state-changing request, including the Health page's own
+    # "Run collector now" button — otherwise that button always 403s.
+    # For a local single-user GUI session there's no external identity
+    # provider to source a token from, so generate one per process launch
+    # (loopback-only server, lives only in this process's env + the
+    # rendered HTML it serves to itself) and expose it to the template so
+    # the browser's own fetch() call can present it back.
+    if not os.environ.get("CTW_DASHBOARD_AUTH_TOKEN"):
+        os.environ["CTW_DASHBOARD_AUTH_TOKEN"] = secrets.token_urlsafe(32)
+
     init_db()
+    from database.qc_archive import init_qc_archive
+    init_qc_archive()
     try:
         print(f"Chinese Tech Wire Newsroom GUI → http://{host}:{port}")
     except UnicodeEncodeError:

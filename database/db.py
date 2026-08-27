@@ -18,6 +18,31 @@ logger = logging.getLogger(__name__)
 # Default to project data/
 DEFAULT_DB = "sqlite:///data/ctw.db"
 
+# Project root, mirroring config.ROOT (imported lazily inside _resolve_sqlite_url
+# to avoid a hard import-time dependency on config.py from this low-level
+# module). A *relative* sqlite:/// path (the shipped default, and what an
+# operator's .env typically has) must always resolve against the repo/exe
+# root, never against the current process's working directory — otherwise
+# running the exact same command from a different cwd (a scheduled task, a
+# shortcut with no explicit "Start in", a shell someone cd'd around in)
+# silently creates/reads a brand-new empty database in that cwd instead of
+# the real one. This bit Chinese Tech Wire on Windows: the shipped .cmd
+# launcher happens to cd into the repo first, but init_db()/get_session()
+# are also called directly by scripts, tests, and any future invocation
+# that doesn't happen to cd first.
+def _resolve_sqlite_url(url: str) -> str:
+    if not url.startswith("sqlite:///") or url.endswith(":memory:"):
+        return url
+    raw_path = url[len("sqlite:///"):]
+    if raw_path == ":memory:":
+        return url
+    path = Path(raw_path)
+    if path.is_absolute():
+        return url
+    from config import ROOT
+    resolved = (ROOT / path).resolve()
+    return "sqlite:///" + str(resolved).replace("\\", "/")
+
 # Columns added after the original V0.1/V0.2 schema.
 # create_all() will not ALTER existing tables — we add them explicitly.
 _STORY_CLUSTER_V03_COLUMNS: List[Tuple[str, str]] = [
@@ -32,6 +57,7 @@ _STORY_CLUSTER_V03_COLUMNS: List[Tuple[str, str]] = [
 
 def get_engine(database_url: str | None = None):
     url = database_url or os.getenv("DATABASE_URL", DEFAULT_DB)
+    url = _resolve_sqlite_url(url)
     # Ensure parent dir exists for sqlite
     if url.startswith("sqlite:///"):
         path = url.replace("sqlite:///", "", 1)

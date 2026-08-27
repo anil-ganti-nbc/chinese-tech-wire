@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Recently QCed — CTW{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Recently QCed</h2>
+  <p class="muted">
+    Durable record of completed QC decisions, read from the separate QC
+    archive database (data/qc_archive.db) — independent of current lead
+    state. Decisions: USEFUL, NOT_USEFUL, FALSE_POSITIVE, DUPLICATE
+    (this project's "out of stock" equivalent — see pipeline/qc.py), WRITTEN.
+    Showing {{ rows|length }} most recent (limit={{ limit }}).
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Decided</th><th>Lead</th><th>Decision</th><th>Headline</th>
+        <th>Type</th><th>Score</th><th>By</th><th>Note</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td class="mono muted">{{ fmt(r.decided_at) }}</td>
+        <td><a href="/leads/{{ r.lead_id }}">#{{ r.lead_id }}</a></td>
+        <td><b>{{ r.decision }}</b></td>
+        <td>{{ (r.headline_hint or '')[:70] }}</td>
+        <td>{{ r.lead_type or '—' }}</td>
+        <td class="mono">{{ r.priority_score }}</td>
+        <td class="muted">{{ r.decided_by or '—' }}</td>
+        <td class="muted">{{ r.note or '' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="8" class="muted">No QC decisions recorded yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

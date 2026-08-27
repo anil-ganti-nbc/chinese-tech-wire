@@ -88,7 +88,7 @@ from pipeline.translate import get_translator, log_translation_stats
 from pipeline.community_ingest import run_community_source
 from pipeline.documentary_ingest import run_documentary_source
 from pipeline.newsroom import (
-    rebuild_leads, list_leads, format_brief, explain_lead, add_feedback,
+    rebuild_leads, list_leads, format_brief, explain_lead,
 )
 from documentary_sources import DOCUMENTARY_REGISTRY
 from community_sources import COMMUNITY_REGISTRY
@@ -117,11 +117,30 @@ SOURCE_REGISTRY: Dict[str, Type[BaseSource]] = {
     "xfastest": XFastestSource,
 }
 
+_LOG_LEVEL = getattr(logging, settings.log_level.upper(), logging.INFO)
+_LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
 logging.basicConfig(
-    level=getattr(logging, settings.log_level.upper(), logging.INFO),
-    format="%(asctime)s [%(levelname)s] %(message)s",
+    level=_LOG_LEVEL,
+    format=_LOG_FORMAT,
     datefmt="%H:%M:%S",
 )
+# Every main.py invocation (interactive --gui, --full-once from a launcher
+# or Task Scheduler, ad-hoc CLI commands) also persists to a predictable
+# file under the repo, in addition to the console handler above — so a
+# failure is visible both live (console/launcher window) and after the
+# fact (e.g. checking why an unattended Task Scheduler run produced
+# nothing). Never removes/replaces the console handler.
+try:
+    _log_dir = ROOT / "logs"
+    _log_dir.mkdir(parents=True, exist_ok=True)
+    _file_handler = logging.FileHandler(_log_dir / "ctw.log", encoding="utf-8")
+    _file_handler.setFormatter(logging.Formatter(_LOG_FORMAT, datefmt="%Y-%m-%d %H:%M:%S"))
+    _file_handler.setLevel(_LOG_LEVEL)
+    logging.getLogger().addHandler(_file_handler)
+except OSError:
+    # Best-effort: an unwritable logs/ dir should not prevent the tool
+    # from running — console logging above still works either way.
+    pass
 install_logging_redaction()
 logger = logging.getLogger("ctw")
 
@@ -802,9 +821,15 @@ def main() -> None:
         print(format_brief(leads))
         return
     if args.lead_feedback:
+        from pipeline.qc import AlreadyQcdError, record_qc_decision
         lid, fb = args.lead_feedback
-        ok = add_feedback(int(lid), fb)
-        print("ok" if ok else "failed")
+        try:
+            record_qc_decision(int(lid), fb, decided_by="cli")
+            print("ok")
+        except AlreadyQcdError as e:
+            print(f"already QC'd (decision={e.existing_decision})")
+        except ValueError as e:
+            print(f"failed: {e}")
         return
 
     since_hours = args.since_hours
@@ -958,7 +983,9 @@ def main() -> None:
         from web.launcher import (
             find_existing_instance, find_free_port, open_browser,
             open_when_ready, write_runtime_state, clear_runtime_state,
+            setup_launcher_logging,
         )
+        setup_launcher_logging()
         host = args.gui_host
         auto = args.gui_port.strip().lower() == "auto"
 
