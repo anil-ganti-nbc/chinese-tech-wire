@@ -79,6 +79,7 @@ install_logging_redaction()
 
 from config import settings, yaml_config
 from database.db import get_session, init_db
+from database.schema_state import SchemaStateError
 from database.models import Article, SourceRun, StoryCluster
 from pipeline.deduplicate import get_or_create_cluster
 from pipeline.normalize import normalize_raw
@@ -577,6 +578,11 @@ def main() -> None:
     parser.add_argument("--miss-cluster-id", type=int, default=None)
     parser.add_argument("--miss-reported-at", type=str, default=None, help="ISO timestamp, optional")
     parser.add_argument("--missed-story-report", action="store_true")
+    parser.add_argument("--adopt-current-schema", action="store_true",
+                        help="EXPLICIT operator action: verify this machine's existing "
+                             "pre-M17 database against the full current structural contract "
+                             "and write the schema authority. Refuses anything that is not "
+                             "structurally complete. Never runs implicitly.")
     parser.add_argument("--freshness-report", action="store_true",
                         help="StoryLead age-bucket / active-vs-archived report (read-only)")
     parser.add_argument("--show-missed-stories", action="store_true")
@@ -585,9 +591,23 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    # Init DB
-    init_db(settings.database_url)
+    # Persistent state is gated (M17 / STD-DEPLOY-COM-002): --identity and
+    # --health must not mutate schema merely by running, so they skip
+    # initialization entirely; every other command passes the compatibility
+    # barrier here — read-only inspection first, canonical bootstrap only
+    # for genuinely fresh databases, refusal with evidence otherwise. A
+    # compatible existing store performs zero schema writes. Legacy
+    # adoption is never implicit: see --adopt-current-schema.
     Path("data").mkdir(exist_ok=True)
+    if not (args.identity or args.health):
+        init_db(settings.database_url)
+
+    if args.adopt_current_schema:
+        import json
+        from database.schema_state import adopt_current_schema
+        result = adopt_current_schema(settings.database_url)
+        print(json.dumps(result, indent=2, default=str))
+        return 0 if result.get("adopted") else 1
 
     if args.identity:
         import json
@@ -1049,4 +1069,14 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SchemaStateError as exc:
+        import json
+        print(json.dumps({
+            "status": "state_incompatible",
+            "gate": "persistent_state_compatibility",
+            **exc.report.as_evidence(),
+        }, indent=2, default=str))
+        raise SystemExit(3)
+

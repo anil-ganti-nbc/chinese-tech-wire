@@ -124,8 +124,99 @@ def get_qc_engine(database_url: Optional[str] = None):
 
 
 def init_qc_archive(database_url: Optional[str] = None) -> None:
-    engine = get_qc_engine(database_url)
+    """Compatibility-gated QC archive initialization (M17 / STD-DEPLOY-COM-002).
+
+    The archive is durable editorial evidence with exactly one schema shape
+    and no version history, so its contract is the smallest honest one:
+    read-only inspection first — a fresh file bootstraps canonically, the
+    exact known qc_archive shape proceeds unchanged, and anything else
+    (missing/extra columns, foreign tables, corruption) is refused with
+    evidence instead of being silently patched by CREATE TABLE IF NOT
+    EXISTS. No numbered migration history is invented for it.
+    """
+    import sqlite3 as _sqlite3
+
+    from .schema_state import SchemaState, SchemaStateError, SchemaStateReport
+
+    url = database_url or os.getenv("QC_ARCHIVE_DATABASE_URL") or _default_qc_archive_url()
+    url = _resolve_sqlite_url(url)
+    raw_path = url.replace("sqlite:///", "", 1) if url.startswith("sqlite:///") else None
+    file_path = Path(raw_path) if raw_path and raw_path != ":memory:" else None
+
+    expected_columns = {
+        name: frozenset(col.name for col in table.columns)
+        for name, table in QcArchiveBase.metadata.tables.items()
+    }
+
+    def _inspect(con) -> str:
+        try:
+            if con.execute("PRAGMA quick_check").fetchone()[0] != "ok":
+                return "CORRUPT"
+            tables = {
+                row[0] for row in con.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table' "
+                    "AND name NOT LIKE 'sqlite_%'"
+                )
+            }
+        except _sqlite3.DatabaseError:
+            return "CORRUPT"
+        if not tables:
+            return "FRESH"
+        if tables != set(expected_columns):
+            return "UNKNOWN_OR_WRONG_SHAPE"
+        for table, required in expected_columns.items():
+            actual = {row[1] for row in con.execute(f"PRAGMA table_info({table})")}
+            if actual != required:
+                return "UNKNOWN_OR_WRONG_SHAPE"
+        return "COMPATIBLE"
+
+    def _refusal(observed: str, reason: str | None = None) -> SchemaStateError:
+        return SchemaStateError(SchemaStateReport(
+            state=SchemaState.CORRUPT if observed == "CORRUPT" else SchemaState.UNKNOWN,
+            expected_version=1,
+            observed_version=None,
+            reason=reason or (
+                f"QC archive state is {observed}: the qc_archive shape does "
+                "not match the expected single-table contract and was not "
+                "modified"
+            ),
+            evidence={
+                "store": "qc_archive",
+                "database": str(file_path) if file_path else ":memory:",
+                "expected_tables": sorted(expected_columns),
+                "compatibility_state": observed,
+            },
+        ))
+
+    state = "FRESH"
+    if file_path is not None and file_path.exists():
+        ro = _sqlite3.connect(f"file:{file_path.as_posix()}?mode=ro", uri=True)
+        try:
+            state = _inspect(ro)
+        finally:
+            ro.close()
+
+    if state == "COMPATIBLE":
+        return
+    if state != "FRESH":
+        raise _refusal(state)
+
+    engine = get_qc_engine(url)
     QcArchiveBase.metadata.create_all(engine)
+    if file_path is not None:
+        ro = _sqlite3.connect(f"file:{file_path.as_posix()}?mode=ro", uri=True)
+        try:
+            post = _inspect(ro)
+        finally:
+            ro.close()
+    else:
+        with engine.connect() as con:
+            post = _inspect(con)
+    if post != "COMPATIBLE":
+        raise _refusal(
+            f"POST_BOOTSTRAP_{post}",
+            reason=f"QC archive bootstrap did not produce the expected shape ({post})",
+        )
 
 
 @contextmanager

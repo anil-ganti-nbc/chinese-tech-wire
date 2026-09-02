@@ -1116,9 +1116,20 @@ def run_gui(host: str = "127.0.0.1", port: int = 8000) -> None:
     if not os.environ.get("CTW_DASHBOARD_AUTH_TOKEN"):
         os.environ["CTW_DASHBOARD_AUTH_TOKEN"] = secrets.token_urlsafe(32)
 
-    init_db()
-    from database.qc_archive import init_qc_archive
-    init_qc_archive()
+    from database.schema_state import SchemaStateError
+
+    try:
+        init_db()
+        from database.qc_archive import init_qc_archive
+        init_qc_archive()
+    except SchemaStateError as exc:
+        import json
+        print(json.dumps({
+            "status": "state_incompatible",
+            "gate": "persistent_state_compatibility",
+            **exc.report.as_evidence(),
+        }, indent=2, default=str))
+        raise SystemExit(3)
     try:
         print(f"Chinese Tech Wire Newsroom GUI → http://{host}:{port}")
     except UnicodeEncodeError:

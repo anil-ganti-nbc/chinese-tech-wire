@@ -95,6 +95,18 @@ def _db_path() -> Optional[Path]:
     return p
 
 
+def _parse_dt(value):
+    """Parse a stored ISO timestamp string into a datetime (None on failure).
+    The raw SQL read path returns strings where the ORM used to return
+    datetimes; the health payload's .isoformat() needs the real type."""
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(str(value))
+    except (TypeError, ValueError):
+        return None
+
+
 def get_health() -> Dict[str, Any]:
     """Build health from process + DB + `ingestion_runs` history.
 
@@ -137,49 +149,79 @@ def get_health() -> Dict[str, Any]:
     last_status: Optional[str] = None
     total_runs = 0
 
+    # M17 / STD-DEPLOY-COM-002: health is read-only and compatibility-aware.
+    # It never initializes, creates, alters, stamps, or adopts — inspection
+    # and the run-history query both happen through a mode=ro connection.
+    compat_report = None
     if db is not None and db_exists:
         try:
-            from sqlalchemy import desc, func, select
+            import sqlite3 as _sqlite3
 
-            from database.db import get_session, init_db
-            from database.models import IngestionRun
+            from database.schema_state import (
+                UNADMITTABLE_STATES,
+                SchemaState,
+                inspect_schema,
+            )
 
-            init_db(settings.database_url)
-            with get_session(settings.database_url) as session:
-                total_runs = (
-                    session.execute(select(func.count()).select_from(IngestionRun)).scalar()
-                    or 0
-                )
-                latest_completed = session.execute(
-                    select(IngestionRun)
-                    .where(IngestionRun.status != "RUNNING")
-                    .order_by(desc(IngestionRun.started_at))
-                    .limit(1)
-                ).scalar_one_or_none()
-                if latest_completed is not None:
-                    last_attempt = latest_completed.started_at
-                    last_status = latest_completed.status
-                    if latest_completed.status != "SUCCESS":
+            ro = _sqlite3.connect(f"file:{db.as_posix()}?mode=ro", uri=True)
+            try:
+                try:
+                    compat_report = inspect_schema(ro)
+                except Exception as exc:  # noqa: BLE001 - health must never raise
+                    reasons.append(f"persistent_state inspection failed: {exc!r}")
+                    compat_report = None
+
+                if compat_report is not None and compat_report.state in UNADMITTABLE_STATES:
+                    reasons.append(
+                        f"persistent_state: {compat_report.state.value} "
+                        f"({compat_report.reason})"
+                    )
+                    if compat_report.state is SchemaState.LEGACY_UNADOPTED:
                         reasons.append(
-                            f"last completed run status={latest_completed.status}: "
-                            f"{latest_completed.summary or 'no summary recorded'}"
+                            "database requires explicit operator adoption "
+                            "(--adopt-current-schema) before normal work can run"
                         )
-                latest_success = session.execute(
-                    select(IngestionRun)
-                    .where(IngestionRun.status == "SUCCESS")
-                    .order_by(desc(IngestionRun.started_at))
-                    .limit(1)
-                ).scalar_one_or_none()
-                if latest_success is not None:
-                    last_success = latest_success.started_at
-                if total_runs == 0:
+                elif compat_report is not None and compat_report.state is SchemaState.COMPATIBLE:
+                    total_runs = (
+                        ro.execute("SELECT COUNT(*) FROM ingestion_runs").fetchone()[0]
+                        or 0
+                    )
+                    row = ro.execute(
+                        "SELECT started_at, status, summary FROM ingestion_runs "
+                        "WHERE status != 'RUNNING' ORDER BY started_at DESC LIMIT 1"
+                    ).fetchone()
+                    if row is not None:
+                        last_attempt = _parse_dt(row[0])
+                        last_status = row[1]
+                        if row[1] != "SUCCESS":
+                            reasons.append(
+                                f"last completed run status={row[1]}: "
+                                f"{row[2] or 'no summary recorded'}"
+                            )
+                    success_row = ro.execute(
+                        "SELECT started_at FROM ingestion_runs "
+                        "WHERE status = 'SUCCESS' ORDER BY started_at DESC LIMIT 1"
+                    ).fetchone()
+                    if success_row is not None:
+                        last_success = _parse_dt(success_row[0])
+                    if total_runs == 0:
+                        reasons.append("no ingestion_runs recorded yet")
+                else:
                     reasons.append("no ingestion_runs recorded yet")
+            finally:
+                ro.close()
         except Exception as exc:  # noqa: BLE001 - health must never raise
             reasons.append(f"health query failed: {exc!r}")
             db_writable = False
 
+    from database.schema_state import UNADMITTABLE_STATES, SchemaState
+
     if db is None or not db_writable:
         state = "failed"
+    elif compat_report is not None and compat_report.state is SchemaState.CORRUPT:
+        state = "failed"
+    elif compat_report is not None and compat_report.state in UNADMITTABLE_STATES:
+        state = "degraded"  # file exists but normal work is gated (legacy/newer/partial/unknown)
     elif total_runs == 0:
         state = "unknown"
     elif last_status == "SUCCESS":
