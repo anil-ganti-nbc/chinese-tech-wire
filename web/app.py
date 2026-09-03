@@ -110,10 +110,18 @@ def _age_str(dt: Optional[datetime]) -> str:
 
 
 def _fmt(dt: Optional[datetime]) -> str:
+    """STD-UI-COM-010: render in UTC, and normalise to UTC first.
+
+    _aware() only ATTACHES UTC to a naive value -- an already-aware value in
+    some other zone was previously formatted in that zone's wall-clock time,
+    so a single stated page convention would have been incidentally rather
+    than provably true. Converting here makes "All times UTC" correct by
+    construction for every value this helper renders, whatever tzinfo it
+    arrives with.
+    """
     if not dt:
         return "—"
-    dt = _aware(dt)
-    return dt.strftime("%m-%d %H:%M")
+    return _aware(dt).astimezone(timezone.utc).strftime("%m-%d %H:%M")
 
 
 templates.env.globals["age_str"] = _age_str

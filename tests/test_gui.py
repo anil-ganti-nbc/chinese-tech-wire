@@ -312,3 +312,41 @@ def test_csv_export(client):
 def test_empty_filters(client):
     r = client.get("/newsroom?status=STALE&q=zzzznonexistent")
     assert r.status_code == 200
+
+
+# ---------------------------------------------------------------------------
+# STD-UI-COM-010: timestamp zone must be determinable from the UI.
+# ---------------------------------------------------------------------------
+
+
+def test_timezone_convention_is_stated_on_every_page(client):
+    """fmt() renders "%m-%d %H:%M" with no per-value zone marker. The frozen
+    standard accepts one clearly stated surface-level convention instead of
+    repeating a marker on every value -- but it must actually be stated, and
+    it must appear on every surface that shows timestamps."""
+    for path in ("/newsroom", "/news", "/community", "/documentary",
+                 "/clusters", "/activity", "/notifications", "/health"):
+        resp = client.get(path)
+        assert resp.status_code == 200, path
+        assert "All times UTC" in resp.text, f"{path} states no timezone convention"
+
+
+def test_fmt_normalises_to_utc_so_the_stated_convention_is_true():
+    """The convention must be true by construction, not incidentally.
+    _aware() only ATTACHES UTC to a naive value; an already-aware value in
+    another zone would previously have been printed in that zone's
+    wall-clock while the page claimed UTC."""
+    from datetime import timedelta, timezone as _tz
+
+    from web.app import _fmt
+
+    # 09:30 in UTC+05:30 is 04:00 UTC -- the rendered value must be the UTC one.
+    ist = _tz(timedelta(hours=5, minutes=30))
+    aware_non_utc = datetime(2026, 9, 3, 9, 30, tzinfo=ist)
+    assert _fmt(aware_non_utc) == "09-03 04:00"
+
+    # A naive value is still treated as UTC, unchanged from previous behaviour.
+    assert _fmt(datetime(2026, 9, 3, 4, 0)) == "09-03 04:00"
+
+    # And an already-UTC value is untouched.
+    assert _fmt(datetime(2026, 9, 3, 4, 0, tzinfo=timezone.utc)) == "09-03 04:00"

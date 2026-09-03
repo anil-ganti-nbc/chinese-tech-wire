@@ -27,6 +27,12 @@
 <main>
   {% block content %}{% endblock %}
 </main>
+{# STD-UI-COM-010: fmt() renders "%m-%d %H:%M" with no per-value zone marker.
+   The frozen standard accepts one clearly stated surface-level convention in
+   place of repeating a marker on every value, so it is stated once here, on
+   the shared layout every page extends. _fmt() converts to UTC before
+   formatting, so this claim is true by construction. #}
+<footer class="muted" style="text-align:center;padding:8px 0 16px;font-size:12px">All times UTC</footer>
 {% block scripts %}{% endblock %}
 </body>
 </html>
