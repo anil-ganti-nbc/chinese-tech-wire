@@ -26,7 +26,12 @@
 <div class="card">
   <h2>Source runs in window</h2>
   <table>
-    <thead><tr><th>Source</th><th>OK</th><th>Found</th><th>New</th><th>Req err</th><th>ms</th><th>Error</th></tr></thead>
+    {# STD-UI-COM-009: request_errors and parse_errors are separately tracked
+       per SourceRun and mean different things -- a fetch that never landed vs
+       a page that landed and would not parse. soft_blocked marks a zero that
+       is known to come from a block rather than an empty listing. Showing
+       only "Req err" collapsed all three. #}
+    <thead><tr><th>Source</th><th>OK</th><th>Found</th><th>New</th><th>Req err</th><th>Parse err</th><th>Soft blocked</th><th>ms</th><th>Error</th></tr></thead>
     <tbody>
     {% for s in src_runs %}
       <tr>
@@ -35,11 +40,13 @@
         <td class="mono">{{ s.articles_found }}</td>
         <td class="mono">{{ s.articles_new }}</td>
         <td class="mono">{{ s.request_errors }}</td>
+        <td class="mono">{{ s.parse_errors }}</td>
+        <td class="mono">{{ "yes" if s.soft_blocked else "—" }}</td>
         <td class="mono">{{ s.response_time_ms or "—" }}</td>
         <td class="muted">{{ s.error_message or "—" }}</td>
       </tr>
     {% else %}
-      <tr><td colspan="7" class="muted">No SourceRun rows in this window.</td></tr>
+      <tr><td colspan="9" class="muted">No SourceRun rows in this window.</td></tr>
     {% endfor %}
     </tbody>
   </table>

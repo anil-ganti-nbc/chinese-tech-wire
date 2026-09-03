@@ -56,10 +56,16 @@
 
   <h3 style="margin:12px 0 4px">Recent ingestion runs — showing {{ snapshot.recent_runs|length }} of {{ snapshot.recent_runs_total }}</h3>
   <table>
-    <thead><tr><th>Started</th><th>Trigger</th><th>Status</th><th>Dur</th><th>+Art</th><th>+Comm</th><th>+Doc</th><th>+Lead</th><th>Err</th></tr></thead>
+    {# STD-UI-COM-009: every run row links to its own detail page, where the
+       per-source phase outcomes (request vs parse errors, soft blocks) live.
+       The previous "Open a run: #1 #2 ..." list below covered only the five
+       newest runs and did not show run ids, so every older row was
+       operationally unreachable. #}
+    <thead><tr><th>Run</th><th>Started</th><th>Trigger</th><th>Status</th><th>Dur</th><th>+Art</th><th>+Comm</th><th>+Doc</th><th>+Lead</th><th>Err</th></tr></thead>
     <tbody id="recent-runs-body">
     {% for r in snapshot.recent_runs %}
       <tr>
+        <td><a href="/runs/{{ r.id }}">#{{ r.id }}</a></td>
         <td class="mono muted">{{ r.started_at or "" }}</td>
         <td>{{ r.trigger }}</td>
         <td><b>{{ r.status }}</b></td>
@@ -71,7 +77,7 @@
         <td class="mono">{{ r.error_count }}</td>
       </tr>
     {% else %}
-      <tr><td colspan="9" class="muted">No runs yet.</td></tr>
+      <tr><td colspan="10" class="muted">No runs yet.</td></tr>
     {% endfor %}
     </tbody>
   </table>
@@ -233,13 +239,14 @@
     if (!tbody) return;
     var html = '';
     rows.forEach(function (r) {
-      html += '<tr><td class="mono muted">' + esc(r.started_at) + '</td><td>' + esc(r.trigger) + '</td>' +
+      html += '<tr><td><a href="/runs/' + esc(r.id) + '">#' + esc(r.id) + '</a></td>' +
+        '<td class="mono muted">' + esc(r.started_at) + '</td><td>' + esc(r.trigger) + '</td>' +
         '<td><b>' + esc(r.status) + '</b></td><td class="mono">' + fmtDur(r.duration_seconds) + '</td>' +
         '<td class="mono">' + fmtNum(r.articles_new) + '</td><td class="mono">' + fmtNum(r.community_threads_new) + '</td>' +
         '<td class="mono">' + fmtNum(r.documentary_records_new) + '</td><td class="mono">' + fmtNum(r.leads_created) + '</td>' +
         '<td class="mono">' + fmtNum(r.error_count) + '</td></tr>';
     });
-    tbody.innerHTML = html || '<tr><td colspan="9" class="muted">No runs yet.</td></tr>';
+    tbody.innerHTML = html || '<tr><td colspan="10" class="muted">No runs yet.</td></tr>';
   }
 
   function renderTracked(run) {

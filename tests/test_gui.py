@@ -350,3 +350,67 @@ def test_fmt_normalises_to_utc_so_the_stated_convention_is_true():
 
     # And an already-UTC value is untouched.
     assert _fmt(datetime(2026, 9, 3, 4, 0, tzinfo=timezone.utc)) == "09-03 04:00"
+
+
+def test_com009_every_run_row_links_to_its_detail_page(client, tmp_path):
+    """STD-UI-COM-009: the run list must indicate that deeper stage evidence
+    exists and give a direct path to it. The old page linked only the five
+    newest runs from a separate paragraph and never printed a run id, so
+    every older row was operationally unreachable."""
+    from database.models import IngestionRun
+    from database.db import get_session
+    from datetime import datetime, timezone
+
+    now = datetime.now(timezone.utc)
+    with get_session() as session:
+        for i in range(7):
+            session.add(IngestionRun(
+                started_at=now, finished_at=now, trigger="SCHEDULED",
+                status="PARTIAL", error_count=i,
+            ))
+        session.commit()
+        ids = [r.id for r in session.query(IngestionRun).all()]
+
+    page = client.get("/health").text
+    for run_id in ids:
+        assert f'href="/runs/{run_id}"' in page, f"run {run_id} has no path to its detail page"
+
+
+def test_com009_run_detail_separates_request_and_parse_failures(client):
+    """STD-UI-COM-009: SourceRun tracks request_errors and parse_errors
+    separately — a fetch that never landed vs a page that landed and would not
+    parse — and soft_blocked marks a zero known to come from a block. Showing
+    only 'Req err' erased distinctions the backend already keeps."""
+    from database.models import IngestionRun, SourceRun
+    from database.db import get_session
+    from datetime import datetime, timezone, timedelta
+
+    started = datetime.now(timezone.utc)
+    with get_session() as session:
+        run = IngestionRun(started_at=started, finished_at=started + timedelta(minutes=5),
+                           trigger="SCHEDULED", status="PARTIAL")
+        session.add(run)
+        session.flush()
+        session.add(SourceRun(
+            source="ithome", layer="NEWS", started_at=started + timedelta(seconds=1),
+            finished_at=started + timedelta(seconds=2), success=False,
+            articles_found=0, articles_new=0,
+            request_errors=0, parse_errors=4, soft_blocked=False,
+        ))
+        session.add(SourceRun(
+            source="chiphell", layer="COMMUNITY", started_at=started + timedelta(seconds=3),
+            finished_at=started + timedelta(seconds=4), success=False,
+            articles_found=0, articles_new=0,
+            request_errors=3, parse_errors=0, soft_blocked=True,
+        ))
+        session.commit()
+        run_id = run.id
+
+    page = client.get(f"/runs/{run_id}").text
+    assert "Parse err" in page
+    assert "Soft blocked" in page
+    # The parse-only failure and the request-only failure must not read alike.
+    ithome = page.split("ithome", 1)[1].split("</tr>", 1)[0]
+    chiphell = page.split("chiphell", 1)[1].split("</tr>", 1)[0]
+    assert ">4<" in ithome and ">0<" in ithome
+    assert ">3<" in chiphell and "yes" in chiphell
