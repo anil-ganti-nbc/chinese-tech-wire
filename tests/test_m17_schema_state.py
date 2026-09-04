@@ -658,17 +658,43 @@ def test_no_qualification_concepts_introduced():
     assert EXPECTED_SCHEMA_VERSION == 1
 
 
-def test_real_db_read_only_classification():
-    """The real local database is marker-less and structurally complete, so
-    under M17 source it classifies LEGACY_UNADOPTED. Read-only, hash-guarded:
-    this test cannot and does not write to it."""
+def test_marker_less_real_shaped_db_classifies_legacy_unadopted(tmp_path):
+    """Deterministic replacement for a test that used to assert the operator's
+    own data/ctw.db was LEGACY_UNADOPTED.
+
+    That coupled repository correctness to one historical moment of mutable
+    operator state: once that database was legitimately adopted it became
+    COMPATIBLE and the suite went red on that machine alone, while skipping
+    everywhere the file does not exist -- so CI could never have caught it.
+    The property actually worth pinning is the classification rule, which a
+    constructed fixture states exactly.
+    """
+    db = _legacy_db(tmp_path)
+    before = _sha(db)
+    report = inspect_primary_store(db)
+    assert report.state is SchemaState.LEGACY_UNADOPTED
+    assert _sha(db) == before  # inspection is read-only
+
+
+def test_real_db_inspection_is_read_only_and_well_classified():
+    """Retained real-database diagnostic, narrowed to what is invariant.
+
+    It no longer asserts WHICH lifecycle state the operator's database is in
+    -- that legitimately changes as they adopt or rebuild it. It asserts the
+    two things that must hold whatever they have done to it: inspecting it
+    never writes, and it classifies into the known vocabulary rather than
+    landing in a damaged state.
+    """
     real = Path(__file__).resolve().parents[1] / "data" / "ctw.db"
     if not real.exists():
         pytest.skip("no real local database present")
     before = _sha(real)
     report = inspect_primary_store(real)
-    assert report.state is SchemaState.LEGACY_UNADOPTED
-    assert _sha(real) == before
+    assert _sha(real) == before  # read-only: the point of this diagnostic
+    assert isinstance(report.state, SchemaState)
+    assert report.state not in {SchemaState.CORRUPT, SchemaState.UNKNOWN}, (
+        f"operator database is in a damaged state: {report.state.value}"
+    )
 
 
 # -- semantics pin --------------------------------------------------------------------
