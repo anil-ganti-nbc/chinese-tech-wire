@@ -1144,4 +1144,10 @@ def run_gui(host: str = "127.0.0.1", port: int = 8000) -> None:
         # Stock Windows console (cp1252) can't encode the arrow — degrade
         # gracefully rather than crashing the whole server before it starts.
         print(f"Chinese Tech Wire Newsroom GUI -> http://{host}:{port}")
-    uvicorn.run(app, host=host, port=port, log_level="info")
+    # Plain formatters, not uvicorn's AccessFormatter: the redaction record
+    # factory clears record.args, which AccessFormatter unpacks structurally.
+    # See security.redaction.uvicorn_log_config.
+    from security.redaction import uvicorn_log_config
+
+    uvicorn.run(app, host=host, port=port, log_level="info",
+                log_config=uvicorn_log_config("info"))

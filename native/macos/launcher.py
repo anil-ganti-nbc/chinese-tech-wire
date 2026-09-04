@@ -80,7 +80,14 @@ def main() -> int:
     write_runtime_state(host, port, state)
     threading.Thread(target=open_when_ready, args=(host, port), daemon=True).start()
 
-    server = uvicorn.Server(uvicorn.Config(app, host=host, port=port, log_level="info"))
+    # See security.redaction.uvicorn_log_config: the redaction record factory
+    # clears record.args, which uvicorn's AccessFormatter unpacks structurally.
+    from security.redaction import uvicorn_log_config
+
+    server = uvicorn.Server(uvicorn.Config(
+        app, host=host, port=port, log_level="info",
+        log_config=uvicorn_log_config("info"),
+    ))
     server_thread = threading.Thread(target=server.run, name="ctw-loopback", daemon=False)
 
     def stop(_signum: int, _frame: object) -> None:

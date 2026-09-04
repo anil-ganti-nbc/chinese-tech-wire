@@ -113,6 +113,49 @@ def protect_handler(handler: logging.Handler) -> logging.Handler:
     return handler
 
 
+def uvicorn_log_config(level: str = "info") -> dict:
+    """A uvicorn logging config that survives our redaction record factory.
+
+    install_logging_redaction() replaces the global LogRecordFactory so every
+    record carries an already-redacted, already-formatted `msg` and, crucially,
+    `args = ()` -- clearing args is not incidental, it is what stops the
+    original unredacted arguments being re-interpolated downstream.
+
+    uvicorn's default `uvicorn.logging.AccessFormatter` does not read
+    `record.msg`; it unpacks five positional values structurally:
+
+        client_addr, method, full_path, http_version, status_code = record.args
+
+    Against a redacted record that raises
+    `ValueError: not enough values to unpack (expected 5, got 0)` on EVERY
+    request, which is the "--- Logging error ---" noise seen in CTW's console
+    while routes still served 200.
+
+    The two designs are simply incompatible, so hand uvicorn plain formatters
+    instead of patching its internals. Nothing is suppressed: the factory has
+    already rendered the identical access line into `msg`, so `%(message)s`
+    prints exactly what AccessFormatter would have, minus the crash.
+    """
+    return {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            # Deliberately NOT uvicorn.logging.{Default,Access}Formatter.
+            "plain": {"format": "%(asctime)s [%(levelname)s] %(message)s",
+                      "datefmt": "%H:%M:%S"},
+        },
+        "handlers": {
+            "plain": {"class": "logging.StreamHandler", "formatter": "plain",
+                      "stream": "ext://sys.stdout"},
+        },
+        "loggers": {
+            "uvicorn": {"handlers": ["plain"], "level": level.upper(), "propagate": False},
+            "uvicorn.error": {"handlers": ["plain"], "level": level.upper(), "propagate": False},
+            "uvicorn.access": {"handlers": ["plain"], "level": level.upper(), "propagate": False},
+        },
+    }
+
+
 def install_logging_redaction() -> None:
     global _installed
     if not _installed:
