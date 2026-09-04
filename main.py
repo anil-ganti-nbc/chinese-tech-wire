@@ -599,15 +599,34 @@ def main() -> None:
     # compatible existing store performs zero schema writes. Legacy
     # adoption is never implicit: see --adopt-current-schema.
     Path("data").mkdir(exist_ok=True)
-    if not (args.identity or args.health):
-        init_db(settings.database_url)
 
+    # Explicit legacy adoption has to run BEFORE the compatibility barrier.
+    # init_db() raises SchemaStateError on LEGACY_UNADOPTED, so ordering it
+    # first made --adopt-current-schema unreachable for the one state it
+    # exists to resolve: the flag was parsed, then the process refused and
+    # returned before ever reaching this branch. (The import was wrong too --
+    # adopt_current_schema lives in database.db, not database.schema_state --
+    # so the branch could not have run even if it had been reached.)
+    #
+    # This does NOT make adoption implicit. It still requires the explicit
+    # operator flag; without it, LEGACY_UNADOPTED still fails closed below,
+    # exactly as STD-DEPLOY-COM-002 requires. Adoption itself remains
+    # structure-verifying and refuses anything that is not LEGACY_UNADOPTED.
     if args.adopt_current_schema:
         import json
-        from database.schema_state import adopt_current_schema
+        from database.db import adopt_current_schema
         result = adopt_current_schema(settings.database_url)
         print(json.dumps(result, indent=2, default=str))
-        return 0 if result.get("adopted") else 1
+        if not result.get("adopted"):
+            return 1
+        # Prove the result through the same gate normal startup uses, so a
+        # "successful" adoption that did not actually reach COMPATIBLE can
+        # never be reported as success.
+        init_db(settings.database_url)
+        return 0
+
+    if not (args.identity or args.health):
+        init_db(settings.database_url)
 
     if args.identity:
         import json
