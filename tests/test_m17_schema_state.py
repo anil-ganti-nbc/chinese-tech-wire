@@ -62,12 +62,14 @@ def _con(path: Path) -> sqlite3.Connection:
 
 
 def _legacy_db(tmp_path: Path, name: str = "legacy.db") -> Path:
-    """An honest pre-M17 database: the full current application shape, no
-    authority — exactly what a real pre-upgrade production DB looks like."""
+    """An honest pre-authority database: the full application shape, no
+    authorities — exactly what a real pre-upgrade production DB looks like
+    (it predates both schema_meta and observation_continuity)."""
     db = tmp_path / name
     init_db(_u(db))
     con = _con(db)
     con.execute("DROP TABLE schema_meta")
+    con.execute("DROP TABLE observation_continuity")
     con.commit()
     con.close()
     return db
@@ -94,14 +96,15 @@ def test_fresh_bootstrap_creates_canonical_schema_and_authority(tmp_path):
     con = _con(db)
     try:
         version = con.execute(f"SELECT version FROM {SCHEMA_META_TABLE}").fetchone()[0]
-        assert version == EXPECTED_SCHEMA_VERSION == 1
+        assert version == EXPECTED_SCHEMA_VERSION == 2
         tables = {
             r[0] for r in con.execute(
                 "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
             )
         }
-        # 21 application tables + the authority itself
-        assert len(tables) == 22 and SCHEMA_META_TABLE in tables
+        # 21 application tables + schema_meta + the observation-continuity authority
+        assert len(tables) == 23 and SCHEMA_META_TABLE in tables
+        assert "observation_continuity" in tables
     finally:
         con.close()
 
@@ -119,7 +122,7 @@ def test_fresh_bootstrap_reverified_before_work(tmp_path):
 # -- 4: compatible state proceeds without mutation ----------------------------
 
 
-def test_current_v1_state_proceeds_without_schema_mutation(tmp_path):
+def test_current_state_proceeds_without_schema_mutation(tmp_path):
     db = tmp_path / "current.db"
     init_db(_u(db))
     before = _sha(db)
@@ -163,7 +166,7 @@ def test_adoption_succeeds_only_after_full_structural_proof(tmp_path):
         rows = con.execute(
             f"SELECT version, source FROM {SCHEMA_META_TABLE}"
         ).fetchall()
-        assert rows == [(1, "legacy-adoption")]
+        assert rows == [(2, "legacy-adoption")]
     finally:
         con.close()
     assert inspect_primary_store(db).state is SchemaState.COMPATIBLE
@@ -173,8 +176,17 @@ def test_adoption_writes_authority_then_reverifies(tmp_path):
     db = _legacy_db(tmp_path)
     result = adopt_current_schema(_u(db))
     assert result["state"] == "COMPATIBLE"
-    assert result["expected_schema_version"] == 1
-    assert result["verified_tables"] == 22
+    assert result["expected_schema_version"] == 2
+    assert result["verified_tables"] == 23
+    # adoption establishes the observation-continuity boundary honestly
+    con = _con(db)
+    try:
+        epoch = con.execute(
+            "SELECT epoch_number, established_by FROM observation_continuity"
+        ).fetchall()
+        assert epoch == [(1, "legacy-adoption")]
+    finally:
+        con.close()
     # a second adoption is refused: the state is no longer LEGACY_UNADOPTED
     refused = adopt_current_schema(_u(db))
     assert refused["adopted"] is False
@@ -284,7 +296,7 @@ def test_create_all_restricted_to_fresh_bootstrap(tmp_path):
 # -- 16-19: marker + structure, newer, malformed, failed mutation ---------------
 
 
-def test_marker_v1_with_missing_table_fails_closed(tmp_path):
+def test_marker_with_missing_table_fails_closed(tmp_path):
     db = tmp_path / "partial.db"
     init_db(_u(db))
     con = _con(db)
@@ -298,7 +310,7 @@ def test_marker_v1_with_missing_table_fails_closed(tmp_path):
         init_db(_u(db))
 
 
-def test_marker_v1_with_missing_column_fails_closed(tmp_path):
+def test_marker_with_missing_column_fails_closed(tmp_path):
     db = tmp_path / "missingcol.db"
     init_db(_u(db))
     con = _con(db)
@@ -311,11 +323,11 @@ def test_marker_v1_with_missing_column_fails_closed(tmp_path):
         init_db(_u(db))
 
 
-def test_newer_version_v2_fails_closed(tmp_path):
+def test_newer_version_v3_fails_closed(tmp_path):
     db = tmp_path / "newer.db"
     init_db(_u(db))
     con = _con(db)
-    con.execute("UPDATE schema_meta SET version = 2")
+    con.execute("UPDATE schema_meta SET version = 3")
     con.commit()
     con.close()
     before = _sha(db)
@@ -323,7 +335,7 @@ def test_newer_version_v2_fails_closed(tmp_path):
         init_db(_u(db))
     report = excinfo.value.report
     assert report.state is SchemaState.INCOMPATIBLE_NEWER
-    assert report.observed_version == 2
+    assert report.observed_version == 3
     assert "FORWARD_ONLY_EXPLICIT" in report.reason
     assert json.loads(json.dumps(report.as_evidence()))  # JSON-serializable
     assert _sha(db) == before
@@ -599,7 +611,7 @@ def test_qc_unknown_and_corrupt_shapes_fail_closed(tmp_path):
 
 
 def test_older_software_newer_state_rejected():
-    """FORWARD_ONLY_EXPLICIT is enforced by inspection (v2 -> refused, test
+    """FORWARD_ONLY_EXPLICIT is enforced by inspection (v3 -> refused, test
     above) and documented in the module; the state vocabulary itself pins
     the skew posture."""
     from database.schema_state import SchemaState as S
@@ -617,11 +629,11 @@ def test_normal_current_state_regression(tmp_path):
         assert session.execute(text("SELECT 1")).scalar() == 1
     report = inspect_primary_store(db)
     assert report.state is SchemaState.COMPATIBLE
-    assert report.observed_version == 1
+    assert report.observed_version == EXPECTED_SCHEMA_VERSION
 
 
 def test_existing_source_health_behavior_intact(tmp_path):
-    """source_runs retains its full current column set under the v1
+    """source_runs retains its full current column set under the current
     contract (the health/telemetry features keep working)."""
     db = tmp_path / "health.db"
     init_db(_u(db))
@@ -645,17 +657,22 @@ def test_existing_source_health_behavior_intact(tmp_path):
 
 
 def test_no_qualification_concepts_introduced():
-    """OPS-COM-003 stays UNKNOWN at Standards level: M17 adds no
-    qualification machinery, and the schema stays free of it."""
+    """OPS-COM-003 stays out of scope: M17 added no qualification machinery,
+    the DATA-COM-001 v2 extension adds none either, and the schema stays
+    free of it."""
     schema_state_src = (
         Path(__file__).resolve().parents[1] / "database" / "schema_state.py"
     ).read_text(encoding="utf-8")
     db_src = (Path(__file__).resolve().parents[1] / "database" / "db.py").read_text(
         encoding="utf-8"
     )
-    for source in (schema_state_src, db_src):
+    continuity_src = (
+        Path(__file__).resolve().parents[1]
+        / "database" / "observation_continuity.py"
+    ).read_text(encoding="utf-8")
+    for source in (schema_state_src, db_src, continuity_src):
         assert "qualification" not in source.lower()
-    assert EXPECTED_SCHEMA_VERSION == 1
+    assert EXPECTED_SCHEMA_VERSION == 2
 
 
 def test_marker_less_real_shaped_db_classifies_legacy_unadopted(tmp_path):

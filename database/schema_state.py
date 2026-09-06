@@ -13,14 +13,23 @@ M17 introduces this module as the narrow, explicit, durable schema
 authority:
 
 - `schema_meta` — a single-row SQLite table recording the schema version
-  (integer, starting at 1). Written only by bootstrap, future marked
-  migrations, or the explicit `adopt_current_schema` operator action.
+  (integer, starting at 1). Written only by bootstrap, marked migrations,
+  or the explicit `adopt_current_schema` operator action.
 - `EXPECTED_SCHEMA_VERSION` — the expected version constant, in one
   authoritative place. Never derived from application/package versions or
   from model metadata at runtime.
 - A structural contract that corroborates the marker: the expected table
   set plus, per table, the expected columns. `MARKER_EXISTS !=
-  COMPATIBLE`; a marker claiming v1 over missing structure is PARTIAL.
+  COMPATIBLE`; a marker claiming the current version over missing
+  structure is PARTIAL.
+
+v2 (STD-DATA-COM-001 remediation) adds the `observation_continuity`
+authority — the observation-continuity epoch registry the frozen data
+standard requires. It is deliberately orthogonal to the compatibility
+marker (see database/observation_continuity.py) but part of the same
+verified structural contract: carrying an older marked store to the
+current contract is an explicit marked migration
+(`database.db.migrate_current_schema`), never an implicit write.
 
 The marker must NOT become a substitute for structural verification.
 
@@ -60,15 +69,29 @@ from enum import Enum
 from pathlib import Path
 
 # The expected persistent-state contract of THIS software version. Single
-# source of truth; written by bootstrap/adoption only, read everywhere.
-EXPECTED_SCHEMA_VERSION = 1
+# source of truth; written by bootstrap/marked-migration/adoption only,
+# read everywhere.
+#
+# v1: the M17 contract (21 declarative application tables + schema_meta).
+# v2: adds the observation_continuity authority (STD-DATA-COM-001). Older
+# marked state migrates to v2 only through the explicit canonical marked
+# migration — never implicitly.
+EXPECTED_SCHEMA_VERSION = 2
 
 # The authoritative name of the durable version marker table.
 SCHEMA_META_TABLE = "schema_meta"
 
+# The authoritative name of the observation-continuity authority
+# (STD-DATA-COM-001). Orthogonal to the compatibility marker, verified as
+# part of the same structural contract.
+OBSERVATION_CONTINUITY_TABLE = "observation_continuity"
+
 # Required tables of the primary store: the declarative application tables
-# plus the authority itself. Static (auditable) list matching
-# database/models.py at the M17 contract.
+# plus the two raw-DDL authorities (the compatibility marker and the
+# observation-continuity registry). The static application list matches
+# database/models.py at the M17 contract and is ALSO the completeness basis
+# for the LEGACY_UNADOPTED class: a pre-authority database predates both
+# authorities, so its structural proof must not require them.
 _APPLICATION_TABLES: tuple[str, ...] = (
     "article_entities", "articles", "author_profiles", "community_posts",
     "community_threads", "documentary_events", "documentary_records",
@@ -78,12 +101,24 @@ _APPLICATION_TABLES: tuple[str, ...] = (
     "thread_metrics", "translation_cache",
 )
 
+# Required columns of the observation-continuity authority, mirroring the
+# canonical DDL in database/observation_continuity.py. Declared here rather
+# than derived from declarative models because the authority — like
+# schema_meta — is created by explicit canonical DDL, not by create_all.
+_OBSERVATION_CONTINUITY_COLUMNS: tuple[str, ...] = (
+    "id", "epoch_number", "epoch_uid", "started_at", "established_by",
+    "previous_epoch_uid", "reason", "created_at",
+)
+
 # Required columns per application table, derived once at import from the
 # declarative models — the exact definition `create_all` bootstraps from, so
 # the manifest and a fresh bootstrap can never disagree. This is a
 # *required-subset* manifest: extra columns (e.g. from never-released newer
 # code) are tolerated by inspection and caught by the version marker instead.
-EXPECTED_TABLES: frozenset[str] = frozenset(_APPLICATION_TABLES) | {SCHEMA_META_TABLE}
+EXPECTED_TABLES: frozenset[str] = (
+    frozenset(_APPLICATION_TABLES)
+    | {SCHEMA_META_TABLE, OBSERVATION_CONTINUITY_TABLE}
+)
 
 
 def _expected_columns() -> dict[str, frozenset[str]]:
@@ -95,7 +130,10 @@ def _expected_columns() -> dict[str, frozenset[str]]:
     return manifest
 
 
-EXPECTED_COLUMNS: dict[str, frozenset[str]] = _expected_columns()
+EXPECTED_COLUMNS: dict[str, frozenset[str]] = {
+    **_expected_columns(),
+    OBSERVATION_CONTINUITY_TABLE: frozenset(_OBSERVATION_CONTINUITY_COLUMNS),
+}
 
 
 class SchemaState(str, Enum):
@@ -242,10 +280,10 @@ def inspect_schema(
         if complete:
             return _verdict(
                 SchemaState.LEGACY_UNADOPTED, expected_version, None,
-                "structurally complete pre-M17 database without the "
+                "structurally complete pre-authority database without the "
                 f"{SCHEMA_META_TABLE} authority; normal work is refused "
                 "until the operator explicitly adopts it "
-                "(adopt-current-schema)",
+                "(adopt-current-schema carries it to the current contract)",
                 user_tables=sorted(tables),
             )
         if app_tables_present:
@@ -323,8 +361,8 @@ def inspect_schema(
     return _verdict(
         SchemaState.COMPATIBLE, expected_version, observed,
         f"state matches the expected v{expected_version} contract "
-        f"({len(EXPECTED_TABLES)} tables incl. {SCHEMA_META_TABLE}, "
-        "required columns verified)",
+        f"({len(EXPECTED_TABLES)} tables incl. {SCHEMA_META_TABLE} and "
+        f"{OBSERVATION_CONTINUITY_TABLE}, required columns verified)",
         user_tables=sorted(tables),
     )
 

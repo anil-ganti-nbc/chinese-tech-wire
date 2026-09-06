@@ -583,6 +583,19 @@ def main() -> None:
                              "pre-M17 database against the full current structural contract "
                              "and write the schema authority. Refuses anything that is not "
                              "structurally complete. Never runs implicitly.")
+    parser.add_argument("--migrate-schema", action="store_true",
+                        help="EXPLICIT operator action: carry an older marked schema "
+                             "(v1) to the current contract through the canonical marked "
+                             "migration. Records the initial observation-continuity "
+                             "boundary (STD-DATA-COM-001) at the migration instant and "
+                             "stamps the version authority. Refuses anything that is not "
+                             "an older marked state. Never runs implicitly.")
+    parser.add_argument("--new-observation-epoch", metavar="REASON",
+                        help="EXPLICIT operator action (STD-DATA-COM-001): declare the "
+                             "observation history discontinuous (data loss, restore, "
+                             "re-baseline) and begin a new observation-continuity epoch "
+                             "with this stated reason. Requires a compatible store and "
+                             "no ingestion run in flight. Never runs implicitly.")
     parser.add_argument("--freshness-report", action="store_true",
                         help="StoryLead age-bucket / active-vs-archived report (read-only)")
     parser.add_argument("--show-missed-stories", action="store_true")
@@ -625,8 +638,36 @@ def main() -> None:
         init_db(settings.database_url)
         return 0
 
+    # The marked migration must also run BEFORE the compatibility barrier:
+    # an older marked store raises MIGRATION_REQUIRED at init_db, which
+    # would otherwise make this explicit action unreachable for the one
+    # state it exists to resolve. Like adoption, it stays explicit and
+    # structure-verifying; it never runs as a side effect of anything.
+    if args.migrate_schema:
+        import json
+        from database.db import migrate_current_schema
+        result = migrate_current_schema(settings.database_url)
+        print(json.dumps(result, indent=2, default=str))
+        if not result.get("migrated"):
+            return 1
+        # Prove the result through the same gate normal startup uses.
+        init_db(settings.database_url)
+        return 0
+
     if not (args.identity or args.health):
         init_db(settings.database_url)
+
+    # STD-DATA-COM-001: a continuity break is recorded only by this explicit
+    # operator flag, against a currently compatible store. It can never fire
+    # as a side effect of startup, collection, or any other command.
+    if args.new_observation_epoch is not None:
+        import json
+        from database.db import record_observation_discontinuity
+        result = record_observation_discontinuity(
+            args.new_observation_epoch, settings.database_url,
+        )
+        print(json.dumps(result, indent=2, default=str))
+        return 0 if result.get("recorded") else 1
 
     if args.identity:
         import json
@@ -1089,7 +1130,11 @@ def main() -> None:
 
 if __name__ == "__main__":
     try:
-        main()
+        # main()'s return value IS the exit code for the explicit operator
+        # actions: a refusal (--adopt-current-schema / --migrate-schema /
+        # --new-observation-epoch) must not exit 0 just because it printed
+        # its evidence instead of raising.
+        raise SystemExit(main() or 0)
     except SchemaStateError as exc:
         import json
         print(json.dumps({

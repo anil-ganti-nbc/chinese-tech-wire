@@ -148,6 +148,7 @@ def get_health() -> Dict[str, Any]:
     last_success: Optional[datetime] = None
     last_status: Optional[str] = None
     total_runs = 0
+    observation_epoch: Optional[dict] = None
 
     # M17 / STD-DEPLOY-COM-002: health is read-only and compatibility-aware.
     # It never initializes, creates, alters, stamps, or adopts — inspection
@@ -206,6 +207,23 @@ def get_health() -> Dict[str, Any]:
                         last_success = _parse_dt(success_row[0])
                     if total_runs == 0:
                         reasons.append("no ingestion_runs recorded yet")
+
+                    # STD-DATA-COM-001: report the observation-continuity
+                    # regime read-only. A compatible store that records no
+                    # regime must not silently present its historical
+                    # first-seen/novelty facts as continuity-verified.
+                    try:
+                        from database.observation_continuity import read_active_epoch
+
+                        observation_epoch = read_active_epoch(ro)
+                    except Exception:  # noqa: BLE001 - health must never raise
+                        observation_epoch = None
+                    if observation_epoch is None:
+                        reasons.append(
+                            "observation continuity not recorded in this "
+                            "store; its historical facts cannot be treated "
+                            "as continuity-verified"
+                        )
                 else:
                     reasons.append("no ingestion_runs recorded yet")
             finally:
@@ -244,6 +262,8 @@ def get_health() -> Dict[str, Any]:
         "last_run_status": last_status,
         "total_runs": total_runs,
         "database_writable": db_writable,
+        "observation_continuity": observation_epoch
+        or {"status": "UNKNOWN_CONTINUITY"},
         "version_info": get_version_info(),
         "status_reasons": reasons,
         "observed_at": observed.isoformat(),

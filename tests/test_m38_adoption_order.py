@@ -22,7 +22,9 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 def _legacy_unadopted_db(tmp_path: Path) -> Path:
-    """Structurally complete, no schema_meta -- i.e. LEGACY_UNADOPTED."""
+    """Structurally complete application schema, no authorities — i.e.
+    LEGACY_UNADOPTED (it predates both schema_meta and the
+    observation-continuity authority)."""
     import sqlite3
 
     from database.db import init_db
@@ -30,8 +32,9 @@ def _legacy_unadopted_db(tmp_path: Path) -> Path:
 
     db = tmp_path / "legacy.db"
     init_db(f"sqlite:///{db.as_posix()}")          # fresh bootstrap
-    con = sqlite3.connect(db)                       # then strip the authority
+    con = sqlite3.connect(db)                       # then strip the authorities
     con.execute(f"DROP TABLE IF EXISTS {SCHEMA_META_TABLE}")
+    con.execute("DROP TABLE IF EXISTS observation_continuity")
     con.commit()
     con.close()
     return db
@@ -106,11 +109,15 @@ def test_adoption_writes_only_the_schema_authority(tmp_path):
     meta = list(con.execute("SELECT * FROM schema_meta"))
     con.close()
 
-    assert set(after) - set(before) == {"schema_meta"}
+    assert set(after) - set(before) == {"schema_meta", "observation_continuity"}
     assert not set(before) - set(after)
     for table, count in before.items():
         assert after[table] == count, f"{table} row count changed"
     assert len(meta) == 1
+    # adoption carries the store to the CURRENT contract, which since the
+    # STD-DATA-COM-001 extension includes the observation-continuity
+    # authority — still authority writes only, never operator data.
+    assert meta[0][0] == 2 and meta[0][2] == "legacy-adoption"
 
 
 def test_adoption_refuses_a_database_that_is_not_legacy_unadopted(tmp_path):
