@@ -119,8 +119,6 @@ def backfill_article_translations(
                     summary_en = translator.translate(summary)
                     if summary_en:
                         article.summary_english = summary_en
-        if not counts.translated and not counts.cached:
-            session.rollback()  # nothing changed: keep the pass read-only
     return counts
 
 
@@ -150,11 +148,9 @@ def backfill_community_titles(
             if not original:
                 continue
             counts.attempted += 1
-            english = translator.translate(original)
+            english = _translate_one(translator, original, counts)
             if english:
                 thread.title_english = english
-        if not counts.translated and not counts.cached:
-            session.rollback()
     return counts
 
 
