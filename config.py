@@ -57,6 +57,15 @@ class Settings(BaseSettings):
     # Gemini
     gemini_api_key: str = Field(default="", alias="GEMINI_API_KEY")
     gemini_model: str = Field(default="gemini-2.0-flash", alias="GEMINI_MODEL")
+    # OpenRouter (OpenAI-compatible endpoint). The key comes from the
+    # environment only — never committed, never logged.
+    openrouter_api_key: str = Field(default="", alias="OPENROUTER_API_KEY")
+    openrouter_base_url: str = Field(
+        default="https://openrouter.ai/api/v1", alias="OPENROUTER_BASE_URL"
+    )
+    openrouter_model: str = Field(
+        default="google/gemini-2.5-flash", alias="OPENROUTER_MODEL"
+    )
     database_url: str = Field(default="sqlite:///data/ctw.db", alias="DATABASE_URL")
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
     # Cloud migration / runtime bridge. Chinese Tech Wire is a Tier B

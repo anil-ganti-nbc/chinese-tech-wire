@@ -54,6 +54,7 @@
       <th>Status</th>
       <th>Lead</th>
       <th>Source</th>
+      <th>QC</th>
       <th>Why now</th>
       <th>Age</th>
       <th>Excl</th>
@@ -83,6 +84,19 @@
         <span class="muted">—</span>
         {% endif %}
       </td>
+      <td class="qc-col">
+        {% if can_qc %}
+        <form class="qc-inline" method="post" action="/leads/{{ L.id }}/feedback">
+          <input type="hidden" name="next" value="{{ next_url }}">
+          <button type="submit" name="feedback" value="USEFUL" class="qc-btn qc-useful" title="QC: Useful — archive and clear from the queue">✓</button>
+          <button type="submit" name="feedback" value="NOT_USEFUL" class="qc-btn qc-not" title="Not useful — archive and dismiss">✕</button>
+          <button type="submit" name="feedback" value="FALSE_POSITIVE" class="qc-btn qc-fp" title="False positive — archive and dismiss">⚠</button>
+          <button type="submit" name="feedback" value="DUPLICATE" class="qc-btn qc-dup" title="Duplicate — archive and dismiss">⧉</button>
+        </form>
+        {% else %}
+        <span class="muted" title="Read-only dashboard: no authenticated mutation profile.">QC off</span>
+        {% endif %}
+      </td>
       <td class="why">{{ L.why_now or '—' }}</td>
       <td class="mono muted">{{ age_str(L.last_activity_at or L.created_at) }}</td>
       <td class="mono">{{ '%.0f'|format(L.exclusivity_score) }}</td>
@@ -92,7 +106,7 @@
       <td class="mono muted">{{ fmt(L.last_activity_at) }}</td>
     </tr>
   {% else %}
-    <tr><td colspan="11" class="muted">No leads. Run ingestion then: python main.py --rebuild-leads</td></tr>
+    <tr><td colspan="12" class="muted">No leads. Run ingestion then: python main.py --rebuild-leads</td></tr>
   {% endfor %}
   </tbody>
 </table>

@@ -573,16 +573,66 @@ def build_uncertainty(ctx: dict, scores: dict) -> str:
     return " ".join(bits)[:500]
 
 
+def _english_preferred_title(ctx: dict, original: str) -> str:
+    """English-first headline selection for a cluster.
+
+    The newsroom is an English-first surface, but translations are
+    enrichment, never admission/classification logic — so the scoring blob
+    keeps original-language titles and only the DISPLAYED headline prefers
+    an English equivalent:
+
+      1. the cluster's representative record's own English title, when the
+         founding article/thread carries one (most faithful to the
+         representative the cluster was built from);
+      2. otherwise the first member article that carries an English title
+         (the same story, syndicated in English);
+      3. otherwise an original-language title — a lead is never hidden or
+         dropped merely because a translation does not exist yet.
+    """
+    cluster = ctx.get("cluster")
+    rep = (cluster.representative_title or "").strip() if cluster else ""
+    if rep:
+        rep_article = next(
+            (a for a in ctx.get("articles", [])
+             if (a.title_original or "").strip() == rep and (a.title_english or "").strip()),
+            None,
+        )
+        if rep_article:
+            return rep_article.title_english.strip()
+        rep_thread = next(
+            (c for c in ctx.get("community", [])
+             if (c.title_original or "").strip() == rep and (c.title_english or "").strip()),
+            None,
+        )
+        if rep_thread:
+            return rep_thread.title_english.strip()
+    # The representative record itself has no English (or there is none):
+    # prefer a suitable existing English title anywhere in the cluster —
+    # same story, syndicated in English — before falling back to the
+    # original-language chain. A lead is never hidden or dropped merely
+    # because no translation exists yet.
+    for article in ctx.get("articles", []):
+        if (article.title_english or "").strip():
+            return article.title_english.strip()
+    for thread in ctx.get("community", []):
+        if (thread.title_english or "").strip():
+            return thread.title_english.strip()
+    if rep:
+        return rep
+    return original
+
+
 def build_headline_hint(ctx: dict, lead_type: str) -> str:
-    title = ""
+    original = ""
     if ctx["cluster"] and ctx["cluster"].representative_title:
-        title = ctx["cluster"].representative_title
+        original = ctx["cluster"].representative_title
     elif ctx["articles"]:
-        title = ctx["articles"][0].title_original
+        original = ctx["articles"][0].title_original
     elif ctx["community"]:
-        title = ctx["community"][0].title_original
+        original = ctx["community"][0].title_original
     elif ctx["docs"]:
-        title = ctx["docs"][0].title or ctx["docs"][0].source_record_id
+        original = ctx["docs"][0].title or ctx["docs"][0].source_record_id
+    title = _english_preferred_title(ctx, original)
     title = (title or "Untitled lead")[:80]
     prefix = {
         "LEAK": "Possible leak:",

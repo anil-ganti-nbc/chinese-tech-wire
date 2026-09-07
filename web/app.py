@@ -10,6 +10,7 @@ import secrets
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
+from urllib.parse import parse_qsl, urlencode
 
 from fastapi import FastAPI, Form, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
@@ -259,6 +260,19 @@ def newsroom(
             L.id: primary_source_url(L, session=session) for L in page_rows
         }
 
+    # Inline QC on the newsroom is offered only where mutations can actually
+    # be authorized — the same contract the POST middleware enforces. With
+    # no injected authorizer and no environment token, the dashboard stays
+    # read-only and the QC column shows why rather than dead buttons.
+    injected = getattr(app.state, "mutation_authorizer", None)
+    can_qc = injected is not None or bool(os.environ.get("CTW_DASHBOARD_AUTH_TOKEN", ""))
+    # Return-to-context: the current newsroom path + query so a QC click
+    # lands back on the exact filtered view it came from. Empty query values
+    # (e.g. ?hours=) are dropped so a blank filter and its absence render a
+    # byte-identical page and return to the same place.
+    pairs = [(k, v) for k, v in parse_qsl(request.url.query, keep_blank_values=True) if v]
+    next_url = request.url.path + (("?" + urlencode(pairs)) if pairs else "")
+
     return templates.TemplateResponse(
         request,
         "newsroom.html",
@@ -276,6 +290,8 @@ def newsroom(
             "hide_written": hide_written,
             "fb_map": fb_map,
             "source_url_map": source_url_map,
+            "can_qc": can_qc,
+            "next_url": next_url,
             "active": "newsroom",
         },
     )
@@ -428,20 +444,35 @@ def lead_detail(request: Request, lead_id: int):
 
 
 @app.post("/leads/{lead_id}/feedback")
-def lead_feedback_post(lead_id: int, feedback: str = Form(...)):
+def lead_feedback_post(
+    lead_id: int,
+    feedback: str = Form(...),
+    next: str = Form(""),
+):
     """The QC decision endpoint: Useful / Not useful / False positive /
     Duplicate (this project's "out of stock" equivalent — see
     pipeline/qc.py) / Written. Delegates to pipeline.qc.record_qc_decision
-    for the transactional archive-and-remove-from-queue contract."""
+    for the transactional archive-and-remove-from-queue contract.
+
+    `next` returns the operator to the context they clicked from (the
+    newsroom's current filter/page) instead of the lead detail page. It is
+    a validated internal path only — never an off-site redirect.
+    """
     from pipeline.qc import AlreadyQcdError, record_qc_decision
+
+    def _safe_next(suffix: str) -> str:
+        candidate = (next or "").strip()
+        if not candidate or not candidate.startswith("/") or candidate.startswith("//"):
+            return f"/leads/{lead_id}{suffix}"
+        return candidate + suffix
 
     try:
         record_qc_decision(lead_id, feedback.strip())
     except AlreadyQcdError:
-        return RedirectResponse(f"/leads/{lead_id}?fb=already", status_code=303)
+        return RedirectResponse(_safe_next("?fb=already"), status_code=303)
     except ValueError:
-        return RedirectResponse(f"/leads/{lead_id}?err=1", status_code=303)
-    return RedirectResponse(f"/leads/{lead_id}?fb=1", status_code=303)
+        return RedirectResponse(_safe_next("?err=1"), status_code=303)
+    return RedirectResponse(_safe_next("?fb=1"), status_code=303)
 
 
 @app.get("/qc/recent", response_class=HTMLResponse)

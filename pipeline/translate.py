@@ -221,11 +221,13 @@ class NoOpTranslator(Translator):
 class OpenAICompatibleTranslator(Translator):
     provider_name = "openai"
 
-    def __init__(self, api_key: str, base_url: str, model: str, timeout: float = 30.0):
+    def __init__(self, api_key: str, base_url: str, model: str, timeout: float = 30.0,
+                 key_env_name: str = "TRANSLATION_API_KEY"):
         self.api_key = api_key
         self.base_url = base_url.rstrip("/")
         self.model_name = model
         self.timeout = timeout
+        self.key_env_name = key_env_name
         self._client = httpx.Client(timeout=timeout)
 
     def translate_raw(
@@ -239,7 +241,10 @@ class OpenAICompatibleTranslator(Translator):
                 {"role": "system", "content": TECH_TRANSLATE_SYSTEM},
                 {"role": "user", "content": text},
             ],
-            "temperature": 0.1,
+            # Deterministic: a translation is a fact-preserving conversion,
+            # not a creative act — the same headline must translate the same
+            # way so the cache stays meaningful.
+            "temperature": 0.0,
             "max_tokens": 256,
         }
         headers = {
@@ -252,14 +257,26 @@ class OpenAICompatibleTranslator(Translator):
             headers=headers,
         )
         if resp.status_code == 429:
-            logger.warning("[TRANSLATE] OpenAI rate limited; storing article without translation")
+            logger.warning("[TRANSLATE] rate limited; storing text without translation")
             raise RuntimeError("rate_limited")
         if resp.status_code in (401, 403):
-            logger.warning("[TRANSLATE] OpenAI auth failed; check TRANSLATION_API_KEY")
+            logger.warning("[TRANSLATE] auth failed; check %s", self.key_env_name)
             raise RuntimeError("auth_failed")
         resp.raise_for_status()
         data = resp.json()
         return data["choices"][0]["message"]["content"].strip()
+
+
+class OpenRouterTranslator(OpenAICompatibleTranslator):
+    """OpenRouter via its OpenAI-compatible endpoint — identified internally
+    as its OWN provider. `provider_name` participates in the persistent
+    translation-cache hash (and every cache row/telemetry line), so OpenRouter
+    traffic must never be cached, stored, or logged under OpenAI's identity:
+    a cached OpenRouter translation would otherwise be silently served to —
+    or misattributed by — the OpenAI provider. Subclassing keeps the HTTP
+    implementation in exactly one place; only the identity differs."""
+
+    provider_name = "openrouter"
 
 
 class GeminiTranslator(Translator):
@@ -403,6 +420,24 @@ def get_translator() -> Translator:
         logger.info("[TRANSLATE] provider=gemini model=%s", model)
         return GeminiTranslator(
             api_key=key, model=model, timeout=timeout, max_retries=max_retries
+        )
+
+    if provider == "openrouter":
+        key = (settings.openrouter_api_key or "").strip()
+        if not key:
+            logger.warning(
+                "[TRANSLATE] TRANSLATION_PROVIDER=openrouter but no "
+                "OPENROUTER_API_KEY; using no-op"
+            )
+            return NoOpTranslator()
+        model = settings.openrouter_model or "google/gemini-2.5-flash"
+        logger.info("[TRANSLATE] provider=openrouter model=%s", model)
+        return OpenRouterTranslator(
+            api_key=key,
+            base_url=settings.openrouter_base_url or "https://openrouter.ai/api/v1",
+            model=model,
+            timeout=timeout,
+            key_env_name="OPENROUTER_API_KEY",
         )
 
     if provider in ("openai", "openai-compatible", "custom"):

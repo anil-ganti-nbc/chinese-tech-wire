@@ -213,3 +213,63 @@ def test_get_translator_gemini_without_key(monkeypatch):
     monkeypatch.setattr(cfg.settings, "gemini_api_key", "")
     t = get_translator()
     assert isinstance(t, NoOpTranslator)
+
+
+# ---------------------------------------------------------------------------
+# OpenRouter provider identity (fleet QoL pass): never cached under OpenAI
+# ---------------------------------------------------------------------------
+
+
+def test_openrouter_translator_identifies_as_openrouter(tmp_path, monkeypatch):
+    monkeypatch.setattr("config.settings.translation_provider", "openrouter")
+    monkeypatch.setattr("config.settings.openrouter_api_key", "sk-test")
+    monkeypatch.setattr("config.settings.openrouter_base_url",
+                        "https://openrouter.ai/api/v1")
+    monkeypatch.setattr("config.settings.openrouter_model",
+                        "google/gemini-2.5-flash")
+
+    t = get_translator()
+    assert t.provider_name == "openrouter"
+    assert isinstance(t, OpenAICompatibleTranslator)   # one HTTP implementation
+    assert t.base_url == "https://openrouter.ai/api/v1"
+    assert t.model_name == "google/gemini-2.5-flash"
+    assert t.key_env_name == "OPENROUTER_API_KEY"
+
+
+def test_openrouter_cache_rows_are_stored_and_served_under_openrouter_identity(
+    tmp_path, monkeypatch,
+):
+    monkeypatch.setattr("config.settings.translation_provider", "openrouter")
+    monkeypatch.setattr("config.settings.openrouter_api_key", "sk-test")
+    t = get_translator()
+    assert t.provider_name == "openrouter"
+
+    # a provider call stores its translation under OPENROUTER identity
+    fake_response = type("R", (), {})()
+    fake_response.status_code = 200
+    fake_response.json = lambda: {"choices": [{"message": {"content": "RTX 5090 spotted"}}]}
+    fake_response.raise_for_status = lambda: None
+    with patch.object(t._client, "post", return_value=fake_response):
+        assert t.translate("英伟达 RTX 5090 曝光") == "RTX 5090 spotted"
+
+    from sqlalchemy import select as _select
+
+    from database.models import TranslationCache as _TC
+
+    with get_session() as session:
+        cached = session.execute(
+            _select(_TC).where(_TC.provider == "openrouter")).scalars().all()
+        assert cached, "the OpenRouter translation was not stored under openrouter identity"
+        assert all(r.provider == "openrouter" and r.model == "google/gemini-2.5-flash"
+                   for r in cached)
+        assert session.execute(
+            _select(_TC).where(_TC.provider == "openai")).scalars().first() is None
+
+    # a fresh OpenRouter translator is SERVED by that cached row under
+    # openrouter identity, while an OpenAI-identity lookup would miss
+    from pipeline.translate import cache_lookup
+
+    assert cache_lookup("英伟达 RTX 5090 曝光", provider="openrouter",
+                        model="google/gemini-2.5-flash") == "RTX 5090 spotted"
+    assert cache_lookup("英伟达 RTX 5090 曝光", provider="openai",
+                        model="gpt-4o-mini") is None

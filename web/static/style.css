@@ -178,3 +178,29 @@ tr:hover td { background: var(--bg2); }
 }
 .warn { color: var(--yellow); }
 .err { color: var(--red); }
+
+/* Inline QC bar on the newsroom main page: compact one-click decisions that
+   sit immediately next to the Source column on every lead row. The four
+   fleet-standard decisions live here; CTW's WRITTEN stays on the detail
+   page only (it is CTW-specific, not part of the fleet QC bar). */
+.qc-inline {
+  display: flex;
+  gap: 3px;
+  flex-wrap: nowrap;
+}
+.qc-inline button {
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  line-height: 1.2;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.qc-inline button:hover { border-color: var(--accent); }
+.qc-inline .qc-useful:hover { color: var(--green); border-color: var(--green); }
+.qc-inline .qc-not:hover { color: var(--muted); }
+.qc-inline .qc-fp:hover, .qc-inline .qc-dup:hover { color: var(--red); border-color: var(--red); }
+td.qc-col { white-space: nowrap; }

@@ -526,6 +526,16 @@ def main() -> None:
     parser.add_argument("--documentary-once", action="store_true")
     parser.add_argument("--newsroom-brief", action="store_true")
     parser.add_argument("--rebuild-leads", action="store_true")
+    parser.add_argument("--translate-backfill", action="store_true",
+                        help="Deliberate enrichment pass: translate missing "
+                             "title_english on stored articles/community threads "
+                             "(cache-aware, resumable, non-destructive), then "
+                             "run: python main.py --rebuild-leads to repair "
+                             "newsroom headlines. Requires a translation provider "
+                             "(e.g. TRANSLATION_PROVIDER=openrouter with "
+                             "OPENROUTER_API_KEY in the environment).")
+    parser.add_argument("--translate-backfill-limit", type=int, default=200,
+                        help="Max records per model per pass (default 200)")
     parser.add_argument("--explain-lead", type=int, metavar="ID",
                         help="Human-readable StoryLead explanation")
     parser.add_argument("--explain-lead-json", type=int, metavar="ID",
@@ -895,6 +905,17 @@ def main() -> None:
     if args.rebuild_leads:
         n = rebuild_leads(dry_run=args.dry_run)
         print(f"Rebuilt {n} leads")
+        return
+    if args.translate_backfill:
+        import json
+        from pipeline.translate_backfill import translate_missing
+        init_db()
+        counts = translate_missing(
+            get_translator(),
+            article_limit=args.translate_backfill_limit,
+            community_limit=args.translate_backfill_limit,
+        )
+        print(json.dumps(counts, ensure_ascii=False, indent=2, default=str))
         return
     if args.newsroom_brief:
         leads = list_leads(limit=args.limit, since_hours=args.since_hours)
