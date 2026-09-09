@@ -235,6 +235,18 @@ class OpenAICompatibleTranslator(Translator):
     ) -> Optional[str]:
         if not self.api_key:
             return None
+        # Cost containment (2026-09-10): a headline translation is a tiny
+        # fact-preserving conversion. The output cap stays tight (80 tokens
+        # is ample for any headline), the budget breaker refuses to pay past
+        # its ceilings, and — for Gemini-family models served through
+        # OpenRouter — the reasoning budget is explicitly zeroed rather than
+        # left to provider defaults, whose hidden thinking tokens are billed
+        # as output.
+        from pipeline.translation_cost import ensure_within_budget, record_usage
+
+        ensure_within_budget(
+            budget_override_usd=getattr(self, "budget_override_usd", None)
+        )
         payload = {
             "model": self.model_name,
             "messages": [
@@ -245,12 +257,18 @@ class OpenAICompatibleTranslator(Translator):
             # not a creative act — the same headline must translate the same
             # way so the cache stays meaningful.
             "temperature": 0.0,
-            "max_tokens": 256,
+            "max_tokens": 80,
+            "reasoning": {"max_tokens": 0},
         }
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
         }
+        if "openrouter.ai" in self.base_url:
+            # Ask OpenRouter to serve deterministic repeats from its edge
+            # cache. Our own persistent SQLite cache stays authoritative —
+            # correctness never depends on this header.
+            headers["X-OpenRouter-Cache"] = "true"
         resp = self._client.post(
             f"{self.base_url}/chat/completions",
             json=payload,
@@ -264,6 +282,9 @@ class OpenAICompatibleTranslator(Translator):
             raise RuntimeError("auth_failed")
         resp.raise_for_status()
         data = resp.json()
+        usage = data.get("usage") or {}
+        if usage:
+            record_usage(self.provider_name, self.model_name, usage)
         return data["choices"][0]["message"]["content"].strip()
 
 

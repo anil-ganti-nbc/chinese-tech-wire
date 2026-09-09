@@ -534,6 +534,13 @@ def main() -> None:
                              "newsroom headlines. Requires a translation provider "
                              "(e.g. TRANSLATION_PROVIDER=openrouter with "
                              "OPENROUTER_API_KEY in the environment).")
+    parser.add_argument("--max-cost-usd", type=float, default=None,
+                        help="REQUIRED with --translate-backfill: the operator-acknowledged "
+                             "spend ceiling in USD for this backfill pass (overrides the "
+                             "default per-run budget; e.g. --max-cost-usd 0.10)")
+    parser.add_argument("--translation-cost-report", action="store_true",
+                        help="Print aggregate translation spend (current run, last 24h, "
+                             "UTC day) from the local usage telemetry store")
     parser.add_argument("--translate-backfill-limit", type=int, default=200,
                         help="Max records per model per pass (default 200)")
     parser.add_argument("--explain-lead", type=int, metavar="ID",
@@ -910,13 +917,27 @@ def main() -> None:
     if args.translate_backfill:
         import json
         from pipeline.translate_backfill import translate_missing
+        if args.max_cost_usd is None:
+            raise SystemExit(
+                "--translate-backfill drains the HISTORICAL backlog and costs real "
+                "money: acknowledge a spend ceiling with --max-cost-usd N "
+                "(e.g. --max-cost-usd 0.10). Current-record translation during "
+                "normal ingestion does not need this flag."
+            )
         init_db()
+        translator = get_translator()
+        translator.budget_override_usd = args.max_cost_usd
         counts = translate_missing(
-            get_translator(),
+            translator,
             article_limit=args.translate_backfill_limit,
             community_limit=args.translate_backfill_limit,
         )
         print(json.dumps(counts, ensure_ascii=False, indent=2, default=str))
+        return
+    if args.translation_cost_report:
+        from pipeline.translation_cost import cost_report
+        import json
+        print(json.dumps(cost_report(), ensure_ascii=False, indent=2))
         return
     if args.newsroom_brief:
         leads = list_leads(limit=args.limit, since_hours=args.since_hours)
