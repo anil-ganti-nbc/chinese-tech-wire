@@ -40,16 +40,25 @@
       if (!form.classList.contains('qc-inline') && !form.classList.contains('fb-post')) return;
       ev.preventDefault();
 
-      var btn = form.querySelector('button[type="submit"], button:not([type])');
+      // The activating submit button carries the decision (name="feedback",
+      // value=USEFUL/...). A native form submission adds its name/value to
+      // the body; FormData(form) does not, so append it explicitly.
+      var submitter = ev.submitter ||
+        (document.activeElement && form.contains(document.activeElement) &&
+         document.activeElement.tagName === 'BUTTON' ? document.activeElement : null);
+      var btn = submitter || form.querySelector('button[type="submit"], button:not([type])');
       if (btn) btn.disabled = true;
 
       var headers = { 'Accept': 'application/json' };
       if (token) headers['Authorization'] = 'Bearer ' + token;
 
+      var data = new FormData(form);
+      if (submitter && submitter.name) data.append(submitter.name, submitter.value);
+
       fetch(form.getAttribute('action'), {
         method: 'POST',
         headers: headers,
-        body: new FormData(form),
+        body: data,
         credentials: 'same-origin'
       })
         .then(function (r) {
