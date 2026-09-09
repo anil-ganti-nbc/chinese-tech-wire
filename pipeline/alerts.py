@@ -608,6 +608,7 @@ def diagnose_alert_policy() -> Dict[str, Any]:
         pred_168 = count_eligible_since(168)
 
         ledger_sent = ledger_failed = 0
+        last_sent_at: Optional[str] = None
         try:
             ledger_sent = session.execute(
                 select(func.count()).select_from(LeadNotification).where(LeadNotification.outcome == "SENT")
@@ -615,6 +616,14 @@ def diagnose_alert_policy() -> Dict[str, Any]:
             ledger_failed = session.execute(
                 select(func.count()).select_from(LeadNotification).where(LeadNotification.outcome == "FAILED")
             ).scalar() or 0
+            last_sent_row = session.execute(
+                select(LeadNotification)
+                .where(LeadNotification.outcome == "SENT")
+                .order_by(LeadNotification.attempted_at.desc())
+                .limit(1)
+            ).scalar_one_or_none()
+            if last_sent_row and last_sent_row.attempted_at:
+                last_sent_at = _aware(last_sent_row.attempted_at).isoformat()
         except Exception:
             pass
 
@@ -642,6 +651,7 @@ def diagnose_alert_policy() -> Dict[str, Any]:
             "policy_activated_at": activation,
             "ledger_sent": ledger_sent,
             "ledger_failed": ledger_failed,
+            "last_sent_at": last_sent_at,
         }
 
 

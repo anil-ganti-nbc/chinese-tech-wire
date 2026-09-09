@@ -308,3 +308,31 @@ def test_quality_gate_suppresses(alert_cfg):
     lead = _lead(priority_score=55, evidence_score=5, relevance_score=70, confidence_score=40)
     d = evaluate_alert_eligibility(lead, policy_activated_at=alert_cfg["policy_activated_at"])
     assert d.reason_code == "SUPPRESSED_QUALITY"
+
+
+# -- diagnostics: last successful Discord send (Phase 4 operator contract) ------
+
+
+def test_diagnose_reports_last_successful_send(tmp_path, monkeypatch, alert_cfg):
+    """An operator must be able to answer 'when did Discord last succeed?'
+    straight from --diagnose-alerts, with zero secret exposure."""
+    _db(tmp_path, monkeypatch)
+    reset_alert_stats()
+    from pipeline.alerts import diagnose_alert_policy
+    d = diagnose_alert_policy()
+    assert d["last_sent_at"] is None  # no successful send yet: honest 'never'
+
+    from pipeline.alerts import record_ledger
+
+    with get_session() as session:
+        lead = session.query(StoryLead).first()
+        record_ledger(
+            session, lead,
+            outcome="SENT", reason_code="ELIGIBLE",
+            result=DiscordSendResult(attempted=True, sent=True, dry_run=False, status_code=204),
+        )
+
+    d2 = diagnose_alert_policy()
+    assert d2["ledger_sent"] == 1
+    assert d2["last_sent_at"] is not None
+    assert "webhook" not in str(d2).lower().replace("webhook_configured", "")  # no secret surface

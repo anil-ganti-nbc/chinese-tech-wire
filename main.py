@@ -770,6 +770,7 @@ def main() -> None:
         print(f"  daily avg (7d): {d.get('predicted_daily_avg_7d')}")
         print(f"\npolicy_activated_at: {d.get('policy_activated_at')}")
         print(f"ledger SENT={d.get('ledger_sent')} FAILED={d.get('ledger_failed')}")
+        print(f"last successful Discord send: {d.get('last_sent_at') or 'never'}")
         print("\n=== CONFIG ===")
         for ck, cv in (d.get("config") or {}).items():
             print(f"  {ck}: {cv}")
