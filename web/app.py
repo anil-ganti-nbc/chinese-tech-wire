@@ -292,6 +292,11 @@ def newsroom(
             "source_url_map": source_url_map,
             "can_qc": can_qc,
             "next_url": next_url,
+            # Same loopback-only contract as the Health page's run-now
+            # button: the per-process token is rendered into the page's own
+            # HTML so its fetch() can present it back. Never logged
+            # (security.redaction scrubs it).
+            "dashboard_auth_token": os.environ.get("CTW_DASHBOARD_AUTH_TOKEN", ""),
             "active": "newsroom",
         },
     )
@@ -438,6 +443,7 @@ def lead_detail(request: Request, lead_id: int):
             "outcomes": outcomes,
             "current_outcome": current_outcome_row,
             "outcome_values": sorted(OUTCOME_VALUES),
+            "dashboard_auth_token": os.environ.get("CTW_DASHBOARD_AUTH_TOKEN", ""),
             "active": "newsroom",
         },
     )
@@ -445,6 +451,7 @@ def lead_detail(request: Request, lead_id: int):
 
 @app.post("/leads/{lead_id}/feedback")
 def lead_feedback_post(
+    request: Request,
     lead_id: int,
     feedback: str = Form(...),
     next: str = Form(""),
@@ -457,6 +464,15 @@ def lead_feedback_post(
     `next` returns the operator to the context they clicked from (the
     newsroom's current filter/page) instead of the lead detail page. It is
     a validated internal path only — never an off-site redirect.
+
+    Transport: the Phase 0 middleware requires Authorization: Bearer on
+    every mutation, which a plain browser form submit cannot attach. The
+    GUI therefore sends QC decisions through its authenticated fetch
+    transport (same mechanism as /operations/run-now) with
+    Accept: application/json, and gets the same validated redirect target
+    back as JSON. Ordinary form posts keep the original 303 semantics —
+    this is transport negotiation only; the mutation path, the archive,
+    the race guard, and the validated `next` are identical for both.
     """
     from pipeline.qc import AlreadyQcdError, record_qc_decision
 
@@ -466,12 +482,23 @@ def lead_feedback_post(
             return f"/leads/{lead_id}{suffix}"
         return candidate + suffix
 
+    wants_json = "application/json" in (request.headers.get("accept") or "").lower()
+
     try:
         record_qc_decision(lead_id, feedback.strip())
     except AlreadyQcdError:
+        if wants_json:
+            return JSONResponse({"ok": True, "outcome": "already_qcd", "next": _safe_next("?fb=already")})
         return RedirectResponse(_safe_next("?fb=already"), status_code=303)
     except ValueError:
+        if wants_json:
+            return JSONResponse(
+                {"ok": False, "error": "invalid_feedback", "next": _safe_next("?err=1")},
+                status_code=400,
+            )
         return RedirectResponse(_safe_next("?err=1"), status_code=303)
+    if wants_json:
+        return JSONResponse({"ok": True, "outcome": "archived", "next": _safe_next("?fb=1")})
     return RedirectResponse(_safe_next("?fb=1"), status_code=303)
 
 

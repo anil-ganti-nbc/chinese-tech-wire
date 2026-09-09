@@ -118,6 +118,10 @@
 {% endblock %}
 {% block scripts %}
 <script>
+window.CTW_DASHBOARD_AUTH_TOKEN = {{ dashboard_auth_token|tojson }};
+</script>
+<script src="{{ url_for('static', path='/qc.js') }}"></script>
+<script>
 setTimeout(function(){ location.reload(); }, 45000);
 </script>
 {% endblock %}

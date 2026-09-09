@@ -28,8 +28,7 @@
   {% if latest_fb %}<span class="muted">current: {{ latest_fb }}</span>{% endif %}
   <div style="margin-top:6px">
   {% for fb in ['USEFUL','NOT_USEFUL','WRITTEN','DUPLICATE','FALSE_POSITIVE'] %}
-    <form method="post" action="/leads/{{ lead.id }}/feedback" style="display:inline"
-          onsubmit="this.querySelector('button').disabled=true">
+    <form method="post" action="/leads/{{ lead.id }}/feedback" class="fb-post" style="display:inline">
       <input type="hidden" name="feedback" value="{{ fb }}">
       <button type="submit" class="btn {{ 'current' if latest_fb==fb else '' }}">{{ fb.replace('_',' ') }}</button>
     </form>
@@ -191,4 +190,10 @@
 <p class="muted"><a href="/newsroom">← Newsroom</a>
   · CLI: <span class="mono">python main.py --explain-lead {{ lead.id }}</span>
 </p>
+{% endblock %}
+{% block scripts %}
+<script>
+window.CTW_DASHBOARD_AUTH_TOKEN = {{ dashboard_auth_token|tojson }};
+</script>
+<script src="{{ url_for('static', path='/qc.js') }}"></script>
 {% endblock %}
