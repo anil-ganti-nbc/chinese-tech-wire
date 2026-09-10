@@ -9,18 +9,7 @@
 </div>
 
 <div class="card">
-  <h2>Scheduler / last ingestion</h2>
-
-  <div id="sched-status">
-    {% if snapshot.scheduler.available %}
-    <p>Scheduler: <b>{{ snapshot.scheduler.status or "UNKNOWN" }}</b></p>
-    {% if snapshot.scheduler.next_run %}<p class="muted">Next run: {{ snapshot.scheduler.next_run }}</p>{% endif %}
-    {% if snapshot.scheduler.last_run %}<p class="muted">Last run: {{ snapshot.scheduler.last_run }}{% if snapshot.scheduler.last_result is not none %} (result {{ snapshot.scheduler.last_result }}){% endif %}</p>{% endif %}
-    {% else %}
-    <p>Scheduler: <b>UNKNOWN</b></p>
-    <p class="muted">{{ snapshot.scheduler.reason or "status unavailable" }}</p>
-    {% endif %}
-  </div>
+  <h2>Manual run / ingestion history</h2>
 
   <div id="current-run-box" class="card" style="margin-top:8px;{% if not snapshot.current_run %}display:none{% endif %}">
     {% if snapshot.current_run %}
@@ -181,18 +170,42 @@
     return d.innerHTML;
   }
 
-  function renderScheduler(sch) {
-    var box = document.getElementById('sched-status');
-    if (!box || !sch) return;
-    if (sch.available) {
-      var html = '<p>Scheduler: <b>' + esc(sch.status || 'UNKNOWN') + '</b></p>';
-      if (sch.next_run) html += '<p class="muted">Next run: ' + esc(sch.next_run) + '</p>';
-      if (sch.last_run) html += '<p class="muted">Last run: ' + esc(sch.last_run) +
-        (sch.last_result !== null && sch.last_result !== undefined ? ' (result ' + esc(sch.last_result) + ')' : '') + '</p>';
-      box.innerHTML = html;
-    } else {
-      box.innerHTML = '<p>Scheduler: <b>UNKNOWN</b></p><p class="muted">' + esc(sch.reason || 'status unavailable') + '</p>';
+  // Classify a launch-post response into an operator-safe message. Never
+  // renders raw bodies, secrets, or tracebacks: JSON reasons are shown
+  // only for known short backend reason strings, everything else degrades
+  // to a status-code or transport-level phrase.
+  function describeLaunchFailure(res) {
+    if (res.kind === 'auth') return 'Authentication required — reload this page (the token rotates on GUI restart)';
+    if (res.kind === 'http') return 'Server error (' + res.status + ')';
+    if (res.kind === 'network') return 'Dashboard connection lost';
+    if (res.kind === 'json' && res.reason) {
+      var reason = String(res.reason);
+      if (reason === 'ALREADY_RUNNING') return 'Collector already running';
+      // backend reasons are short, code-authored strings — safe to show
+      return 'Launch failed: ' + reason;
     }
+    return 'Launch failed (unexpected response)';
+  }
+
+  function postLaunch(url) {
+    var headers = dashboardAuthToken ? { 'Authorization': 'Bearer ' + dashboardAuthToken } : {};
+    return fetch(url, { method: 'POST', headers: headers })
+      .then(function (r) {
+        var ct = r.headers.get('content-type') || '';
+        if (ct.indexOf('application/json') !== -1) {
+          return r.json().then(function (data) {
+            return { ok: r.ok, status: r.status, kind: 'json', data: data };
+          });
+        }
+        return { ok: r.ok, status: r.status, kind: 'http', data: null };
+      })
+      .then(function (res) {
+        if (res.status === 401 || res.status === 403) res.kind = 'auth';
+        return res;
+      })
+      .catch(function () {
+        return { ok: false, status: 0, kind: 'network', data: null };
+      });
   }
 
   function renderCurrent(run) {
@@ -295,7 +308,6 @@
     var url = '/api/health/runtime?runs_offset=' + runsOffset + '&runs_limit=' + runsLimit;
     if (manualRunId) url += '&manual_run_id=' + encodeURIComponent(manualRunId);
     fetch(url).then(function (r) { return r.json(); }).then(function (data) {
-      renderScheduler(data.scheduler);
       renderCurrent(data.current_run);
       renderLast(data.last_completed_run);
       renderRecentRuns(data.recent_runs);
@@ -309,37 +321,28 @@
       btn.disabled = true;
       var msg = document.getElementById('run-now-msg');
       msg.textContent = 'Manual collection started…';
-      fetch('/operations/run-now', {
-        method: 'POST',
-        headers: dashboardAuthToken ? { 'Authorization': 'Bearer ' + dashboardAuthToken } : {}
-      })
-        .then(function (r) { return r.json().then(function (data) { return { status: r.status, data: data }; }); })
-        .then(function (res) {
-          if (res.status === 409) {
-            msg.textContent = 'Collector already running';
-            if (res.data.run_id) {
-              manualRunId = res.data.run_id;
-              sessionStorage.setItem('ctw_manual_run_id', manualRunId);
-            }
-            poll();
-            return;
-          }
-          if (res.data.started) {
-            msg.textContent = '';
-            if (res.data.run_id) {
-              manualRunId = res.data.run_id;
-              sessionStorage.setItem('ctw_manual_run_id', manualRunId);
-            }
-          } else {
-            msg.textContent = 'Failed to start: ' + (res.data.reason || 'unknown error');
-            btn.disabled = false;
+      postLaunch('/operations/run-now').then(function (res) {
+        if (res.status === 409) {
+          msg.textContent = 'Collector already running';
+          if (res.data && res.data.run_id) {
+            manualRunId = res.data.run_id;
+            sessionStorage.setItem('ctw_manual_run_id', manualRunId);
           }
           poll();
-        })
-        .catch(function () {
-          msg.textContent = 'Failed to start (network error)';
+          return;
+        }
+        if (res.kind === 'json' && res.data && res.data.started) {
+          msg.textContent = '';
+          if (res.data.run_id) {
+            manualRunId = res.data.run_id;
+            sessionStorage.setItem('ctw_manual_run_id', manualRunId);
+          }
+        } else {
+          msg.textContent = describeLaunchFailure(res);
           btn.disabled = false;
-        });
+        }
+        poll();
+      });
     });
   }
 
@@ -349,19 +352,14 @@
       sbtn.disabled = true;
       var prevText = sbtn.textContent;
       sbtn.textContent = 'Running…';
-      fetch('/operations/run-now?source=' + encodeURIComponent(source), {
-        method: 'POST',
-        headers: dashboardAuthToken ? { 'Authorization': 'Bearer ' + dashboardAuthToken } : {}
-      })
-        .then(function (r) { return r.json().then(function (data) { return { status: r.status, data: data }; }); })
-        .then(function (res) {
-          sbtn.textContent = res.data.started ? 'Started' : ('Failed: ' + (res.data.reason || 'error'));
-          setTimeout(function () { sbtn.textContent = prevText; sbtn.disabled = false; }, 4000);
-        })
-        .catch(function () {
-          sbtn.textContent = 'Failed (network)';
-          setTimeout(function () { sbtn.textContent = prevText; sbtn.disabled = false; }, 4000);
-        });
+      postLaunch('/operations/run-now?source=' + encodeURIComponent(source)).then(function (res) {
+        if (res.kind === 'json' && res.data && res.data.started) {
+          sbtn.textContent = 'Started';
+        } else {
+          sbtn.textContent = describeLaunchFailure(res);
+        }
+        setTimeout(function () { sbtn.textContent = prevText; sbtn.disabled = false; }, 4000);
+      });
     });
   });
 

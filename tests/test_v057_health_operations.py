@@ -552,3 +552,76 @@ def test_failed_sources_for_run_only_within_window(tmp_path, monkeypatch):
         failed = failed_sources_for_run(run, session)
     assert len(failed) == 1
     assert failed[0]["source"] == "hkepc"
+
+
+# ---------------------------------------------------------------------------
+# manual-run 500 regression: no unhandled exception may reach the browser
+# as a plain-text 500 (the "Failed to start (network error)" bug — the
+# post-launch DB polling raced the child process's SQLite write locks
+# under journal_mode=delete and escaped the endpoint as an unhandled
+# sqlite3.OperationalError, so fetch()'s r.json() failed and the GUI
+# blamed the network).
+# ---------------------------------------------------------------------------
+
+
+def test_run_now_survives_correlation_db_race(tmp_path, monkeypatch):
+    """A DB lock hit during post-launch run-row correlation must degrade to
+    run_id=None (the frontend falls back to generic polling) — never to a
+    plain-text 500, and never a failed launch: the collector IS running."""
+    _db(tmp_path, monkeypatch)
+    import sqlite3
+    from fastapi.testclient import TestClient
+    from web.app import app
+    client = TestClient(app)
+    with patch("pipeline.operations.subprocess.Popen") as mocked_popen, \
+         patch("pipeline.operations.correlate_new_run",
+               side_effect=sqlite3.OperationalError("database is locked")):
+        mocked_popen.return_value = MagicMock(pid=999)
+        r = client.post("/operations/run-now")
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("application/json")
+    body = r.json()
+    assert body["started"] is True
+    assert body["run_id"] is None
+    assert mocked_popen.called  # the launch was real and survived
+
+
+def test_run_now_returns_json_when_run_state_is_unreadable(tmp_path, monkeypatch):
+    """A locked DB during the pre-launch ALREADY_RUNNING check must come
+    back as a JSON error the GUI can display, not a text/plain 500."""
+    _db(tmp_path, monkeypatch)
+    import sqlite3
+    from fastapi.testclient import TestClient
+    from web.app import app
+    client = TestClient(app)
+    with patch("pipeline.operations.active_running_run",
+               side_effect=sqlite3.OperationalError("database is locked")):
+        r = client.post("/operations/run-now")
+    assert r.status_code == 503
+    assert r.headers["content-type"].startswith("application/json")
+    body = r.json()
+    assert body["started"] is False
+    assert "Run state unavailable" in body["reason"]
+
+
+def test_health_page_has_no_scheduler_block_and_keeps_manual_run_ui(tmp_path, monkeypatch):
+    """CTW is manually operated: the stale Task-Scheduler metadata block
+    (Scheduler / Next run / Last scheduler run) is gone from the Health
+    page, while everything operationally meaningful stays."""
+    _db(tmp_path, monkeypatch)
+    from fastapi.testclient import TestClient
+    from web.app import app
+    client = TestClient(app)
+    r = client.get("/health")
+    assert r.status_code == 200
+    html = r.text
+    assert 'id="sched-status"' not in html
+    assert "Scheduler:" not in html
+    assert "Next run:" not in html
+    # the manual-run and history UI stays
+    assert 'id="run-now-btn"' in html
+    assert 'id="current-run-box"' in html
+    assert 'id="last-run-box"' in html
+    assert 'id="recent-runs-body"' in html
+    assert "source-run-btn" in html
+    assert "Manual run / ingestion history" in html

@@ -822,14 +822,19 @@ def api_health_runtime(
 def operations_run_now(source: Optional[str] = Query(None)):
     """Launches a collector as a detached background process — this
     request does not wait for collection to finish. With no `source`,
-    launches the same production full-cycle path the scheduled task uses
-    ("Run all collectors"). With `source=NAME`, launches only that one
-    collector (`python main.py --source NAME` — the per-collector "Run"
+    launches the same production full-cycle path the operator triggers
+    manually ("Run all collectors"). With `source=NAME`, launches only that
+    one collector (`python main.py --source NAME` — the per-collector "Run"
     buttons in the Health page's source table). Rejects the full-cycle
     launch if a run is genuinely already active (see
     pipeline.operations.active_running_run for the stale-RUNNING-row
     safety window); single-source runs are cheap/independent enough not to
-    need that same mutual-exclusion gate."""
+    need that same mutual-exclusion gate.
+
+    Every failure returns JSON: the Health page parses this response, and a
+    plain-text 500 (FastAPI's unhandled-exception default) is what rendered
+    in the browser as a misleading "network error" when the post-launch
+    DB polling raced the child process's SQLite write locks."""
     from pipeline.operations import active_running_run, correlate_new_run, launch_manual_run
     from main import SOURCE_REGISTRY
 
@@ -840,7 +845,15 @@ def operations_run_now(source: Optional[str] = Query(None)):
                 {"started": False, "reason": f"Unknown source: {source}"}, status_code=400
             )
     else:
-        existing = active_running_run()
+        try:
+            existing = active_running_run()
+        except Exception as e:
+            logger.exception("Could not read ingestion run state before launch")
+            return JSONResponse(
+                {"started": False,
+                 "reason": f"Run state unavailable ({type(e).__name__}); try again"},
+                status_code=503,
+            )
         if existing is not None:
             return JSONResponse(
                 {"started": False, "reason": "ALREADY_RUNNING", "run_id": existing.id},
@@ -859,7 +872,15 @@ def operations_run_now(source: Optional[str] = Query(None)):
         # --full-once does), so there's nothing to correlate/poll.
         return {"started": True, "run_id": None, "source": source}
 
-    run_id = correlate_new_run(launch_time)
+    try:
+        run_id = correlate_new_run(launch_time)
+    except Exception:
+        # The launch itself succeeded; correlation is a best-effort UX
+        # nicety (the frontend falls back to generic polling). A DB race
+        # with the child process's write locks must never turn this into a
+        # plain-text 500 — that is exactly the "network error" bug.
+        logger.exception("Run-row correlation failed after a successful launch")
+        run_id = None
     return {"started": True, "run_id": run_id}
 
 
