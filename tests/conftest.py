@@ -15,6 +15,13 @@ def _explicit_test_mutation_profile():
 _PAID_HOSTS = ("openrouter.ai", "generativelanguage.googleapis.com", "api.openai.com")
 
 
+class PaidApiCallInTest(BaseException):
+    """Deliberately a BaseException: CTW's translate() contract swallows all
+    Exceptions so a provider failure can never fail ingestion — a paid-call
+    attempt inside a test must be louder than that and fail the test
+    immediately, un-swallowable by any except Exception handler."""
+
+
 def _paid_host(url: str) -> bool:
     try:
         from urllib.parse import urlsplit
@@ -76,7 +83,7 @@ def _no_paid_api_calls(request, monkeypatch, tmp_path):
 
     def wall_post(self, url, *args, **kwargs):
         if _paid_host(str(url)):
-            raise AssertionError(
+            raise PaidApiCallInTest(
                 "TEST WALL: a paid inference API call was attempted in a normal "
                 f"test ({url}). Normal pytest must cost exactly $0.00. Mark the "
                 "test @pytest.mark.live_openrouter AND run with "
@@ -87,7 +94,7 @@ def _no_paid_api_calls(request, monkeypatch, tmp_path):
     def wall_urlopen(url, *args, **kwargs):
         target = getattr(url, "full_url", url)
         if _paid_host(str(target)):
-            raise AssertionError(
+            raise PaidApiCallInTest(
                 "TEST WALL: a paid inference API call was attempted in a normal "
                 f"test ({target}). Normal pytest must cost exactly $0.00. Mark the "
                 "test @pytest.mark.live_openrouter AND run with "

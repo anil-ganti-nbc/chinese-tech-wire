@@ -184,8 +184,13 @@ def test_normal_pytest_cannot_reach_openrouter_even_with_a_key(monkeypatch):
     monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-v1-if-this-were-real-it-must-not-matter")
     translator = _openrouter_translator(api_key="sk-or-v1-anything")
 
-    with pytest.raises(AssertionError, match="TEST WALL"):
+    raised = None
+    try:
         translator.translate_raw("这必须花 $0.00")
+    except BaseException as error:  # noqa: BLE001 — the wall IS the point
+        raised = error
+    assert raised is not None, "the transport wall did not fire"
+    assert "TEST WALL" in str(raised)
 
     from pipeline import translation_cost
 
