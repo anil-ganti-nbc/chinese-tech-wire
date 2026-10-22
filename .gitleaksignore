@@ -1,0 +1,5 @@
+# False positive: generic-api-key on a placeholder argument in a test double.
+# Exact finding only (this file, this rule, this line). CI runs both
+# `gitleaks git` and `gitleaks dir`, which fingerprint the same line differently.
+f5eed8953adac1ad4c4dbbef42e719ba343d4255:tests/test_translation_cost.py:generic-api-key:185
+tests/test_translation_cost.py:generic-api-key:185
