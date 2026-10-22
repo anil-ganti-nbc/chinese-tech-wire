@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Generator
 
 from sqlalchemy import create_engine, event, text
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 
 from database.models import Base
 
@@ -351,8 +351,10 @@ def migrate_current_schema(database_url: str | None = None) -> dict:
     import sqlite3 as _sqlite3
 
     from .schema_state import (
+        SCHEMA_META_TABLE,
         _APPLICATION_TABLES,
         SchemaState,
+        SchemaStateError,
         _missing_columns,
         inspect_primary_store,
     )
@@ -518,7 +520,7 @@ def record_observation_discontinuity(
 
 
 @contextmanager
-def get_session(database_url: str | None = None) -> Generator["Session", None, None]:
+def get_session(database_url: str | None = None) -> Generator[Session, None, None]:
     """ORM session behind the compatibility barrier: unadmittable state is
     refused with evidence before any work; genuinely fresh state is allowed
     through (queries fail honestly on the absent schema; this context never
